@@ -16,8 +16,9 @@
   --texto: #40222b;
   --texto-suave: #83626d;
   --blanco: #fffdfb;
-  --wa: #25d366;
-  --wa-oscuro: #1da851;
+  --wa: #1d5c46;
+  --wa-oscuro: #1d5c46;
+  --wa-hover: #2a7055;
   --shadow-sm: 0 2px 10px rgba(63, 11, 26, .08);
   --shadow-md: 0 10px 30px rgba(63, 11, 26, .14);
   --shadow-lg: 0 24px 60px rgba(63, 11, 26, .28);
@@ -69,9 +70,11 @@ em { font-family: var(--font-display); font-style: italic; color: var(--bordo-2)
 }
 .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(201, 162, 75, .5); }
 .btn-whatsapp {
-  background: var(--wa); color: #08361a; box-shadow: 0 8px 24px rgba(37, 211, 102, .35);
+  background: linear-gradient(160deg, #23614d, #14382c);
+  color: #f3ead8; box-shadow: 0 8px 24px rgba(20, 56, 44, .4);
+  border: 1px solid rgba(228, 200, 122, .4);
 }
-.btn-whatsapp:hover { background: #2fe673; transform: translateY(-2px); }
+.btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(20, 56, 44, .5); border-color: rgba(228, 200, 122, .7); }
 .btn-outline {
   background: transparent; color: var(--bordo); border: 1.5px solid var(--bordo-3);
 }
@@ -243,10 +246,11 @@ em { font-family: var(--font-display); font-style: italic; color: var(--bordo-2)
 .tcard-btn-book { background: var(--bordo); color: #fff; }
 .treatments-alt .tcard-btn-book { background: var(--dorado); color: var(--vino); }
 .tcard-btn-wa {
-  width: 40px; flex: 0 0 40px; background: var(--wa); color: #08361a;
+  width: 40px; flex: 0 0 40px; background: linear-gradient(160deg, #23614d, #173f31); color: #f3ead8;
+  border: 1px solid rgba(228, 200, 122, .35);
   border-radius: 10px; display: inline-flex; align-items: center; justify-content: center;
 }
-.tcard-btn-wa:hover { background: #2fe673; }
+.tcard-btn-wa:hover { background: #2a7055; border-color: rgba(228, 200, 122, .65); }
 
 /* ---------- Turnero ---------- */
 .booking { padding: 5rem 0; background: var(--crema); position: relative; }
@@ -327,7 +331,8 @@ textarea { resize: vertical; }
 .aside-wa-card svg { color: var(--wa-oscuro); flex-shrink: 0; margin-top: .15rem; }
 .aside-wa-card strong { color: var(--vino); font-size: .95rem; }
 .aside-wa-card p { font-size: .8rem; color: var(--texto-suave); margin: .3rem 0 .5rem; }
-.aside-wa-btn { font-weight: 700; color: var(--wa-oscuro); text-decoration: none; font-size: .95rem; }
+.aside-wa-btn { font-weight: 700; color: var(--wa-oscuro); text-decoration: none; font-size: .95rem; letter-spacing: .02em; border-bottom: 1.5px solid rgba(29,92,70,.35); padding-bottom: .1rem; }
+.aside-wa-btn:hover { color: var(--wa-hover); border-color: var(--wa-hover); }
 
 .booking-success {
   max-width: 620px; margin: 0 auto; text-align: center; background: var(--blanco);
@@ -336,8 +341,9 @@ textarea { resize: vertical; }
 }
 .success-icon {
   width: 84px; height: 84px; border-radius: 50%; margin: 0 auto 1.2rem;
-  background: linear-gradient(160deg, #1da851, #25d366); color: #fff;
-  display: grid; place-items: center; box-shadow: 0 10px 30px rgba(37,211,102,.4);
+  background: radial-gradient(circle at 35% 30%, #2a7055, #14382c 80%); color: #f3ead8;
+  display: grid; place-items: center; box-shadow: 0 10px 30px rgba(20,56,44,.45);
+  border: 1.5px solid rgba(228, 200, 122, .55);
   animation: popIn .5s cubic-bezier(.2, 1.4, .4, 1);
 }
 @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -416,15 +422,18 @@ textarea { resize: vertical; }
 .wa-float {
   position: fixed; bottom: 22px; right: 22px; z-index: 90;
   width: 62px; height: 62px; border-radius: 50%;
-  background: var(--wa); color: #08361a; display: grid; place-items: center;
-  box-shadow: 0 10px 30px rgba(37,211,102,.45); text-decoration: none;
-  transition: transform .25s ease; animation: waPulse 2.6s infinite;
+  background: radial-gradient(circle at 33% 30%, #2a7055, #14382c 78%);
+  color: #f3ead8; display: grid; place-items: center;
+  border: 1.5px solid rgba(228, 200, 122, .6);
+  box-shadow: 0 12px 32px rgba(20, 56, 44, .5), 0 0 0 5px rgba(20, 56, 44, .1);
+  text-decoration: none; transition: transform .25s ease, box-shadow .25s ease;
+  animation: waPulse 2.8s infinite;
 }
-.wa-float:hover { transform: scale(1.12); }
+.wa-float:hover { transform: scale(1.1); box-shadow: 0 14px 38px rgba(20, 56, 44, .6), 0 0 0 5px rgba(228,200,122,.25); }
 @keyframes waPulse {
-  0% { box-shadow: 0 10px 30px rgba(37,211,102,.45), 0 0 0 0 rgba(37,211,102,.45); }
-  70% { box-shadow: 0 10px 30px rgba(37,211,102,.45), 0 0 0 18px rgba(37,211,102,0); }
-  100% { box-shadow: 0 10px 30px rgba(37,211,102,.45), 0 0 0 0 rgba(37,211,102,0); }
+  0% { box-shadow: 0 12px 32px rgba(20, 56, 44, .5), 0 0 0 0 rgba(35, 97, 77, .4); }
+  70% { box-shadow: 0 12px 32px rgba(20, 56, 44, .5), 0 0 0 16px rgba(35, 97, 77, 0); }
+  100% { box-shadow: 0 12px 32px rgba(20, 56, 44, .5), 0 0 0 0 rgba(35, 97, 77, 0); }
 }
 
 /* ---------- Reveal on scroll ---------- */

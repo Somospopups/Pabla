@@ -58,5 +58,5 @@ Los turnos se guardan en `data/appointments.json`.
 
 ## Notas
 
-- Imágenes generadas con IA como placeholder — reemplazar por fotos reales de la profesional y el consultorio.
+- El retrato de Pabla es una foto real (enviada por el cliente) con retoque de luz. Las imágenes de consultorio/tratamientos son de apoyo visual (IA). Reemplazar por fotos reales del consultorio cuando estén disponibles.
 - El sitio no reemplaza la consulta profesional.

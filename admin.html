@@ -193,15 +193,20 @@ tbody tr:hover{background:var(--nude)}
 
 @media (max-width:960px){
   .layout{grid-template-columns:1fr}
-  .side{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:.6rem}
+  .side{position:static;height:auto;flex-direction:row;align-items:center;gap:.4rem;overflow-x:auto;padding:.55rem .6rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain;mask-image:linear-gradient(to right,#000 85%,transparent);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent)}
+  .side::-webkit-scrollbar{display:none}
   .side-title,.side-foot{display:none}
-  .nav-btn{white-space:nowrap}
+  .nav-btn{flex:0 0 auto;align-items:center;justify-content:center;height:42px;padding:.45rem .75rem;border-radius:12px;white-space:nowrap;font-size:.85rem;gap:.5rem;text-align:center}
   .agenda-grid{grid-template-columns:1fr}
   .balance-cards{grid-template-columns:1fr}
   .grid2,.grid3{grid-template-columns:1fr}
   .appt{grid-template-columns:1fr;gap:.3rem;padding:.7rem .6rem}
   .appt-actions{flex-direction:row;justify-content:space-between;align-items:center;width:100%}
 }
+/* Animacion de entrada: las secciones "se corren" para avisar que se deslizan */
+@keyframes navNudge{0%,100%{transform:translateX(0)}30%{transform:translateX(-34px)}65%{transform:translateX(14px)}}
+.side.nav-nudge{animation:navNudge 1.15s ease-in-out 2}
+@media (prefers-reduced-motion:reduce){.side.nav-nudge{animation:none}}
 @media (prefers-reduced-motion:reduce){.page.active{animation:none}.btn:hover{transform:none}}
 /* ---------- Tarjetas del sitio ---------- */
 .tarjetas-list{display:flex;flex-direction:column;gap:.6rem}
@@ -997,6 +1002,13 @@ function showPanel() {
   gateWrap.style.display = 'none';
   panel.hidden = false;
   topbarActions.hidden = false;
+  const sideEl = document.querySelector('.side');
+  if (sideEl && window.matchMedia('(max-width: 960px)').matches) {
+    sideEl.classList.remove('nav-nudge');
+    void sideEl.offsetWidth; /* reiniciar la animacion */
+    sideEl.classList.add('nav-nudge');
+    sideEl.addEventListener('animationend', () => sideEl.classList.remove('nav-nudge'), { once: true });
+  }
 }
 function showConfigMissing() {
   gateWrap.style.display = 'grid';

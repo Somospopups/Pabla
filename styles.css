@@ -325,16 +325,6 @@ textarea { resize: vertical; }
 .summary-card li strong { text-align: right; font-weight: 600; }
 .summary-note { font-size: .78rem; color: rgba(253,243,236,.75); margin-top: .9rem; line-height: 1.5; }
 .summary-note b { color: var(--dorado-suave); }
-.aside-wa-card {
-  display: flex; gap: .8rem; align-items: flex-start;
-  background: var(--blanco); border: 1px solid var(--nude-2); border-radius: var(--radius);
-  padding: 1.2rem; box-shadow: var(--shadow-sm);
-}
-.aside-wa-card img { flex-shrink: 0; width: 34px; height: 34px; margin-top: .1rem; }
-.aside-wa-card strong { color: var(--vino); font-size: .95rem; }
-.aside-wa-card p { font-size: .8rem; color: var(--texto-suave); margin: .3rem 0 .5rem; }
-.aside-wa-btn { font-weight: 700; color: var(--wa-oscuro); text-decoration: none; font-size: .95rem; letter-spacing: .02em; border-bottom: 1.5px solid rgba(29,92,70,.35); padding-bottom: .1rem; }
-.aside-wa-btn:hover { color: var(--wa-hover); border-color: var(--wa-hover); }
 
 .booking-success {
   max-width: 620px; margin: 0 auto; text-align: center; background: var(--blanco);

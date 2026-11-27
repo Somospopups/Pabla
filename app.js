@@ -189,6 +189,8 @@ function openBookModal(pending, trigger) {
   if (!bookModal) return;
   pendingBooking = pending || null;
   lastTrigger = trigger || null;
+  const isArmo = String(pendingBooking?.area || '').toLowerCase().includes('armonizacion');
+  bookModal.classList.toggle('is-armonizacion', isArmo);
   if (pendingBooking?.treatment) {
     bookContextName.textContent = pendingBooking.treatment;
     bookContext.hidden = false;
@@ -211,7 +213,7 @@ function closeBookModal() {
   const restore = lastTrigger;
   setTimeout(() => {
     bookModal.hidden = true;
-    bookModal.classList.remove('closing');
+    bookModal.classList.remove('closing', 'is-armonizacion');
     pendingBooking = null;
     lastTrigger = null;
     restore?.focus?.({ preventScroll: true });

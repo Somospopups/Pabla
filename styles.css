@@ -863,18 +863,28 @@ body.splash-on { overflow: hidden; }
   .copito-bubble { margin-bottom: 3.3rem; font-size: .76rem; padding: .35rem .62rem; }
 }
 
-/* Crédito de la agencia (mini sello POPUPS) */
-.credit { display: flex; justify-content: center; padding: .1rem 1rem 1.15rem; }
+/* Crédito de la agencia (sticker POPUPS) */
+.credit { display: flex; justify-content: center; padding: .15rem 1rem 1.35rem; }
 .credit__link {
-  display: inline-flex; align-items: center; gap: .4rem;
-  padding: .2rem .8rem .2rem .22rem; border-radius: 999px;
-  background: #0b0b0b; border: 1.5px solid rgba(255, 255, 255, .9); color: #fff;
-  text-decoration: none; transition: background .3s ease, border-color .3s ease;
+  display: inline-flex; align-items: center; gap: .7rem;
+  padding: .38rem 1.15rem .38rem .42rem; border-radius: 999px;
+  background: #0b0b0b; border: 2.5px solid #fff; color: #fff;
+  text-decoration: none; transform: rotate(-2.5deg);
+  box-shadow: 0 5px 0 #000, 0 16px 28px -14px rgba(0, 0, 0, .8);
+  transition: transform .45s cubic-bezier(.34, 1.56, .64, 1);
 }
-.credit__link:hover, .credit__link:focus-visible { background: #161616; border-color: #fff; }
-.credit__link:focus-visible { outline: 2px solid #C5F711; outline-offset: 3px; }
-.credit__mark { display: block; height: 17px; width: auto; }
-.credit__by { font-weight: 700; font-size: .58rem; letter-spacing: .17em; text-transform: uppercase; opacity: .85; white-space: nowrap; line-height: 1; }
+.credit__link:hover, .credit__link:focus-visible { transform: rotate(0deg) scale(1.05); }
+.credit__link:focus-visible { outline: 3px solid #C5F711; outline-offset: 4px; }
+.credit__mark { display: block; height: 42px; width: auto; }
+.credit__txt { display: flex; flex-direction: column; line-height: 1.05; text-align: left; }
+.credit__phrase { font-weight: 800; font-size: .98rem; padding-top: .08em; white-space: nowrap; }
+.credit__by { margin-top: .28rem; font-weight: 700; font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; opacity: .85; white-space: nowrap; }
 .credit__by b { color: #c5f711; }
 .credit__arrow { display: inline-block; transition: transform .3s ease; }
-.credit__link:hover .credit__arrow, .credit__link:focus-visible .credit__arrow { transform: translate(1.5px, -1.5px); }
+.credit__link:hover .credit__arrow, .credit__link:focus-visible .credit__arrow { transform: translate(2px, -2px); }
+@media (max-width: 640px) {
+  .credit__link { gap: .55rem; padding: .32rem .95rem .32rem .35rem; }
+  .credit__mark { height: 36px; }
+  .credit__phrase { font-size: .88rem; }
+  .credit__by { font-size: .52rem; letter-spacing: .16em; }
+}

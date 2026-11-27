@@ -219,6 +219,96 @@ tbody tr:hover{background:var(--nude)}
 .tarj-actions{display:flex;gap:.3rem;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .sql-block{user-select:all;white-space:pre-wrap;font-size:.72rem;background:#2a0611;color:#fdf3ec;border-radius:12px;padding:.8rem 1rem;max-height:250px;overflow:auto;margin:.6rem 0;line-height:1.45}
 .setup-missing{border:1px dashed var(--dorado);margin-bottom:1rem}
+
+/* ============ HISTORIA CLÍNICA (ficha oficial re-tipo seteada) ============ */
+.hc-sheet{background:#fffdf9;border:1.5px solid #e4d6c8;border-radius:16px;box-shadow:0 18px 44px rgba(60,10,25,.14);max-width:1060px;margin:0 auto;color:#241c1a;font-family:Georgia,'Times New Roman',serif}
+.hc-page{padding:18px 22px 14px;position:relative}
+.hc-page + .hc-page{border-top:1px dashed #cdbfae}
+.hc-pgnum{width:32px;height:32px;margin:0 auto .15rem;border:2px solid #2b211f;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.8rem;background:#fffdf9}
+.hc-doc-title{text-align:center;font-family:var(--font-display,Georgia,serif);font-weight:800;letter-spacing:.06em;font-size:1.35rem;color:#2b211f;border-bottom:3px solid #2b211f;display:table;margin:6px auto 10px;padding:0 1.2rem .2rem}
+.hc-meta-row{display:flex;gap:1.2rem;align-items:flex-end;font-size:.72rem;margin:.5rem .2rem .6rem}
+.hc-meta-row .grow{flex:1}
+.hc-field{display:flex;align-items:baseline;gap:.35rem;font-size:.72rem}
+.hc-input{border:none;border-bottom:1.5px dotted #6f5f57;background:transparent;font:inherit;font-size:.78rem;color:#1d1614;padding:0 .15rem 1px;min-width:1.6rem;outline:none;flex:1}
+.hc-input:focus{border-bottom-color:#6b1230;background:#fdf3ec}
+.hc-input.date{min-width:6.5rem}
+.hc-digitbox{display:flex;gap:3px}
+.hc-digit{width:17px;height:22px;border:1.5px solid #2b211f;border-radius:2px;text-align:center;font:700 .78rem/1 Georgia,serif;padding:0;background:#fff;outline:none}
+.hc-digit:focus{border-color:#6b1230;background:#fdf3ec}
+.hc-idbar{display:grid;grid-template-columns:1fr auto auto;border:2px solid #2b211f;margin:.4rem 0;font-size:.78rem}
+.hc-idbar > div{padding:.4rem .55rem}
+.hc-idbar > div:first-child{border-right:2px solid #2b211f}
+.hc-idbar .lbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.06em;color:#4c3f39}
+.hc-idbar .sub{border-left:2px solid #2b211f;display:flex;flex-direction:column;justify-content:center}
+.hc-two-col{columns:2;column-gap:1.4rem}
+@media (max-width:860px){.hc-two-col{columns:1}}
+.hc-col-block{break-inside:avoid;display:flex;flex-direction:column;gap:.28rem}
+.hc-item{display:flex;align-items:baseline;gap:.4rem;font-size:.72rem;line-height:1.32;min-height:1.05rem}
+.hc-item .qlbl{flex:0 1 auto}
+.hc-sub{font-size:.6rem;text-transform:uppercase;letter-spacing:.055em;color:#5a4c45;margin:.15rem 0 0;border-bottom:1px dotted #b9a99d;padding-bottom:1px;font-weight:700}
+.hc-note{font-size:.7rem;font-style:italic;color:#33291f;padding:.15rem 0}
+.sino{display:inline-flex;gap:.32rem;align-items:center;white-space:nowrap;margin-left:auto}
+.sino-opt{display:inline-flex;align-items:center;gap:.18rem;cursor:pointer;user-select:none;font-size:.72rem}
+.sino-opt input{appearance:none;width:12px;height:12px;border:1.5px solid #2b211f;background:#fff;border-radius:2px;cursor:pointer;margin:0;position:relative}
+.sino-opt input:checked{background:#2b211f;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.2 6.4 4.8 9 9.8 3.2' fill='none' stroke='%23fffdf9' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-size:cover}
+.hc-checks{display:inline-flex;gap:.4rem;align-items:center}
+.hc-checks .sino-opt input{border-radius:50%}
+.hc-section-title{font-family:var(--font-display,Georgia,serif);font-weight:800;font-size:.95rem;color:#2b211f;border-bottom:2.5px solid #2b211f;padding-bottom:.15rem;margin:.7rem 0 .45rem}
+.hc-declaration{font-style:italic;font-size:.74rem;text-align:center;margin:.55rem auto;max-width:60ch;color:#26201d}
+.hc-odonto-wrap{display:flex;gap:.9rem;align-items:flex-start;margin-top:.35rem}
+@media (max-width:860px){.hc-odonto-wrap{flex-direction:column}}
+.hc-odonto{border:1.5px solid #2b211f;border-radius:10px;padding:.4rem .5rem .5rem;background:#fff}
+.hc-odonto svg{display:block}
+.hc-arch-label{font-style:italic;font-size:.75rem;display:flex;align-items:center}
+.hc-refs{border:2.5px solid #2b211f;padding:.4rem .55rem;min-width:230px;font-size:.68rem}
+.hc-refs h4{margin:0 0 .3rem;text-align:center;font-size:.78rem;letter-spacing:.08em;border-bottom:2px solid #2b211f;padding-bottom:.15rem}
+.hc-refs .ref-row{display:flex;gap:.45rem;align-items:center;margin:.18rem 0}
+.hc-ref-swatch{width:30px;height:19px;border:1.5px solid #2b211f;display:inline-block;border-radius:2px;flex:0 0 auto}
+.hc-ref-count{display:flex;align-items:center;gap:.4rem;margin-top:.35rem;border-top:1.5px solid #2b211f;padding-top:.3rem}
+.hc-toolbtn{display:inline-flex;align-items:center;gap:.35rem;padding:.34rem .6rem;border:1.5px solid #cbb9ab;border-radius:10px;background:#fffdf9;cursor:pointer;font-size:.74rem;font-family:var(--font-body)}
+.hc-toolbtn.active{border-color:#6b1230;background:#f7e8ea;box-shadow:inset 0 0 0 1px #6b1230}
+.hc-dotred{width:13px;height:13px;background:#c0392b;border-radius:3px;display:inline-block}
+.hc-dotblue{width:13px;height:13px;background:#1f5fbf;border-radius:3px;display:inline-block}
+.hc-estado-row{display:flex;gap:1.6rem;align-items:center;font-size:.76rem;margin:.5rem .2rem .1rem;flex-wrap:wrap}
+.hc-block-title{font-size:.8rem;font-weight:700;text-transform:none;margin:.7rem .2rem .15rem;text-decoration:underline}
+.hc-write-line{height:1.55rem;border-bottom:1.5px dotted #6f5f57}
+.hc-area{width:100%;border:none;resize:vertical;min-height:5.6rem;line-height:1.55rem;font-size:.78rem;background-image:repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.55rem - 1.5px), #6f5f57 calc(1.55rem - 1.5px), #6f5f57 1.55rem);background-position:0 1.5px;padding:0 .15rem}
+.hc-area:focus{background-color:#fdf3ec}
+.hc-annex-row{display:flex;justify-content:flex-end;font-size:.68rem;margin-top:.2rem}
+.hc-consent{font-size:.71rem;line-height:1.42;margin:.55rem .2rem .2rem;text-align:justify}
+.hc-sign-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2.4rem;margin-top:2.4rem}
+.hc-sign{border-top:1.5px solid #2b211f;text-align:center;font-size:.68rem;padding-top:.18rem;color:#33291f}
+.hc-footnote{font-size:.62rem;color:#7a6a62;margin-top:.6rem;text-align:center}
+.hc-empty{color:#8a7a72;font-size:.8rem}
+/* odontograma: caras interactivas */
+.hc-tooth-face{fill:#fffdf9;stroke:#2b211f;stroke-width:1.35;cursor:pointer;transition:fill .12s}
+.hc-tooth-face:hover{fill:#f5e9dc}
+.hc-tooth-face.red{fill:#d94f3d;stroke:#8c241a}
+.hc-tooth-face.blue{fill:#2f66c4;stroke:#173a6b}
+.hc-tooth-x{stroke:#8c241a;stroke-width:4;stroke-linecap:round}
+.hc-tooth-corona{fill:none;stroke:#2b211f;stroke-width:2.4}
+.hc-tooth-fixed{fill:none;stroke:#2b211f;stroke-width:3.4}
+.hc-tooth-removable{fill:none;stroke:#2b211f;stroke-width:2.2;stroke-dasharray:6 4}
+.hc-tooth-num{font:700 10.5px Georgia,serif;fill:#241c1a}
+@media print{
+  @page{size:A4;margin:8mm}
+  body.print-historia .side,body.print-historia .topbar,body.print-historia .page:not(#page-historia),body.print-historia #page-historia .page-head,body.print-historia #hcPatientBar,body.print-historia #hcSetupNotice,body.print-historia .toast{display:none !important}
+  body.print-historia,body.print-historia .main{display:block !important;padding:0 !important;background:#fff !important}
+  body.print-historia .page{display:block !important;padding:0 !important}
+  body.print-historia .content{padding:0 !important;max-width:none !important}
+  body.print-historia .hc-sheet{box-shadow:none;border:none;border-radius:0;max-width:none;width:100%;padding:0;background:#fff}
+  body.print-historia .hc-page{padding:1mm 0;page-break-after:always}
+  body.print-historia .hc-page:last-child{page-break-after:auto}
+  body.print-historia #hcToolBar{display:none !important}
+  body.print-historia .hc-input,body.print-historia .hc-digit,body.print-historia .hc-write-line{border-color:#000 !important;background:#fff !important}
+  body.print-historia .sino-opt input{border-color:#000 !important;background:#fff !important}
+  body.print-historia .sino-opt input:checked{background:#000 !important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.2 6.4 4.8 9 9.8 3.2' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important}
+  body.blank-print .hc-input,body.blank-print .hc-digit,body.blank-print textarea.hc-input{color:transparent !important}
+  body.blank-print .sino-opt input:checked{background:#fff !important;background-image:none !important}
+  body.blank-print .hc-tooth-face.red,body.blank-print .hc-tooth-face.blue{fill:#fff !important}
+  body.blank-print .hc-tooth-x,body.blank-print .hc-tooth-corona,body.blank-print .hc-tooth-fixed,body.blank-print .hc-tooth-removable{display:none !important}
+  body.blank-print #hcOdontogramMarks{opacity:0 !important}
+}
 .aranceles-meta{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
 .aranceles-map{display:flex;flex-direction:column;gap:.4rem;max-height:46vh;overflow:auto;margin:.4rem 0 .2rem}
 .aranceles-map-row{display:grid;grid-template-columns:auto 1fr auto;gap:.6rem;align-items:center;border:1px solid rgba(0,0,0,.14);border-radius:12px;padding:.5rem .6rem;cursor:pointer;background:#fff}
@@ -509,13 +599,130 @@ tbody tr:hover{background:var(--nude)}
 
     <!-- ════ HISTORIA CLÍNICA ════ -->
     <section class="page" id="page-historia">
-      <div class="page-head"><div><h1>Historia clínica</h1><p>Odontológica y de armonización facial.</p></div></div>
-      <div class="panel"><div class="panel-body" style="text-align:center;padding:3rem 1.5rem">
-        <span class="big" style="font-size:2.6rem;display:block;margin-bottom:.6rem">🗂️</span>
-        <h2 style="font-family:var(--font-display);color:var(--vino);margin-bottom:.5rem">Próximamente</h2>
-        <p class="muted" style="max-width:52ch;margin:0 auto 1rem;line-height:1.6">La <strong>historia clínica odontológica</strong> la sumamos cuando traigas del consultorio el modelo de ficha que querés usar — con odontograma, antecedentes y evolución. La <strong>de armonización</strong> va detrás, con su modelo.</p>
-        <p class="muted" style="max-width:52ch;margin:0 auto;line-height:1.6">Mientras tanto, todo lo importante de cada paciente ya queda guardado en <button class="linkish" data-goto="pacientes" type="button">Pacientes</button> (datos, tratamientos y turnos).</p>
-      </div></div>
+      <div class="page-head">
+        <div><h1>Historia clínica</h1><p>Ficha general del Colegio Odontológico de Córdoba, re-diseñada: se completa en pantalla, se guarda por paciente, se comparte y se imprime (llena o en blanco). Solo la ve tu cuenta.</p></div>
+      </div>
+
+      <div class="panel" id="hcPatientBar">
+        <div class="panel-body" style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+          <label class="f" for="hcPaciente" style="margin:0">Paciente</label>
+          <select class="input" id="hcPaciente" style="max-width:320px"></select>
+          <button class="btn btn-line btn-sm" id="hcNewBtn" type="button">Nueva en blanco</button>
+          <span class="hint" id="hcEstado" style="margin:0">Elegí un paciente para cargar o guardar su ficha.</span>
+          <div style="flex:1"></div>
+          <button class="btn btn-line btn-sm" id="hcCompartirBtn" type="button">📤 Compartir</button>
+          <button class="btn btn-line btn-sm" id="hcPrintBtn" type="button">🖨 Imprimir</button>
+          <button class="btn btn-line btn-sm" id="hcPrintBlankBtn" type="button">🖨 Imprimir en blanco</button>
+          <button class="btn btn-bordo btn-sm" id="hcGuardarBtn" type="button">💾 Guardar ficha</button>
+        </div>
+      </div>
+
+      <div class="panel setup-missing" id="hcSetupNotice" hidden>
+        <div class="panel-body">
+          <h2 style="margin:0 0 .4rem">Falta un paso único: crear la tabla en la nube</h2>
+          <p class="hint" style="margin-top:0">Todavía no existe la tabla <code>clinical_records</code>. Copiá el SQL, pegalo en el editor SQL de Supabase y tocá RUN. Después recargá el panel.</p>
+          <pre id="hcSqlPre" class="sql-block"></pre>
+          <button class="btn btn-line btn-sm" id="copyHcSqlBtn" type="button">Copiar SQL</button>
+        </div>
+      </div>
+
+      <div class="hc-sheet" id="hcSheet">
+        <!-- ═══ PÁGINA 01 · Datos + anamnesis ═══ -->
+        <div class="hc-page" id="hcPage1">
+          <div class="hc-pgnum">01</div>
+          <h2 class="hc-doc-title">HISTORIA CLÍNICA GENERAL</h2>
+          <div class="hc-meta-row">
+            <div class="hc-field grow">Lugar: <input class="hc-input" data-hc="lugar" placeholder="Consultorio, ciudad" /></div>
+            <div class="hc-field">Fecha: <input class="hc-input date" data-hc="fecha" placeholder="dd / mm / aaaa" /></div>
+          </div>
+          <div class="hc-idbar">
+            <div><div class="lbl">Odontólogo</div><input class="hc-input" data-hc="odontologo" placeholder="Nombre y apellido" style="font-size:.85rem" /></div>
+            <div class="sub"><div class="lbl">Nº de Matrícula</div><div class="hc-digitbox" id="hcMatriculaBox" data-hcbox="matricula"></div></div>
+          </div>
+          <div class="hc-idbar">
+            <div><div class="lbl">Paciente</div><input class="hc-input" data-hc="paciente_nombre" placeholder="Apellido y nombre" style="font-size:.85rem" /></div>
+            <div class="sub"><div class="lbl">Nº Afil</div><div class="hc-digitbox" id="hcAfilBox" data-hcbox="afil"></div></div>
+          </div>
+          <div class="hc-meta-row" style="display:grid;grid-template-columns:1fr auto auto;gap:.8rem;margin-top:.55rem">
+            <div class="hc-field">Obra Social: <input class="hc-input" data-hc="obra_social" placeholder="…" /></div>
+            <div class="hc-field">F. Nac.: <input class="hc-input date" data-hc="fecha_nac" placeholder="dd/mm/aaaa" style="min-width:5.5rem" /></div>
+            <div class="hc-field">Tel.: <input class="hc-input" data-hc="telefono" placeholder="…" style="min-width:6.5rem" /></div>
+          </div>
+          <div class="hc-meta-row" style="display:grid;grid-template-columns:auto auto 1fr auto auto;gap:.8rem">
+            <div class="hc-field">Edad: <input class="hc-input" data-hc="edad" style="min-width:3rem;max-width:4rem" /></div>
+            <div class="hc-field">Estado Civil: <input class="hc-input" data-hc="estado_civil" style="min-width:6rem" /></div>
+            <div class="hc-field">Nacionalidad: <input class="hc-input" data-hc="nacionalidad" /></div>
+            <div class="hc-field">Nº de Doc: <input class="hc-input" data-hc="doc" placeholder="…" style="min-width:7.5rem" /></div>
+            <div class="hc-field">Cel: <input class="hc-input" data-hc="celular" placeholder="…" style="min-width:8rem" /></div>
+          </div>
+          <div class="hc-meta-row"><div class="hc-field grow">Domicilio (calle, núm., barrio, localidad): <input class="hc-input" data-hc="domicilio" /></div></div>
+          <div class="hc-meta-row" style="display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:.8rem">
+            <div class="hc-field">Profesión/Actividad: <input class="hc-input" data-hc="profesion" /></div>
+            <div class="hc-field">Titular: <input class="hc-input" data-hc="titular" /></div>
+            <div class="hc-field">Lugar de trabajo: <input class="hc-input" data-hc="trabajo" /></div>
+            <div class="hc-field">Jerarquía: <input class="hc-input" data-hc="jerarquia" style="min-width:5rem" /></div>
+          </div>
+
+          <div class="hc-cols" style="display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;margin-top:.4rem">
+            <div class="hc-col-block" id="hcColLeft"></div>
+            <div class="hc-col-block" id="hcColRight"></div>
+          </div>
+        </div>
+
+        <!-- ═══ PÁGINA 02 · Lesiones, odontograma, plan y consentimiento ═══ -->
+        <div class="hc-page" id="hcPage2">
+          <div class="hc-pgnum">02</div>
+          <div class="hc-cols" style="display:grid;grid-template-columns:1fr 1fr;gap:1.3rem">
+            <div class="hc-col-block" id="hcColLesLeft"></div>
+            <div class="hc-col-block" id="hcColLesRight"></div>
+          </div>
+
+          <p class="hc-declaration">Declaro que he contestado todas las preguntas con honestidad y según mi conocimiento. Asimismo, he sido informado que los datos suministrados quedan reservados en la presente Historia Clínica y amparados en secreto profesional.</p>
+
+          <div class="hc-odonto-wrap">
+            <div class="hc-odonto">
+              <div id="hcOdontoAdult"></div>
+              <div id="hcOdontoChild" style="margin-top:.35rem"></div>
+            </div>
+            <div class="hc-refs">
+              <h4>REFERENCIAS</h4>
+              <div class="ref-row"><span class="hc-ref-swatch" style="background:#d94f3d;border-color:#8c241a"></span> Color rojo: prestaciones existentes</div>
+              <div class="ref-row"><span class="hc-ref-swatch" style="background:#2f66c4;border-color:#173a6b"></span> Color azul: prestaciones requeridas</div>
+              <div class="ref-row"><span class="hc-ref-swatch" style="display:grid;place-items:center;font-weight:800;color:#8c241a">X</span> Diente ausente o a extraer</div>
+              <div class="ref-row"><span class="hc-ref-swatch" style="border-width:3px"></span> Prótesis fija</div>
+              <div class="ref-row"><span class="hc-ref-swatch" style="border-style:dashed"></span> Prótesis removible</div>
+              <div class="ref-row"><span class="hc-ref-swatch" style="border-radius:50%"></span> Coronas</div>
+              <div class="hc-ref-count"><span style="font-size:.66rem;font-weight:700;line-height:1.15">CANTIDAD DE DIENTES<br>EXISTENTES</span><input class="hc-input" data-hc="cant_dientes" style="max-width:3.4rem;text-align:center;font-weight:700" inputmode="numeric" /></div>
+            </div>
+          </div>
+          <div class="hc-estado-row"><strong>Estado bucal general:</strong>
+            <span class="sino-opt" style="gap:.3rem">Presencia de sarro <label class="sino-opt"><input type="radio" name="hc_sarro" value="si" data-hc="sarro" />SI</label><label class="sino-opt"><input type="radio" name="hc_sarro" value="no" data-hc="sarro" />NO</label></span>
+            <span class="sino-opt" style="gap:.3rem">Enfermedad Periodontal <label class="sino-opt"><input type="radio" name="hc_periodontal" value="si" data-hc="periodontal" />SI</label><label class="sino-opt"><input type="radio" name="hc_periodontal" value="no" data-hc="periodontal" />NO</label></span>
+          </div>
+
+          <div class="hc-block-title">Diagnóstico presuntivo</div>
+          <textarea class="hc-input hc-area" data-hc="diagnostico" rows="4" placeholder="…"></textarea>
+          <div class="hc-annex-row">Continúa en Anexo Nº <input class="hc-input" data-hc="anexo_diag" style="min-width:2.2rem;max-width:3rem" /></div>
+
+          <div class="hc-block-title">Plan de tratamiento &nbsp;<span style="font-weight:400;font-size:.68rem">fecha: <input class="hc-input date" data-hc="plan_fecha" placeholder="dd/mm/aaaa" style="max-width:6.5rem" /></span></div>
+          <textarea class="hc-input hc-area" data-hc="plan" rows="4" placeholder="…"></textarea>
+          <div class="hc-annex-row">Continúa en Anexo Nº <input class="hc-input" data-hc="anexo_plan" style="min-width:2.2rem;max-width:3rem" /></div>
+
+          <div class="hc-block-title">Observaciones:</div>
+          <textarea class="hc-input hc-area" data-hc="observaciones" rows="4" placeholder="…"></textarea>
+          <div class="hc-annex-row">Continúa en Anexo Nº <input class="hc-input" data-hc="anexo_obs" style="min-width:2.2rem;max-width:3rem" /></div>
+
+          <p class="hc-consent">He comprendido todas las explicaciones que se me han facilitado en el lenguaje claro y sencillo, he podido realizar todas las observaciones y se me han aclarado todas las dudas; por lo que estoy completamente de acuerdo con el tratamiento que se me va a realizar.<br><br>
+          El/la que suscribe <input class="hc-input" data-hc="consent_suscribe" style="min-width:9rem" /> DNI Nº <input class="hc-input" data-hc="consent_dni" style="min-width:7rem" /> con domicilio en calle <input class="hc-input" data-hc="consent_domicilio" style="min-width:12rem" /><br>
+          otorgo mi consentimiento para realizar el tratamiento necesario para rehabilitar mi salud bucodental propuesta por el/la Dr/a MP <input class="hc-input" data-hc="consent_mp" style="min-width:6rem" /></p>
+          <div class="hc-sign-row">
+            <div class="hc-sign">Firma del paciente o tutor</div>
+            <div class="hc-sign">aclaración</div>
+            <div class="hc-sign">DNI Nº</div>
+          </div>
+          <p class="hc-footnote">Datos sensibles protegidos por secreto profesional y Ley 25.326. Documento de uso interno del consultorio.</p>
+        </div>
+      </div>
     </section>
 
     <!-- ════ ACCESOS ════ -->
@@ -1883,6 +2090,463 @@ $('#confirmarAplicarArancelesBtn').addEventListener('click', async () => {
 });
 
 /* ============================================================
+   Historia clínica odontológica (ficha oficial, interactiva)
+   ============================================================ */
+const HC_SQL = `create table if not exists public.clinical_records (
+  patient_id  uuid not null references public.patients (id) on delete cascade,
+  area        text not null default 'odontologia',
+  data        jsonb not null default '{}'::jsonb,
+  odontogram  jsonb not null default '{}'::jsonb,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now(),
+  primary key (patient_id, area)
+);
+alter table public.clinical_records enable row level security;
+drop policy if exists "hc auth lee" on public.clinical_records;
+create policy "hc auth lee" on public.clinical_records for select to authenticated using (true);
+drop policy if exists "hc auth escribe" on public.clinical_records;
+create policy "hc auth escribe" on public.clinical_records for all to authenticated using (true) with check (true);`;
+const HC_AREA = 'odontologia';
+let hcCurrentPatientId = '';
+let hcDirty = false;
+const hcOdonto = {};
+
+/* ---------- 1) render declarativo del cuestionario ---------- */
+const hcKey = (k) => `hc_${k}`;
+const sinoHTML = (key) => `<span class="sino-opt"><input type="radio" name="${hcKey(key)}" value="si" data-hc="${key}" />SI</span><span class="sino-opt"><input type="radio" name="${hcKey(key)}" value="no" data-hc="${key}" />NO</span>`;
+const sinoRow = (key, label) => `<div class="hc-item"><span class="qlbl">${label}</span><span class="sino">${sinoHTML(key)}</span></div>`;
+const lineRow = (key, label, ph, maxW) => `<div class="hc-item"><span class="qlbl">${label}</span><input class="hc-input" data-hc="${key}" placeholder="${ph || '…'}" ${maxW ? `style="max-width:${maxW}"` : ''} /></div>`;
+const textAreaRow = (key, label, rows) => `<div class="hc-item" style="align-items:flex-start;flex-direction:column;gap:.1rem"><span class="qlbl">${label}</span><textarea class="hc-input hc-area" data-hc="${key}" rows="${rows || 1}" style="min-height:1.55rem" placeholder="…"></textarea></div>`;
+const sinoTextRow = (key, label, textKey, textPh) => `<div class="hc-item"><span class="qlbl">${label}</span><span class="sino">${sinoHTML(key)}</span></div><div class="hc-item"><input class="hc-input" data-hc="${textKey}" placeholder="${textPh || '…'}" style="margin-left:.4rem" /></div>`;
+const subHTML = (t) => `<div class="hc-sub">${t}</div>`;
+const noteHTML = (t) => `<div class="hc-note">${t}</div>`;
+const checksRow = (key, label, options) => `<div class="hc-item" style="flex-wrap:wrap;row-gap:.25rem">${label ? `<span class="qlbl">${label}</span>` : ''}<span class="hc-checks">${options.map(([v, l]) => `<label class="sino-opt"><input type="checkbox" value="${v}" data-hc="${key}" data-hcgroup="${key}" />${l}</label>`).join('')}</span></div>`;
+const sectionHTML = (t) => `<div class="hc-section-title">${t}</div>`;
+
+const HC_LEFT = [
+  noteHTML('Este cuestionario tiene el tenor de una <strong>“Declaración Jurada”</strong>'),
+  sinoTextRow('padre_vida', 'Padre con vida?', 'padre_enf', 'enfermedad que padece o padeció…'),
+  sinoTextRow('madre_vida', 'Madre con vida?', 'madre_enf', 'enfermedad que padece o padeció…'),
+  sinoTextRow('hermanos', 'Hermanos?', 'hermanos_sanos', 'sanos? …'),
+  sinoTextRow('enf_sufridas', 'Sufre de alguna enfermedad?', 'enf_sufridas_det', 'de que? …'),
+  sinoTextRow('tto_medico', 'Hace algún tratamiento médico?', 'tto_medico_det', 'cuál? …'),
+  textAreaRow('med_habit', 'Qué medicamento/s consume habitualmente?', 2),
+  textAreaRow('med_ult5', 'Que medicamentos ha consumido en los últimos 5 años', 2),
+  sinoRow('deporte', 'Realiza algún deporte?'),
+  sinoRow('deporte_malestar', 'Nota algún malestar al realizarlo'),
+  sinoRow('alergia_droga', '<strong>Es alérgico a alguna droga?</strong>'),
+  `<div class="hc-item" style="flex-wrap:wrap;row-gap:.25rem"><span class="qlbl">a la anestesia</span><input class="hc-input" data-hc="alergia_anestesia" style="max-width:6.5rem" /><span class="qlbl">a la penicilina</span><input class="hc-input" data-hc="alergia_penicilina" style="max-width:6.5rem" /><span class="qlbl">otros</span><input class="hc-input" data-hc="alergia_otros" style="max-width:8rem" /></div>`,
+  lineRow('cicatriza', 'Cuando le sacan una muela o se lastima, cicatriza bien?'),
+  lineRow('sangra_mucho', 'sangra mucho?'),
+  sinoRow('colageno', 'Tiene problema de colágeno (hiperlaxitud)?'),
+  sinoRow('fiebre_reumatica', 'Antecedentes de fiebre reumática?'),
+  lineRow('fiebre_proteccion', 'Se protege con alguna medicación?'),
+  sinoTextRow('diabetico', 'Es diabético?', 'diabetico_det', 'Desde cuando? … está controlado? con qué? …'),
+  sinoTextRow('cardiaco', 'Tiene algún problema cardíaco?', 'cardiaco_cual', 'cuál? …'),
+  sinoTextRow('aspirina', 'Toma seguido aspirina y/o anticoagulante?', 'aspirina_freq', 'con qué frecuencia? …'),
+  sinoRow('presion_alta', 'Tiene presión alta?'),
+  sinoRow('chagas', 'Chagas?'),
+  lineRow('chagas_tto', 'está en tratamiento?'),
+  sinoRow('renal', 'Tiene problemas renales?'),
+  sinoRow('ulcera', 'Ulcera Gástrica?'),
+  sinoRow('hepatitis', 'Tuvo hepatitis?'),
+  checksRow('hepatitis_tipo', 'de qué tipo?', [['A', 'A'], ['B', 'B'], ['C', 'C']]),
+  lineRow('hepatitis_cual', 'cuál? recibió algún tratamiento?'),
+  sinoTextRow('hepatico', 'Tiene algún problema hepático?', 'hepatico_cual', 'cuál? …'),
+  sinoRow('convulsiones', 'Tuvo convulsiones?'),
+  sinoTextRow('epileptico', 'Es epiléptico?', 'epilepsia_med', 'medicación que toma…'),
+  sinoRow('sifilis', 'Ha tenido Sífilis o Gonorrea?'),
+].join('');
+
+const HC_RIGHT = [
+  sinoRow('infecto', 'Otra enfermedad infecto-contagiosa?'),
+  sinoRow('transfusiones', 'Tuvo transfusiones?'),
+  sinoTextRow('operado', 'Fue operado alguna vez?', 'operado_que', 'de qué? …'),
+  lineRow('operado_cuando', 'Cuando?'),
+  sinoTextRow('respiratorio', 'Tiene algún problema respiratorio?', 'respiratorio_cual', 'cuál? …'),
+  sinoRow('fuma', 'Fuma?'),
+  sinoRow('embarazada', 'Está embarazada?'),
+  lineRow('embarazada_meses', 'de cuántos meses?'),
+  sinoTextRow('otra_enf', 'Hay alguna otra enfermedad o recomendación de su médico que quiera dejar constancia?', 'otra_enf_cual', 'cuál? …'),
+  textAreaRow('homeopatia', 'Realiza algún tipo de tratamiento homeopático, Acupuntura, otros?', 2),
+  lineRow('medico_clinico', 'Médico clínico:'),
+  textAreaRow('derivacion', 'Clínica/Hospital en caso de hacer falta derivación:', 2),
+  sectionHTML('Historia Clínica Odontológica'),
+  textAreaRow('motivo', 'Por qué asistió a la consulta?', 2),
+  sinoRow('otro_prof', 'Consultó antes con algún otro profesional?'),
+  sinoRow('otro_med', 'Tomó algún medicamento?'),
+  textAreaRow('otro_med_nombre', 'Nombre de los medicamentos', 2),
+  sinoRow('resultados', 'Obtuvo resultados'),
+  `<div class="hc-item"><span class="qlbl"><strong>Ha tenido dolor?</strong></span><span class="qlbl" style="color:#5a4c45">de qué tipo?</span></div>`,
+  checksRow('dolor_intensidad', '', [['suave', 'Suave'], ['moderado', 'Moderado'], ['intenso', 'Intenso']]),
+  checksRow('dolor_tipo', '', [['temporario', 'Temporario'], ['intermitente', 'Intermitente'], ['continuo', 'Continuo'], ['espontaneo', 'Espontáneo'], ['provocado', 'Provocado']]),
+  checksRow('dolor_estimulo', '', [['frio', 'Al frío'], ['calor', 'Al calor']]),
+  lineRow('dolor_localizado', 'Localizado — dónde?'),
+  lineRow('dolor_irradiado', 'Irradiado — hacia dónde?'),
+  textAreaRow('dolor_calmar', 'Puede calmarlo con algo?', 2),
+  sinoTextRow('golpe', 'Sufrió algún golpe en los dientes?', 'golpe_det', 'cuándo? ¿cómo se produjo? …'),
+  sinoTextRow('fractura', 'Se le fracturó algún diente?', 'fractura_det', 'cuál? recibió algún tratamiento? …'),
+  lineRow('dificultad_hablar', 'Tiene dificultad para hablar?'),
+  lineRow('dificultad_masticar', 'para masticar?'),
+  lineRow('dificultad_abrir', 'para abrir la boca?'),
+  lineRow('dificultad_tragar', 'para tragar los alimentos?'),
+].join('');
+
+const HC_LES_LEFT = [
+  lineRow('abn_labios', 'Ha observado algo anormal en los labios?'),
+  `<div class="hc-item" style="flex-wrap:wrap;row-gap:.25rem"><span class="qlbl">lengua?</span><input class="hc-input" data-hc="abn_lengua" style="max-width:5rem" /><span class="qlbl">paladar?</span><input class="hc-input" data-hc="abn_paladar" style="max-width:5rem" /><span class="qlbl">piso de boca?</span><input class="hc-input" data-hc="abn_piso" style="max-width:5rem" /></div>`,
+  `<div class="hc-item" style="flex-wrap:wrap;row-gap:.25rem"><span class="qlbl">carrillos?</span><input class="hc-input" data-hc="abn_carrillos" style="max-width:5rem" /><span class="qlbl">rebordes?</span><input class="hc-input" data-hc="abn_rebordes" style="max-width:5rem" /><span class="qlbl">trígono retromolar?</span><input class="hc-input" data-hc="abn_trigono" style="max-width:5rem" /></div>`,
+  subHTML('Qué tipo de lesiones presenta:'),
+  sinoRow('manchas', 'Manchas?'),
+  sinoRow('abultamiento', 'Abultamiento de los tejidos?'),
+  sinoRow('ulceraciones', 'Ulceraciones?'),
+  sinoRow('ampollas', 'Ampollas?'),
+  textAreaRow('lesiones_otros', 'Otros:', 2),
+  sinoTextRow('enciasysangran', 'Le sangran las encías?', 'encias_cuando', 'cuándo? …'),
+].join('');
+
+const HC_LES_RIGHT = [
+  sinoTextRow('pus', 'Sale pus de algún lugar de su boca?', 'pus_donde', 'de dónde? …'),
+  sinoTextRow('movilidad', 'Tiene movilidad en sus dientes?', 'movilidad_altos', 'al morder siente altos los dientes? …'),
+  sinoTextRow('cara_hinchada', 'Ha tenido la cara hinchada?', 'cara_hinchada_det', 'Se puso hielo? … calor? … otros? …'),
+  lineRow('azucar', 'Momentos de azúcar diario'),
+  lineRow('indice_placa', 'Índice de placa'),
+  checksRow('higiene', 'Estado de la higiene bucal:', [['muy_bueno', 'Muy bueno'], ['bueno', 'Bueno'], ['deficiente', 'Deficiente'], ['malo', 'Malo']]),
+].join('');
+
+$('#hcColLeft').innerHTML = HC_LEFT;
+$('#hcColRight').innerHTML = HC_RIGHT;
+$('#hcColLesLeft').innerHTML = HC_LES_LEFT;
+$('#hcColLesRight').innerHTML = HC_LES_RIGHT;
+
+/* ---------- 2) odontograma interactivo (FDI) ---------- */
+const HC_ADULT_UPPER = [18, 17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27, 28];
+const HC_ADULT_LOWER = [48, 47, 46, 45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36, 37, 38];
+const HC_CHILD_UPPER = [55, 54, 53, 52, 51, 61, 62, 63, 64, 65];
+const HC_CHILD_LOWER = [85, 84, 83, 82, 81, 71, 72, 73, 74, 75];
+
+function hcToothSVG(n) {
+  return `<svg class="hc-tooth" viewBox="0 0 46 60" width="46" height="60" data-tooth="${n}" role="button" aria-label="Pieza ${n}">
+    <text class="hc-tooth-num" x="23" y="10" text-anchor="middle">${n}</text>
+    <path class="hc-tooth-face" data-face="vestibular" d="M5 15 H41 L31 26 H15 Z"></path>
+    <path class="hc-tooth-face" data-face="lingual" d="M15 44 H31 L41 55 H5 Z"></path>
+    <path class="hc-tooth-face" data-face="distal" d="M5 15 L15 26 V44 L5 55 Z"></path>
+    <path class="hc-tooth-face" data-face="mesial" d="M41 15 L31 26 V44 L41 55 Z"></path>
+    <rect class="hc-tooth-face hc-tooth-center" data-face="oclusal" x="15" y="26" width="16" height="18" rx="1.5"></rect>
+    <g class="hc-marks" data-marks="${n}"></g>
+  </svg>`;
+}
+function hcArchHTML(teeth) {
+  const mid = Math.ceil(teeth.length / 2);
+  const left = teeth.slice(0, mid).map(hcToothSVG).join('');
+  const right = teeth.slice(mid).map(hcToothSVG).join('');
+  return `<div class="hc-arch" style="display:flex;align-items:flex-start;gap:.15rem;justify-content:center">${left}<div style="width:2.5px;align-self:stretch;background:#2b211f;margin:12px .1rem 0"></div>${right}</div>`;
+}
+$('#hcOdontoAdult').innerHTML =
+  `<div style="display:flex;align-items:center;gap:.3rem;justify-content:space-between"><span class="hc-arch-label">Derecha</span><span class="hc-arch-label" style="font-weight:700;letter-spacing:.05em">ADULTO</span><span class="hc-arch-label">Izquierda</span></div>` +
+  hcArchHTML(HC_ADULT_UPPER) + hcArchHTML(HC_ADULT_LOWER);
+$('#hcOdontoChild').innerHTML =
+  `<div style="display:flex;align-items:center;gap:.3rem;justify-content:space-between;margin-top:.25rem"><span class="hc-arch-label"></span><span class="hc-arch-label" style="font-weight:700;font-size:.66rem;letter-spacing:.05em">NIÑO · DECIDUOS</span><span class="hc-arch-label"></span></div>` +
+  hcArchHTML(HC_CHILD_UPPER) + hcArchHTML(HC_CHILD_LOWER);
+
+/* barra de herramientas del odontograma */
+const HC_TOOLS = [
+  ['red', '<span class="hc-dotred"></span> Existente'],
+  ['blue', '<span class="hc-dotblue"></span> Requerida'],
+  ['absent', '✕ Ausente / a extraer'],
+  ['corona', '⊙ Corona'],
+  ['fixed', '▭ Prótesis fija'],
+  ['removable', '╌ Prótesis removible'],
+  ['erase', '⌫ Borrador'],
+];
+document.querySelector('#hcSheet .hc-odonto').insertAdjacentHTML('afterbegin', `<div id="hcToolBar" style="display:flex;gap:.3rem;flex-wrap:wrap;margin:.1rem 0 .3rem">${HC_TOOLS.map(([k, l]) => `<button class="hc-toolbtn" data-tool="${k}" type="button">${l}</button>`).join('')}</div>`);
+let hcTool = 'red';
+$('#hcToolBar').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-tool]'); if (!btn) return;
+  hcTool = btn.dataset.tool;
+  $$('#hcToolBar .hc-toolbtn').forEach((b) => b.classList.toggle('active', b === btn));
+});
+$('#hcToolBar [data-tool="red"]').classList.add('active');
+
+function hcEnsureTooth(n) { return (hcOdonto[n] = hcOdonto[n] || { faces: {}, ausente: false, corona: false, fija: false, removible: false }); }
+function hcToothEmpty(t) { return !Object.values(t.faces).some(Boolean) && !t.ausente && !t.corona && !t.fija && !t.removible; }
+function hcRenderMarks(n) {
+  const g = document.querySelector(`[data-marks="${n}"]`);
+  if (!g) return;
+  const st = hcOdonto[n];
+  document.querySelectorAll(`.hc-tooth[data-tooth="${n}"] .hc-tooth-face`).forEach((f) => {
+    f.classList.remove('red', 'blue');
+    const v = st && st.faces ? st.faces[f.dataset.face] : null;
+    if (v) f.classList.add(v);
+  });
+  let inner = '';
+  if (st && st.ausente) inner += '<line class="hc-tooth-x" x1="9" y1="19" x2="37" y2="51"/><line class="hc-tooth-x" x1="37" y1="19" x2="9" y2="51"/>';
+  if (st && st.corona) inner += '<circle class="hc-tooth-corona" cx="23" cy="35" r="13"/>';
+  if (st && st.fija) inner += '<rect class="hc-tooth-fixed" x="3" y="13" width="40" height="44" rx="3"/>';
+  if (st && st.removible) inner += '<rect class="hc-tooth-removable" x="3" y="13" width="40" height="44" rx="3"/>';
+  g.innerHTML = inner;
+}
+function hcRenderAllMarks() { Object.keys(hcOdonto).forEach(hcRenderMarks); }
+$('#hcPage2').addEventListener('click', (e) => {
+  const toothEl = e.target.closest('.hc-tooth'); if (!toothEl) return;
+  const n = toothEl.dataset.tooth;
+  const face = e.target.closest('.hc-tooth-face');
+  if (hcTool === 'red' || hcTool === 'blue') {
+    if (!face) return;
+    const t = hcEnsureTooth(n);
+    const cur = t.faces[face.dataset.face];
+    t.faces[face.dataset.face] = cur === hcTool ? null : hcTool;
+    if (hcToothEmpty(t)) delete hcOdonto[n];
+    hcDirty = true; hcRenderMarks(n); return;
+  }
+  if (hcTool === 'erase') { delete hcOdonto[n]; hcDirty = true; hcRenderMarks(n); return; }
+  const keyMap = { absent: 'ausente', corona: 'corona', fixed: 'fija', removable: 'removible' };
+  const k = keyMap[hcTool]; if (!k) return;
+  const t = hcEnsureTooth(n);
+  t[k] = !t[k];
+  if (hcToothEmpty(t)) delete hcOdonto[n];
+  hcDirty = true; hcRenderMarks(n);
+});
+
+/* ---------- 3) recolección / carga / guardado ---------- */
+function hcCollect() {
+  const d = {};
+  $$('#hcSheet [data-hc]').forEach((el) => {
+    const k = el.dataset.hc;
+    if (el.type === 'radio') { if (el.checked) d[k] = el.value; return; }
+    if (el.type === 'checkbox') { (d[k] = d[k] || []).push(el.value); return; }
+    d[k] = el.value;
+  });
+  $$('#hcSheet [data-hcbox]').forEach((box) => {
+    d[box.dataset.hcbox] = [...box.querySelectorAll('.hc-digit')].map((i) => i.value || ' ').join('').trim();
+  });
+  d.__marcas = JSON.parse(JSON.stringify(hcOdonto));
+  return d;
+}
+function hcSetDigits(boxKey, value) {
+  const box = document.querySelector(`[data-hcbox="${boxKey}"]`); if (!box) return;
+  const digits = String(value || '').replace(/\D/g, '').split('');
+  [...box.querySelectorAll('.hc-digit')].forEach((input, i) => { input.value = digits[i] || ''; });
+}
+function hcClearOdonto() {
+  Object.keys(hcOdonto).forEach((n) => delete hcOdonto[n]);
+  document.querySelectorAll('.hc-tooth-face').forEach((f) => f.classList.remove('red', 'blue'));
+  document.querySelectorAll('.hc-marks').forEach((g) => { g.innerHTML = ''; });
+}
+function hcFill(d) {
+  d = d || {};
+  $$('#hcSheet [data-hc]').forEach((el) => {
+    const k = el.dataset.hc;
+    if (el.type === 'radio') { el.checked = d[k] === el.value; return; }
+    if (el.type === 'checkbox') {
+      const arr = Array.isArray(d[k]) ? d[k] : String(d[k] || '').split(',');
+      el.checked = arr.includes(el.value);
+      return;
+    }
+    el.value = d[k] ?? '';
+  });
+  hcSetDigits('matricula', d.matricula);
+  hcSetDigits('afil', d.afil);
+  hcClearOdonto();
+  const marcas = d.__marcas || {};
+  Object.keys(marcas).forEach((n) => { hcOdonto[n] = marcas[n]; });
+  hcRenderAllMarks();
+  hcDirty = false;
+}
+function hcReset() { hcFill({}); hcDirty = false; }
+function hcShowSetup(show) {
+  const n = $('#hcSetupNotice'); if (n) n.hidden = !show;
+  if (show) { const p = $('#hcSqlPre'); if (p && !p.textContent) p.textContent = HC_SQL; }
+}
+$('#copyHcSqlBtn').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(HC_SQL); toast('SQL copiado ✓'); }
+  catch { toast('No pude copiar. Seleccioná el texto del recuadro y copialo a mano.'); }
+});
+
+function hcPopulatePatients() {
+  const sel = $('#hcPaciente');
+  const patients = [...((store && store.patients) || [])].sort((a, b) => String(a.nombre).localeCompare(String(b.nombre), 'es'));
+  const prev = sel.value || hcCurrentPatientId;
+  sel.innerHTML = '<option value="">— Elegí un paciente —</option>' + patients.map((p) => `<option value="${esc(p.id)}">${esc(p.nombre)}</option>`).join('');
+  if (prev && patients.some((p) => p.id === prev)) sel.value = prev;
+}
+function hcSetEstado(msg) { $('#hcEstado').textContent = msg; }
+
+async function hcLoad(patientId) {
+  hcCurrentPatientId = patientId;
+  if (!patientId) { hcReset(); hcSetEstado('Elegí un paciente para cargar o guardar su ficha.'); return; }
+  hcSetEstado('Cargando…');
+  try {
+    const res = await sbFetch(`/rest/v1/clinical_records?select=*&patient_id=eq.${encodeURIComponent(patientId)}&area=eq.${HC_AREA}`);
+    if (res.status === 404 || res.status === 400) { hcShowSetup(true); hcSetEstado('Falta crear la tabla (ver aviso).'); return; }
+    hcShowSetup(false);
+    const rows = await res.json();
+    const rec = Array.isArray(rows) ? rows[0] : null;
+    if (rec) {
+      hcFill(rec.data || {});
+      hcSetEstado(`Guardada · última actualización: ${fmtFechaISO(rec.updated_at)}`);
+    } else {
+      hcReset();
+      const p = ((store && store.patients) || []).find((x) => x.id === patientId);
+      if (p) { const el = document.querySelector('[data-hc="paciente_nombre"]'); if (el && !el.value) el.value = p.nombre; }
+      hcSetEstado('Sin ficha todavía — completá y guardá.');
+    }
+  } catch (e) {
+    console.error(e);
+    hcSetEstado('Error al cargar. Revisá tu conexión.');
+  }
+}
+$('#hcPaciente').addEventListener('change', async (e) => {
+  const next = e.target.value;
+  if (hcDirty && !(await showConfirm('Descartar cambios', 'Tenés cambios sin guardar. ¿Descartarlos y cambiar de paciente?'))) {
+    e.target.value = hcCurrentPatientId; return;
+  }
+  hcLoad(next);
+});
+$('#hcNewBtn').addEventListener('click', async () => {
+  if (hcDirty && !(await showConfirm('Nueva ficha', 'Tenés cambios sin guardar. ¿Borrarlos y empezar una ficha en blanco?'))) return;
+  hcReset();
+  const p = ((store && store.patients) || []).find((x) => x.id === hcCurrentPatientId);
+  if (p) { const el = document.querySelector('[data-hc="paciente_nombre"]'); if (el) el.value = p.nombre; }
+  hcSetEstado('Ficha en blanco (sin guardar).');
+});
+$('#hcGuardarBtn').addEventListener('click', async () => {
+  if (!hcCurrentPatientId) { toast('Elegí un paciente primero.'); return; }
+  const btn = $('#hcGuardarBtn'); const label = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Guardando…';
+  const data = hcCollect();
+  try {
+    const res = await sbFetch('/rest/v1/clinical_records?on_conflict=patient_id,area', {
+      method: 'POST',
+      headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({ patient_id: hcCurrentPatientId, area: HC_AREA, data, odontogram: hcOdonto, updated_at: new Date().toISOString() }),
+    });
+    if (!res.ok) {
+      const txt = await res.text().catch(() => '');
+      if (/clinical_records/i.test(txt) || res.status === 404) { hcShowSetup(true); toast('Falta crear la tabla. Mirá el aviso de arriba.'); }
+      else toast('No se pudo guardar la ficha.');
+      return;
+    }
+    hcShowSetup(false);
+    hcDirty = false;
+    hcSetEstado('Guardada · justo ahora');
+    toast('Ficha guardada ✓');
+  } catch (e) {
+    console.error(e);
+    toast('No se pudo guardar. Revisá tu conexión.');
+  } finally {
+    btn.disabled = false; btn.textContent = label;
+  }
+});
+$('#hcSheet').addEventListener('input', () => { hcDirty = true; });
+
+/* ---------- 4) compartir / imprimir ---------- */
+function hcBuildShareText() {
+  const d = hcCollect();
+  const L = [];
+  const val = (k, label) => { if (d[k] != null && String(d[k]).trim()) L.push(`${label}: ${d[k]}`); };
+  const yn = (k, label) => { if (d[k]) L.push(`${label}: ${d[k] === 'si' ? 'SÍ' : 'NO'}`); };
+  const arr = (k, label) => { if (Array.isArray(d[k]) && d[k].length) L.push(`${label}: ${d[k].join(', ')}`); };
+  L.push('HISTORIA CLÍNICA GENERAL — Colegio Odontológico de Córdoba');
+  L.push(`Fecha: ${d.fecha || '—'}`);
+  L.push(`Odontólogo: ${d.odontologo || '—'}  |  Mat.: ${d.matricula || '—'}`);
+  L.push(`Paciente: ${d.paciente_nombre || '—'}  |  Nº Afil: ${d.afil || '—'}`);
+  val('obra_social', 'O. Social'); val('fecha_nac', 'F. Nac.'); val('telefono', 'Tel.');
+  val('edad', 'Edad'); val('estado_civil', 'Estado civil'); val('nacionalidad', 'Nacionalidad'); val('doc', 'Doc'); val('celular', 'Cel'); val('domicilio', 'Domicilio');
+  L.push('— Antecedentes —');
+  yn('padre_vida', 'Padre con vida'); val('padre_enf', 'Padre: enfermedad');
+  yn('madre_vida', 'Madre con vida'); val('madre_enf', 'Madre: enfermedad');
+  yn('hermanos', 'Hermanos'); val('hermanos_sanos', 'Hermanos sanos');
+  yn('enf_sufridas', 'Sufre enfermedad'); val('enf_sufridas_det', 'Cuál');
+  yn('tto_medico', 'Hace tratamiento médico'); val('tto_medico_det', 'Cuál');
+  val('med_habit', 'Medicamentos habituales'); val('med_ult5', 'Medicamentos últimos 5 años');
+  yn('deporte', 'Hace deporte'); yn('deporte_malestar', 'Malestar al deporte');
+  yn('alergia_droga', 'Alérgica/o a alguna droga'); val('alergia_anestesia', 'Alergia anestesia'); val('alergia_penicilina', 'Alergia penicilina'); val('alergia_otros', 'Otras alergias');
+  yn('diabetico', 'Diabético'); val('diabetico_det', 'Detalle');
+  yn('cardiaco', 'Problema cardíaco'); val('cardiaco_cual', 'Cuál');
+  yn('aspirina', 'Aspirina/anticoagulante'); val('aspirina_freq', 'Frecuencia');
+  yn('presion_alta', 'Presión alta'); yn('chagas', 'Chagas'); val('chagas_tto', 'Chagas: en tratamiento');
+  yn('renal', 'Problema renal'); yn('ulcera', 'Úlcera gástrica');
+  yn('hepatitis', 'Hepatitis'); arr('hepatitis_tipo', 'Hepatitis tipo'); val('hepatitis_cual', 'Cuál/tratamiento'); yn('hepatico', 'Problema hepático'); val('hepatico_cual', 'Cuál');
+  yn('convulsiones', 'Convulsiones'); yn('epileptico', 'Epiléptico'); val('epilepsia_med', 'Medicación'); yn('sifilis', 'Sífilis o gonorrea');
+  yn('infecto', 'Enfermedad infecto-contagiosa'); yn('transfusiones', 'Transfusiones');
+  yn('operado', 'Operada/o'); val('operado_que', 'De qué'); val('operado_cuando', 'Cuándo');
+  yn('respiratorio', 'Problema respiratorio'); val('respiratorio_cual', 'Cuál');
+  yn('fuma', 'Fuma'); yn('embarazada', 'Embarazada'); val('embarazada_meses', 'Meses');
+  val('otra_enf', 'Otra enfermedad/recomendación'); val('otra_enf_cual', 'Cuál');
+  val('medico_clinico', 'Médico clínico'); val('derivacion', 'Derivación');
+  L.push('— Odontológico —');
+  val('motivo', 'Motivo de consulta');
+  yn('otro_prof', 'Consultó otro profesional'); yn('otro_med', 'Tomó medicamento'); val('otro_med_nombre', 'Medicamentos'); yn('resultados', 'Obtuvo resultados');
+  arr('dolor_intensidad', 'Dolor'); arr('dolor_tipo', 'Tipo de dolor'); arr('dolor_estimulo', 'Estímulo');
+  val('dolor_localizado', 'Localizado'); val('dolor_irradiado', 'Irradiado'); val('dolor_calmar', 'Calma con');
+  yn('golpe', 'Golpe en dientes'); val('golpe_det', 'Detalle'); yn('fractura', 'Fractura dental'); val('fractura_det', 'Detalle');
+  val('dificultad_hablar', 'Dificultad para hablar'); val('dificultad_masticar', 'Dificultad para masticar'); val('dificultad_abrir', 'Dificultad para abrir la boca'); val('dificultad_tragar', 'Dificultad para tragar');
+  yn('manchas', 'Manchas'); yn('abultamiento', 'Abultamiento'); yn('ulceraciones', 'Ulceraciones'); yn('ampollas', 'Ampollas'); val('lesiones_otros', 'Otras lesiones');
+  yn('enciasysangran', 'Encías sangran'); val('encias_cuando', 'Cuándo');
+  yn('pus', 'Supuración'); val('pus_donde', 'De dónde'); yn('movilidad', 'Movilidad dentaria'); val('movilidad_altos', 'Altos al morder');
+  yn('cara_hinchada', 'Cara hinchada'); val('cara_hinchada_det', 'Se puso');
+  val('azucar', 'Momentos de azúcar'); val('indice_placa', 'Índice de placa'); arr('higiene', 'Higiene bucal');
+  if (d.diagnostico) L.push(`Diagnóstico presuntivo: ${d.diagnostico}`);
+  if (d.plan) L.push(`Plan de tratamiento${d.plan_fecha ? ` (${d.plan_fecha})` : ''}: ${d.plan}`);
+  if (d.observaciones) L.push(`Observaciones: ${d.observaciones}`);
+  const marcas = Object.entries(d.__marcas || {});
+  if (marcas.length) {
+    L.push('— Odontograma —');
+    for (const [n, s] of marcas) {
+      const partes = [];
+      for (const [f, v] of Object.entries(s.faces || {})) if (v) partes.push(`${f} ${v === 'red' ? 'existente' : 'requerida'}`);
+      if (s.ausente) partes.push('ausente/a extraer');
+      if (s.corona) partes.push('corona');
+      if (s.fija) partes.push('prótesis fija');
+      if (s.removible) partes.push('prótesis removible');
+      if (partes.length) L.push(`${n}: ${partes.join(', ')}`);
+    }
+  }
+  return L.join('\n');
+}
+$('#hcCompartirBtn').addEventListener('click', async () => {
+  const text = hcBuildShareText();
+  const title = `Historia clínica — ${hcCollect().paciente_nombre || 'paciente'}`;
+  if (navigator.share) {
+    try { await navigator.share({ title, text }); } catch { /* cancelada */ }
+    return;
+  }
+  try { await navigator.clipboard.writeText(text); toast('Ficha copiada al portapapeles ✓'); }
+  catch { toast('No se pudo compartir desde este navegador.'); }
+});
+function hcPrint(blank) {
+  document.body.classList.add('print-historia');
+  if (blank) document.body.classList.add('blank-print');
+  window.print();
+}
+$('#hcPrintBtn').addEventListener('click', () => hcPrint(false));
+$('#hcPrintBlankBtn').addEventListener('click', () => hcPrint(true));
+window.addEventListener('afterprint', () => { document.body.classList.remove('print-historia', 'blank-print'); });
+
+/* ---------- 5) cajas de dígitos (matrícula / afiliado) ---------- */
+for (const boxId of ['hcMatriculaBox', 'hcAfilBox']) {
+  const box = document.getElementById(boxId);
+  const size = boxId === 'hcMatriculaBox' ? 5 : 10;
+  box.innerHTML = Array.from({ length: size }, () => '<input class="hc-digit" maxlength="1" inputmode="numeric" autocomplete="off" />').join('');
+  box.addEventListener('input', (e) => {
+    const input = e.target.closest('.hc-digit'); if (!input) return;
+    input.value = input.value.replace(/\D/g, '').slice(0, 1);
+    if (input.value) { const next = input.nextElementSibling; if (next && next.classList.contains('hc-digit')) next.focus(); }
+    hcDirty = true;
+  });
+  box.addEventListener('keydown', (e) => {
+    const input = e.target.closest('.hc-digit'); if (!input) return;
+    if (e.key === 'Backspace' && !input.value) { const prev = input.previousElementSibling; if (prev && prev.classList.contains('hc-digit')) prev.focus(); }
+  });
+}
+
+/* ---------- 6) pacientes en el selector ---------- */
+function renderHistoria() {
+  hcPopulatePatients();
+}
+
+/* ============================================================
    Gastos de insumos
    ============================================================ */
 const gastosTable = $('#gastosTable'), gastosMonth = $('#gastosMonth'), gastosStats = $('#gastosStats');
@@ -2324,6 +2988,7 @@ function renderAll() {
   renderPacientes();
   renderPrecios();
   renderAranceles();
+  renderHistoria();
   renderTarjetas();
   loadContactoSite();
   renderGastos();

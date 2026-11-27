@@ -290,10 +290,103 @@ tbody tr:hover{background:var(--nude)}
 .hc-tooth-fixed{fill:none;stroke:#2b211f;stroke-width:3.4}
 .hc-tooth-removable{fill:none;stroke:#2b211f;stroke-width:2.2;stroke-dasharray:6 4}
 .hc-tooth-num{font:700 10.5px Georgia,serif;fill:#241c1a}
+/* ── Armonización orofacial (página 01 Plan / 02 Consentimiento) ── */
+.ar-brandline{text-align:center;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#8a6d63;margin:0}
+.ar-brandline span{display:block;font-size:.5rem;letter-spacing:.08em;margin-top:.05rem}
+.ar-layout{display:grid;grid-template-columns:190px 1fr;gap:.7rem;margin-top:.35rem;align-items:start}
+@media (max-width:1100px){.ar-layout{grid-template-columns:1fr}}
+.ar-facebox{margin:0;background:#fffdfb;border:1px solid var(--nude-2);border-radius:.7rem;padding:.5rem .4rem;display:flex;flex-direction:column;align-items:center;gap:.25rem}
+.ar-face-tools{display:flex;gap:.25rem;flex-wrap:wrap;align-items:center;width:100%}
+.ar-face{width:150px;max-width:100%;height:auto;cursor:crosshair;touch-action:manipulation}
+.ar-face-skin{fill:#f6ebe6;stroke:#43302c;stroke-width:2.4;stroke-linejoin:round}
+.ar-face-guide{stroke:#c9b6ad;stroke-width:1;stroke-dasharray:3 5}
+.ar-face-feat{fill:none;stroke:#43302c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ar-face-feat.thin{stroke-width:1.3;stroke:#6d544d}
+.ar-face-pupil{fill:#43302c}
+.ar-face-lip{fill:#d8a49b;stroke:#43302c;stroke-width:1.6;stroke-linejoin:round}
+.ar-face-hint{font-size:.58rem;color:var(--texto-suave);text-align:center;margin:0;line-height:1.25}
+.ar-mark circle{fill:var(--bordo-2);stroke:#fff;stroke-width:1.4}
+.ar-mark text{fill:#fff;font-size:9px;font-weight:700}
+.ar-grid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+@media (max-width:900px){.ar-grid{grid-template-columns:1fr}}
+.ar-card{background:#fffdfb;border:1px solid #d9c6bd;border-radius:.6rem;overflow:hidden;display:flex;flex-direction:column}
+.ar-card-head{background:linear-gradient(160deg,#4a3540,#33222c);color:#f4e9e4;padding:.32rem .55rem;font-size:.82rem;font-weight:800;letter-spacing:.03em;display:flex;align-items:baseline;gap:.3rem}
+.ar-card-head .ar-sub{font-size:.55rem;font-weight:400;color:#d9c3bb;letter-spacing:.02em}
+.ar-reg{font-size:.55rem;font-weight:400;position:relative;top:-.3em}
+.ar-card-body{padding:.35rem .45rem .45rem;display:flex;flex-direction:column;gap:.3rem}
+.ar-card-body .hc-field{font-size:.68rem;gap:.25rem}
+.ar-units{display:grid;grid-template-columns:1fr 1fr;gap:.18rem .45rem}
+.ar-urow{display:flex;align-items:center;justify-content:space-between;gap:.3rem;font-size:.64rem;color:var(--texto)}
+.ar-urow input{max-width:3.2rem;text-align:right;padding:.14rem .25rem;font-size:.68rem}
+.ar-uotras{grid-column:1 / -1}
+.ar-uotras input{max-width:9rem;text-align:left;flex:1}
+.ar-utotal{display:flex;align-items:center;justify-content:space-between;gap:.4rem;background:#f1e6de;border:1px dashed #b9a194;border-radius:.45rem;padding:.22rem .4rem;font-size:.66rem;font-weight:800;color:#4a3540}
+.ar-utotal input{max-width:4.2rem;text-align:right;font-weight:800;background:transparent}
+.ar-table{width:100%;border-collapse:collapse;font-size:.62rem}
+.ar-table th{background:#efe2da;color:#43302c;font-size:.58rem;letter-spacing:.06em;padding:.18rem .3rem;border:1px solid #cdbdb2;text-align:left}
+.ar-table td{border:1px solid #e2d5cd;padding:.08rem;height:1.32rem}
+.ar-table tr:nth-child(even) td{background:#faf3ee}
+.ar-cell{border:none !important;background:transparent !important;box-shadow:none !important;font-size:.66rem;padding:.1rem .25rem;min-width:0;width:100%}
+.ar-cell:focus{outline:1px solid var(--bordo-3)}
+.ar-tag{margin-top:auto;min-height:2.4rem;border:1.6px dashed #b9a194;border-radius:.5rem;display:flex;align-items:center;justify-content:center;color:#a8928a;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;background:#fdfbf9}
+.ar-retorno{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.55rem}
+@media (max-width:900px){.ar-retorno{grid-template-columns:1fr}}
+.ar-retorno-box{background:linear-gradient(160deg,#4a3540,#33222c);color:#f4e9e4;border-radius:.6rem;padding:.5rem .7rem;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;justify-content:space-between}
+.ar-retorno-box strong{letter-spacing:.05em;font-size:.78rem}
+.ar-retorno-box .hc-field{color:#e8d8d0;font-size:.62rem}
+.ar-retorno-box .hc-input{background:#fffdfb;color:var(--texto)}
+/* página 02 — consentimiento */
+.ar-decl{font-size:.72rem;line-height:2.1;margin:.5rem 0 .35rem}
+.ar-inline{display:inline-block;width:max-content;min-width:10rem;vertical-align:baseline}
+.ar-proc-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin:.2rem 0 .45rem}
+@media (max-width:900px){.ar-proc-grid{grid-template-columns:1fr}}
+.ar-proc{display:flex;gap:.5rem;align-items:flex-start;border:1.5px solid #d9c6bd;border-radius:.55rem;padding:.4rem .5rem;cursor:pointer;font-size:.7rem;line-height:1.35;background:#fffdfb}
+.ar-proc:hover{border-color:var(--bordo-3)}
+.ar-proc input{margin-top:.15rem}
+.ar-bigcheck{width:1.15rem;height:1.15rem;accent-color:var(--bordo)}
+.ar-intro{font-size:.7rem;margin:.3rem 0 .25rem}
+.ar-legal{columns:2;column-gap:1rem;font-size:.58rem;line-height:1.32;margin:.15rem 0 .35rem;padding-left:.9rem;text-align:justify}
+.ar-legal li{margin-bottom:.22rem;break-inside:avoid}
+@media (max-width:900px){.ar-legal{columns:1}}
+.ar-para{font-size:.62rem;line-height:1.4;text-align:justify;margin:.28rem 0}
+.ar-firmas{display:flex;flex-direction:column;gap:.5rem;margin-top:.45rem}
+.ar-firma-row{display:flex;gap:1.1rem;align-items:flex-end}
+.ar-testigo{display:flex;gap:.35rem;align-items:center;font-size:.68rem;flex:1}
+.ar-prescripcion{border-top:1.5px solid #43302c;margin-top:.5rem;padding-top:.3rem}
+.ar-micro-title{font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.15rem}
+.ar-micro{font-size:.47rem;line-height:1.28;text-align:justify;color:#4a3a35;margin:0;columns:2;column-gap:.9rem}
+@media (max-width:900px){.ar-micro{columns:1}}
+.ar-postop{display:grid;grid-template-columns:2.1rem 1fr auto;gap:0;margin-top:.5rem;border-radius:.5rem;overflow:hidden;border:1.5px solid #4a3540}
+.ar-postop-side{background:var(--bordo);color:#f9ece2;writing-mode:vertical-rl;transform:rotate(180deg);font-size:.68rem;font-weight:800;letter-spacing:.1em;display:flex;align-items:center;justify-content:center;text-align:center;padding:.5rem .2rem;line-height:1.25}
+.ar-postop-body{background:linear-gradient(160deg,#5e4639,#3e2b26);color:#f7ece6;padding:.45rem .6rem;font-size:.56rem;line-height:1.35}
+.ar-postop-body ol{margin:0;padding-left:1rem;display:flex;flex-direction:column;gap:.18rem}
+.ar-postop-meta{background:#33222c;color:#c8a89d;font-size:.45rem;letter-spacing:.08em;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;padding:.3rem .15rem;text-align:center}
 @media print{
   @page{size:A4;margin:8mm}
-  body.print-historia .side,body.print-historia .topbar,body.print-historia .page:not(#page-historia),body.print-historia #page-historia .page-head,body.print-historia #hcPatientBar,body.print-historia #hcSetupNotice,body.print-historia .toast{display:none !important}
-  body.print-historia,body.print-historia .main{display:block !important;padding:0 !important;background:#fff !important}
+body.print-armon .side,body.print-armon .topbar,body.print-armon .page:not(#page-armon),body.print-armon #page-armon .page-head,body.print-armon #arPatientBar,body.print-armon #arSetupNotice,body.print-armon .toast{display:none !important}
+body.print-armon,body.print-armon .layout,body.print-armon .main{display:block !important;padding:0 !important;background:#fff !important}
+body.print-armon .page{display:block !important;padding:0 !important}
+body.print-armon .content{padding:0 !important;max-width:none !important}
+body.print-armon .ar-sheet{box-shadow:none;border:none;border-radius:0;max-width:none;width:100%;padding:0;background:#fff}
+body.print-armon .ar-page{padding:1mm 0;page-break-after:always}
+body.print-armon .ar-page:last-child{page-break-after:auto}
+body.print-armon .ar-card,body.print-armon .ar-facebox,body.print-armon .ar-retorno-box,body.print-armon .ar-proc{border-color:#000 !important}
+body.print-armon .ar-card-head,body.print-armon .ar-retorno-box{background:#efe4dc !important;color:#000 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body.print-armon .ar-retorno-box strong{color:#000 !important}
+body.print-armon .ar-postop{border-color:#000 !important}
+body.print-armon .ar-postop-side,body.print-armon .ar-postop-body,body.print-armon .ar-postop-meta{background:#fff !important;color:#000 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body.print-armon .ar-face-skin,body.print-armon .ar-face-feat,body.print-armon .ar-face-lip{stroke:#000 !important}
+body.print-armon .ar-face-skin{fill:#fff !important}
+body.print-armon .ar-face-lip{fill:#fff !important}
+body.print-armon .ar-mark circle{fill:#fff !important;stroke:#000 !important}
+body.print-armon .ar-mark text{fill:#000 !important}
+body.blank-print #arFaceMarks{opacity:0 !important}
+  body.print-armon .ar-face-hint{display:none !important}
+input::placeholder,textarea::placeholder{color:transparent !important}
+body.print-armon .ar-face-tools{display:none !important}
+body.blank-print .ar-bigcheck{opacity:0 !important}
+body.print-historia .side,body.print-historia .topbar,body.print-historia .page:not(#page-historia),body.print-historia #page-historia .page-head,body.print-historia #hcPatientBar,body.print-historia #hcSetupNotice,body.print-historia .toast{display:none !important}
+  body.print-historia,body.print-historia .layout,body.print-historia .main{display:block !important;padding:0 !important;background:#fff !important}
   body.print-historia .page{display:block !important;padding:0 !important}
   body.print-historia .content{padding:0 !important;max-width:none !important}
   body.print-historia .hc-sheet{box-shadow:none;border:none;border-radius:0;max-width:none;width:100%;padding:0;background:#fff}
@@ -376,6 +469,7 @@ tbody tr:hover{background:var(--nude)}
     <button class="nav-btn" data-tab="balance"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7l-3 6a5.5 5.5 0 0 0 6 0L5 7zM19 7l-3 6a5.5 5.5 0 0 0 6 0l-3-6zM8 21h8"/></svg>Balance</button>
     <div class="side-title">Clínica</div>
     <button class="nav-btn" data-tab="historia"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>Historia clínica</button>
+    <button class="nav-btn" data-tab="armon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.5 0-7 3.6-7 8 0 5.4 2.4 10 7 10s7-4.6 7-10c0-4.4-2.5-8-7-8z"/><path d="M9.5 10.5 11 12l-1 1.2M14.5 10.5 13 12l1 1.2M9 17h6"/></svg>Armonización</button>
     <div class="side-title">Herramientas</div>
     <button class="nav-btn" data-tab="accesos"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l3.54-3.54a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.07 0l-3.54 3.54a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Accesos</button>
     <button class="nav-btn" data-tab="respaldo"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>Datos y cuenta</button>
@@ -721,6 +815,209 @@ tbody tr:hover{background:var(--nude)}
             <div class="hc-sign">DNI Nº</div>
           </div>
           <p class="hc-footnote">Datos sensibles protegidos por secreto profesional y Ley 25.326. Documento de uso interno del consultorio.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ ARMONIZACIÓN OROFACIAL · Plan de aplicación + Consentimiento (modelo Allergan) ════════ -->
+    <section class="page" id="page-armon">
+      <div class="page-head">
+        <div><h1>Armonización orofacial</h1><p>Plan de aplicación y Consentimiento informado oficial (modelo Allergan Aesthetics), re-diseñados: se completan en pantalla, se guardan por paciente, se comparten y se imprimen (lleno o en blanco). Solo la ve tu cuenta.</p></div>
+      </div>
+
+      <div class="panel" id="arPatientBar">
+        <div class="panel-body" style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+          <label class="f" for="arPaciente" style="margin:0">Paciente</label>
+          <select class="input" id="arPaciente" style="max-width:320px"></select>
+          <button class="btn btn-line btn-sm" id="arNewBtn" type="button">Nueva en blanco</button>
+          <span class="hint" id="arEstado" style="margin:0">Elegí un paciente para cargar o guardar su ficha.</span>
+          <div style="flex:1"></div>
+          <button class="btn btn-line btn-sm" id="arCompartirBtn" type="button">📤 Compartir</button>
+          <button class="btn btn-line btn-sm" id="arPrintBtn" type="button">🖨 Imprimir</button>
+          <button class="btn btn-line btn-sm" id="arPrintBlankBtn" type="button">🖨 Imprimir en blanco</button>
+          <button class="btn btn-bordo btn-sm" id="arGuardarBtn" type="button">💾 Guardar ficha</button>
+        </div>
+      </div>
+
+      <div class="panel setup-missing" id="arSetupNotice" hidden>
+        <div class="panel-body">
+          <h2 style="margin:0 0 .4rem">Falta un paso único: crear la tabla en la nube</h2>
+          <p class="hint" style="margin-top:0">Todavía no existe la tabla <code>clinical_records</code>. Copiá el SQL, pegalo en el editor SQL de Supabase y tocá RUN. Después recargá el panel. (Si ya corriste el paquete de Historia clínica, esta tabla ya existe.)</p>
+          <pre id="arSqlPre" class="sql-block"></pre>
+          <button class="btn btn-line btn-sm" id="copyArSqlBtn" type="button">Copiar SQL</button>
+        </div>
+      </div>
+
+      <div class="hc-sheet ar-sheet" id="arSheet">
+
+        <!-- ═══ PÁGINA 01 · PLAN DE APLICACIÓN ═══ -->
+        <div class="hc-page ar-page" id="arPage1">
+          <div class="hc-pgnum">01</div>
+          <div class="ar-brandline">Allergan Aesthetics <span>an AbbVie company</span></div>
+          <h2 class="hc-doc-title" style="margin-top:.1rem">PLAN DE APLICACIÓN</h2>
+          <div class="hc-meta-row" style="justify-content:space-between">
+            <div class="hc-field"><span class="qlbl" style="font-weight:700">Sexo:</span>
+              <span class="hc-checks" style="margin-left:.3rem"><label class="sino-opt"><input type="radio" name="ar_sexo" value="Mujer" data-ar="sexo" />Mujer</label><label class="sino-opt"><input type="radio" name="ar_sexo" value="Hombre" data-ar="sexo" />Hombre</label></span>
+            </div>
+            <div class="hc-field">Nombre del paciente: <input class="hc-input" data-ar="paciente_nombre" placeholder="Apellido y nombre" style="min-width:16rem" /></div>
+          </div>
+
+          <div class="ar-layout">
+            <!-- Rostro interactivo para marcar puntos de inyección -->
+            <figure class="ar-facebox">
+              <figcaption class="ar-face-tools">
+                <span class="qlbl" style="font-weight:700">PUNTOS DE APLICACIÓN</span>
+                <span style="flex:1"></span>
+                <button class="hc-toolbtn active" id="arToolAdd" type="button">➕ Marcar punto</button>
+                <button class="hc-toolbtn" id="arUndoBtn" type="button">⌫ Borrar último</button>
+                <button class="hc-toolbtn" id="arClearBtn" type="button">🗑 Limpiar</button>
+              </figcaption>
+              <svg class="ar-face" id="arFaceSvg" viewBox="0 0 220 272" role="img" aria-label="Rostro para marcar puntos de aplicación">
+                <path class="ar-face-skin" d="M110 14 C60 14 46 82 46 128 C46 178 74 226 110 226 C146 226 174 178 174 128 C174 82 160 14 110 14 Z"/>
+                <line class="ar-face-guide" x1="110" y1="22" x2="110" y2="226"/>
+                <path class="ar-face-feat" d="M70 108 q16 -8 32 0"/><path class="ar-face-feat" d="M118 108 q16 -8 32 0"/>
+                <path class="ar-face-feat" d="M74 124 q12 9 24 0"/><path class="ar-face-feat" d="M122 124 q12 9 24 0"/>
+                <circle class="ar-face-pupil" cx="86" cy="123" r="3.4"/><circle class="ar-face-pupil" cx="134" cy="123" r="3.4"/>
+                <path class="ar-face-feat" d="M110 112 L106 150 q4 5 10 2"/>
+                <path class="ar-face-feat" d="M96 156 q8 5 14 0 M110 156 q8 5 18 -2"/>
+                <path class="ar-face-lip" d="M84 192 q14 -9 26 -2 q12 -7 26 2 q-8 14 -26 14 q-18 0 -26 -14 Z"/>
+                <path class="ar-face-feat thin" d="M92 193 q18 7 36 0"/>
+                <g id="arFaceMarks"></g>
+              </svg>
+              <p class="ar-face-hint">Tocá el rostro para marcar los puntos de inyección (quedan numerados).</p>
+            </figure>
+
+            <!-- Paneles de producto -->
+            <div class="ar-grid">
+
+              <div class="ar-card">
+                <div class="ar-card-head">BOTOX<span class="ar-reg">®</span> <span class="ar-sub">Onabotulinumtoxin A</span></div>
+                <div class="ar-card-body">
+                  <div class="hc-field">Fecha de aplicación: <input class="hc-input date" data-ar="botox_fecha" placeholder="dd / mm / aaaa" /></div>
+                  <div class="ar-units" id="arBotoxUnits"></div>
+                  <div class="ar-utotal"><span>U Total de unidades inyectadas</span><input class="hc-input" data-ar="u_total" inputmode="decimal" placeholder="0" readonly /></div>
+                  <div class="hc-meta-row" style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;margin-top:.3rem">
+                    <div class="hc-field">Fecha de vencimiento: <input class="hc-input date" data-ar="botox_venc" placeholder="dd/mm/aaaa" /></div>
+                    <div class="hc-field">Número de lote: <input class="hc-input" data-ar="botox_lote" /></div>
+                  </div>
+                  <div class="hc-field">Volumen de dilución: <input class="hc-input" data-ar="botox_dil" placeholder="…" /></div>
+                  <div class="hc-field" style="align-items:flex-start">Observaciones:<textarea class="hc-input hc-area" data-ar="botox_obs" rows="2" placeholder="…"></textarea></div>
+                  <div class="ar-tag">Etiqueta BOTOX®</div>
+                </div>
+              </div>
+
+              <div class="ar-card">
+                <div class="ar-card-head">HArmonyCa<span class="ar-reg">™</span> <span class="ar-sub">Bioestimulador de colágeno</span></div>
+                <div class="ar-card-body">
+                  <div class="hc-field">Fecha de aplicación: <input class="hc-input date" data-ar="har_fecha" placeholder="dd / mm / aaaa" /></div>
+                  <table class="ar-table"><thead><tr><th>REGIÓN</th><th style="width:34%">VOLUMEN</th></tr></thead><tbody id="arHarRows"></tbody></table>
+                  <div class="hc-field" style="align-items:flex-start;margin-top:.35rem">Observaciones:<textarea class="hc-input hc-area" data-ar="har_obs" rows="2" placeholder="…"></textarea></div>
+                  <div class="ar-tag">Etiqueta HArmonyCa™</div>
+                </div>
+              </div>
+
+              <div class="ar-card">
+                <div class="ar-card-head">Juvéderm<span class="ar-reg">®</span> <span class="ar-sub">Relleno con ácido hialurónico</span></div>
+                <div class="ar-card-body">
+                  <div class="hc-field">Fecha de aplicación: <input class="hc-input date" data-ar="juv_fecha" placeholder="dd / mm / aaaa" /></div>
+                  <table class="ar-table"><thead><tr><th>REGIÓN</th><th>PRODUCTO</th><th style="width:22%">VOLUMEN</th></tr></thead><tbody id="arJuvRows"></tbody></table>
+                  <div class="hc-field" style="align-items:flex-start;margin-top:.35rem">Observaciones:<textarea class="hc-input hc-area" data-ar="juv_obs" rows="2" placeholder="…"></textarea></div>
+                  <div class="ar-tag">Etiqueta Juvéderm®</div>
+                </div>
+              </div>
+
+              <div class="ar-card">
+                <div class="ar-card-head">Skinvive<span class="ar-reg">™</span> <span class="ar-sub">Gel de ácido hialurónico hidratante</span></div>
+                <div class="ar-card-body">
+                  <div class="hc-field">Fecha de aplicación: <input class="hc-input date" data-ar="skin_fecha" placeholder="dd / mm / aaaa" /></div>
+                  <table class="ar-table"><thead><tr><th>REGIÓN</th><th style="width:34%">VOLUMEN</th></tr></thead><tbody id="arSkinRows"></tbody></table>
+                  <div class="hc-field" style="align-items:flex-start;margin-top:.35rem">Observaciones:<textarea class="hc-input hc-area" data-ar="skin_obs" rows="2" placeholder="…"></textarea></div>
+                  <div class="ar-tag">Etiqueta Skinvive™</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="ar-retorno">
+            <div class="ar-retorno-box"><strong>Retorno para EVALUACIÓN</strong>
+              <span class="hc-field">FECHA <input class="hc-input date" data-ar="ret_eval_fecha" placeholder="dd/mm/aaaa" /></span>
+              <span class="hc-field">HORA <input class="hc-input" data-ar="ret_eval_hora" placeholder="hh:mm" style="max-width:6rem" /></span>
+            </div>
+            <div class="ar-retorno-box"><strong>Nueva APLICACIÓN</strong>
+              <span class="hc-field">FECHA <input class="hc-input date" data-ar="ret_nueva_fecha" placeholder="dd/mm/aaaa" /></span>
+              <span class="hc-field">HORA <input class="hc-input" data-ar="ret_nueva_hora" placeholder="hh:mm" style="max-width:6rem" /></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ PÁGINA 02 · DOCUMENTO DE CONSENTIMIENTO INFORMADO ═══ -->
+        <div class="hc-page ar-page" id="arPage2">
+          <div class="hc-pgnum">02</div>
+          <div class="ar-brandline">Allergan Aesthetics <span>an AbbVie company</span></div>
+          <h2 class="hc-doc-title" style="margin-top:.1rem">DOCUMENTO DE<br />CONSENTIMIENTO INFORMADO</h2>
+          <div class="hc-meta-row" style="justify-content:flex-end"><div class="hc-field">Fecha de aplicación: <input class="hc-input date" data-ar="c_fecha" placeholder="dd / mm / aaaa" /></div></div>
+          <div class="hc-meta-row" style="display:grid;grid-template-columns:1.6fr 1fr;gap:.6rem;margin-top:.4rem">
+            <div class="hc-field">Nombre completo: <input class="hc-input" data-ar="c_nombre" /></div>
+            <div class="hc-field">Edad: <input class="hc-input" data-ar="c_edad" style="min-width:4rem" /></div>
+          </div>
+          <div class="hc-meta-row" style="display:grid;grid-template-columns:1.6fr 1fr;gap:.6rem">
+            <div class="hc-field">Dirección: <input class="hc-input" data-ar="c_direccion" /></div>
+            <div class="hc-field">Teléfono/celular: <input class="hc-input" data-ar="c_tel" /></div>
+          </div>
+          <p class="ar-decl">Por el presente término, yo <input class="hc-input ar-inline" data-ar="c_yo" placeholder="apellido y nombres" /> de nacionalidad <input class="hc-input ar-inline" data-ar="c_nacionalidad" />, portador/a del número de documento <input class="hc-input ar-inline" data-ar="c_documento" style="min-width:8rem" />, declaro estar informado/a y autorizo a <input class="hc-input ar-inline" data-ar="c_autorizo_a" placeholder="profesional" /> a realizar el procedimiento conocido como:</p>
+
+          <div class="ar-proc-grid">
+            <label class="ar-proc"><input type="checkbox" class="ar-bigcheck" value="botox" data-ar="proc" data-argroup="proc" /><span><strong>Tratamiento cosmético para arrugas de expresión</strong> con la aplicación de <strong>BOTOX®</strong> - OnabotulinumtoxinA.</span></label>
+            <label class="ar-proc"><input type="checkbox" class="ar-bigcheck" value="juvederm" data-ar="proc" data-argroup="proc" /><span><strong>Relleno facial con ácido hialurónico</strong> con la aplicación de <strong>JUVÉDERM®</strong>.</span></label>
+            <label class="ar-proc"><input type="checkbox" class="ar-bigcheck" value="harmonyca" data-ar="proc" data-argroup="proc" /><span><strong>Bioestimulador de colágeno</strong> con ácido hialurónico e hidroxiapatita de calcio con <strong>HArmonyCa™</strong>.</span></label>
+            <label class="ar-proc"><input type="checkbox" class="ar-bigcheck" value="skinvive" data-ar="proc" data-argroup="proc" /><span><strong>Gel de ácido hialurónico hidratante</strong> <strong>Skinvive™</strong>.</span></label>
+          </div>
+
+          <p class="ar-intro">Los procedimientos mencionados fueron totalmente explicados por el médico y yo entendí la naturaleza y consecuencias de los mismos. Los siguientes puntos fueron especialmente aclarados:</p>
+          <ul class="ar-legal">
+            <li>A pesar de la seguridad con el uso de la Onabotulinumtoxin A y con los rellenos de ácido hialurónico, algunos efectos adversos o secundarios pueden ocurrir luego de la aplicación, como edema, hematoma, inflamación o también otros efectos descritos en el prospecto. Estos son generalmente transitorios y totalmente reversibles.</li>
+            <li>Los pacientes con tendencia al desarrollo de cicatrices hipertróficas, con hipersensibilidad conocida al ácido hialurónico, mujeres embarazadas o en etapa de lactancia y niños, no deben ser sometidos(as) al procedimiento con JUVÉDERM®.</li>
+            <li>Los pacientes con historia clínica de alergia y/o hipersensibilidad a la lidocaína o cualquier otro anestésico tópico local del tipo amida, portadores de epilepsia no tratada o portadores de porfiria no deben ser sometidos al procedimiento con JUVÉDERM® ULTRA XC, JUVÉDERM® ULTRA PLUS XC, JUVÉDERM® VOLBELLA®, JUVÉDERM® VOLIFT®, JUVÉDERM® VOLUMA® con Lidocaína, JUVÉDERM® VOLUX® y Skinvive™.</li>
+            <li>No es recomendable la utilización de JUVÉDERM® ULTRA XC, JUVÉDERM® ULTRA PLUS XC, JUVÉDERM® VOLBELLA®, JUVÉDERM® VOLIFT®, JUVÉDERM® VOLUMA® con Lidocaína, JUVÉDERM® VOLUX® y Skinvive™ en pacientes que están en tratamiento con drogas como cimetidina o beta-bloqueadores.</li>
+            <li>Todos los pacientes que están en tratamiento con antibióticos de tipo espectinomicina o aminoglucósidos, que padecen enfermedades neuromusculares, embarazadas o en lactancia, con infección o señales de inflamación en los lugares de aplicación no deben ser sometidos(as) al tratamiento con BOTOX®.</li>
+            <li>No es recomendable la utilización de JUVÉDERM ULTRA XC, JUVÉDERM ULTRA PLUS XC, JUVÉDERM® VOLBELLA®, JUVÉDERM® VOLIFT®, JUVÉDERM® VOLUMA® con Lidocaína, JUVÉDERM® VOLUX® y Skinvive™ en pacientes que están en tratamiento odontológico, 15 días antes o 15 posteriores a la aplicación, incluyendo limpiezas bucales.</li>
+            <li>Deben transcurrir por lo menos 4 semanas entre tratamientos ultrasonidos, tratamientos con láser o peeling y el uso de HArmonyCa™.</li>
+            <li>HArmonyCa™ no debe utilizarse en pacientes bajo tratamiento con sustancias que pueden prolongar el sangrado (p. aspirina, anticoagulantes, trombolíticos, antiinflamatorios, inhibidores de la ECA), ya que puede ocurrir un aumento de los hematomas y el sangrado.</li>
+            <li>Está contraindicada la inyección de HArmonyCa™ en zona glabelar, periocular, labios o región perioral.</li>
+          </ul>
+          <p class="ar-para">Entendí que la duración de los resultados del tratamiento con BOTOX® / JUVÉDERM® / HArmonyCa™ / Skinvive™ es variable, dependiendo del metabolismo y hábitos de cada paciente. En el caso de JUVÉDERM®, esta duración también puede ser influenciada por la presentación del producto utilizado, variando de 6 a 24 meses. En el caso de BOTOX®, entendí que los efectos iniciales son observados en aproximadamente 24-48 horas y que la duración total también puede ser influenciada por la dosificación del tratamiento en el área tratada, siendo en promedio de 4 meses.</p>
+          <p class="ar-para">Estoy consciente que la práctica de la medicina no es una ciencia exacta y reconozco que, a pesar de que el médico me haya informado adecuadamente las posibilidades de alcanzar los objetivos del tratamiento, acepto que no se puede afirmar que los resultados son garantizados. Doy mi consentimiento para ser fotografiado(a) antes y después del procedimiento, autorizando al profesional interventor a utilizar mi imagen personal de forma gratuita en historia clínica, revistas científicas o presentaciones en congresos médicos:</p>
+          <div class="hc-checks" style="justify-content:center;gap:1.4rem;margin:.2rem 0 .5rem">
+            <label class="sino-opt"><input type="checkbox" value="historia" data-ar="foto" data-argroup="foto" />Historia clínica</label>
+            <label class="sino-opt"><input type="checkbox" value="revistas" data-ar="foto" data-argroup="foto" />Revistas científicas</label>
+            <label class="sino-opt"><input type="checkbox" value="congresos" data-ar="foto" data-argroup="foto" />Presentaciones en congresos médicos</label>
+          </div>
+          <p class="ar-para">Doy fe de no haber omitido o alterado datos al exponer mis antecedentes clínicos. Leí detalladamente este Documento de Consentimiento Informado y lo entendí totalmente, autorizando al profesional nominado a realizar en mí el(los) procedimiento(s) previamente explicado(s). En prueba de conformidad con todo lo anterior, firmo el presente documento en presencia de: <input class="hc-input ar-inline" data-ar="testigo1_nom" style="min-width:11rem" /> y <input class="hc-input ar-inline" data-ar="testigo2_nom" style="min-width:11rem" />, testigos de este acto.</p>
+          <div class="ar-firmas">
+            <div class="ar-firma-row"><div class="hc-write-line grow">Firma</div><div class="grow">Nombre del paciente: <input class="hc-input" data-ar="nombre_paciente" /></div></div>
+            <div class="ar-firma-row"><div class="hc-write-line grow">Firma</div><div class="grow">Nombre del médico: <input class="hc-input" data-ar="nombre_medico" /></div></div>
+            <div class="ar-firma-row"><div class="ar-testigo">Testigos (firma/Nº Documento): 1 <input class="hc-input" data-ar="test_firma1" placeholder="firma" /> <input class="hc-input" data-ar="test_doc1" placeholder="Nº doc" style="max-width:8rem" /></div>
+            <div class="ar-testigo">2 <input class="hc-input" data-ar="test_firma2" placeholder="firma" /> <input class="hc-input" data-ar="test_doc2" placeholder="Nº doc" style="max-width:8rem" /></div></div>
+          </div>
+
+          <div class="ar-prescripcion"><div class="ar-micro-title">Información para la prescripción</div>
+            <p class="ar-micro">BOTOX® (Onabotulinumtoxin A) es una forma liofilizada estéril de toxina botulínica purificada de Tipo A, producida por fermentación del cultivo Clostridium botulinum tipo A. BOTOX® debe ser reconstituido con una solución salina estéril no preservada antes de la inyección intramuscular. Cada vial de BOTOX® contiene 100 unidades (U) de toxina de Clostridium botulinum tipo A, 0,5 mg de albúmina (humana) y 0,9 mg de cloruro de sodio en una forma estéril, liofilizada, sin conservador. Una unidad (U) corresponde a la dosis letal media intreperitoneal (LD/50) en ratones calculada para BOTOX® reconstituido inyectado. INDICACIÓN COSMÉTICA NO TERAPÉUTICA: Corrección estética facial para remoción de arrugas glabelares asociadas con la actividad muscular del corrugador y/o procerus. Tratamiento de líneas faciales superiores, incluyendo frente, líneas laterales del ángulo del ojo (patas de gallo) y líneas faciales hiperquinéticas. CONTRAINDICACIONES: Pacientes con miastenia gravis o Síndrome de Eaton Lambert. Presencia de infección en el sitio/s propuesto/s de inyección. Individuos con conocida hipersensibilidad a cualquier ingrediente de la formulación. Cuando existen trastornos de cualquier tipo en la coagulación, en caso de terapia con anticoagulantes o siempre que exista alguna razón para evitar inyecciones intramusculares. Cuando se están utilizando o se piensa utilizar antibióticos aminoglicósidos o espectinomicina. Embarazo y lactancia. ADVERTENCIAS , PRECAUCIONES Y REACCIONES ADVERSAS: Ver información en prospecto del producto. FORMA DE PRESENTACIÓN: Cada vial contiene complejo de neurotoxina de Clostridium botulinum tipo A 900kD, 100 unidades. ALMACENAMIENTO: Conservar en heladera entre 2°C y 8°C, o en freezer a -5°C o menos. Aplique BOTOX dentro de los tres (3) días después de que el producto es retirado del congelador y se ha reconstituido. Durante esos tres días el producto reconstituido debe guardarse en heladera (2° a 8°C ). Este debe ser claro, incoloro y libre de partículas. Instrucciones especiales: Todos los viales, incluidos los vencidos, así como los equipos empleados con la droga deben ser eliminados cuidadosamente como se lo hace con todo desecho médico. Especialidad medicinal autorizada por el Ministerio de Salud. Instrucciones de uso de JUVÉDERM® ULTRA XC; Instrucciones de uso de JUVÉDERM® ULTRA PLUS XC; Instrucciones de uso de JUVÉDERM® VOLUMA®; Instrucciones de uso de JUVÉDERM® VOLIFT®; Instrucciones de uso de JUVÉDERM® VOLBELLA®; Instrucciones de uso de JUVÉDERM® VOLUX®; Instrucciones de uso de HArmonyCa™; Instrucciones de uso de Skinvive™.</p>
+          </div>
+
+          <div class="ar-postop">
+            <div class="ar-postop-side">Cuidados<br />POST<br />APLICACIÓN</div>
+            <div class="ar-postop-body">
+              <ol>
+                <li><strong>Se recomienda no masajear o manipular</strong> las regiones tratadas.</li>
+                <li><strong>Evite los ambientes muy calurosos</strong>, la exposición al sol inmediatamente después de la aplicación y la actividad física, a menos que esté debidamente autorizado por su médico.</li>
+                <li><strong>Molestias locales leves</strong> o discreto enrojecimiento en las áreas tratadas pueden ocurrir en procedimientos inyectables. Cualquier otra alteración debe ser reportada inmediatamente a su médico.</li>
+                <li><strong>Cualquier duda</strong> sobre el tratamiento realizado (resultados, alteraciones, síntomas, etc.) deben ser informadas de inmediato al médico que ha realizado el procedimiento.</li>
+              </ol>
+            </div>
+            <div class="ar-postop-meta">MATERIAL EXCLUSIVO PARA MÉDICOS<br />AR-SKV-250012 · Marzo 2025</div>
+          </div>
+          <p class="hc-footnote">Adaptado del modelo oficial Allergan Aesthetics (an AbbVie company) · AR-SKV-250012 · Marzo 2025. Datos sensibles protegidos por secreto profesional y Ley 25.326. Documento de uso interno del consultorio.</p>
         </div>
       </div>
     </section>
@@ -2547,6 +2844,272 @@ function renderHistoria() {
 }
 
 /* ============================================================
+   Armonización orofacial (Plan de Aplicación + Consentimiento, modelo Allergan)
+   ============================================================ */
+const AR_SQL = `create table if not exists public.clinical_records (
+  patient_id  uuid not null references public.patients (id) on delete cascade,
+  area        text not null default 'odontologia',
+  data        jsonb not null default '{}'::jsonb,
+  odontogram  jsonb not null default '{}'::jsonb,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now(),
+  primary key (patient_id, area)
+);
+alter table public.clinical_records enable row level security;
+drop policy if exists "hc auth lee" on public.clinical_records;
+create policy "hc auth lee" on public.clinical_records for select to authenticated using (true);
+drop policy if exists "hc auth escribe" on public.clinical_records;
+create policy "hc auth escribe" on public.clinical_records for all to authenticated using (true) with check (true);`;
+const AR_AREA = 'armonizacion';
+let arCurrentPatientId = '';
+let arDirty = false;
+const arPuntos = []; /* [{x,y}] en coordenadas viewBox 220x272 */
+
+/* ---------- 1) paneles de productos: tablas y unidades ---------- */
+const AR_BOTOX_UNITS = [
+  ['u_frontal', 'U Frontal'], ['u_corrugador', 'U Corrugador'], ['u_procerus', 'U Procerus'],
+  ['u_orb_ojos', 'U Orbicular de los ojos'], ['u_orb_subpalpebral', 'U Orbicular sub-palpebral'], ['u_nariz', 'U Nariz'],
+  ['u_orb_boca', 'U Orbicular de la boca'], ['u_mentoniano', 'U Mentoniano'], ['u_otras', 'U Otras'],
+];
+$('#arBotoxUnits').innerHTML = AR_BOTOX_UNITS.map(([k, l]) => `<label class="ar-urow"><span>${l}</span><input class="hc-input ar-unum" data-ar="${k}" inputmode="decimal" placeholder="0" /></label>`).join('')
+  + `<label class="ar-urow ar-uotras"><span style="font-weight:400;color:#6b5a52">Otras, cuáles:</span><input class="hc-input" data-ar="u_otras_det" placeholder="…" /></label>`;
+
+const arTableRows = (tbodyId, cols, prefix, n) => {
+  $(tbodyId).innerHTML = Array.from({ length: n || 7 }, (_, i) => {
+    const r = i + 1;
+    return '<tr>' + cols.map(([c, w]) => `<td${w ? ` style="width:${w}"` : ''}><input class="hc-input ar-cell" data-ar="${prefix}_${c}${r}" /></td>`).join('') + '</tr>';
+  }).join('');
+};
+arTableRows('#arHarRows', [['reg'], ['vol']], 'har', 7);
+arTableRows('#arJuvRows', [['reg'], ['prod'], ['vol']], 'juv', 7);
+arTableRows('#arSkinRows', [['reg'], ['vol']], 'skin', 7);
+
+/* total de unidades BOTOX (se suma solo) */
+function arBotoxRecalc() {
+  let sum = 0, any = false;
+  AR_BOTOX_UNITS.forEach(([k]) => {
+    const el = document.querySelector(`[data-ar="${k}"]`);
+    const v = parseFloat(String(el.value || '').replace(',', '.'));
+    if (!Number.isNaN(v)) { sum += v; any = true; }
+  });
+  const total = document.querySelector('[data-ar="u_total"]');
+  total.value = any ? String(Math.round(sum * 10) / 10) : '';
+}
+$('#arBotoxUnits').addEventListener('input', arBotoxRecalc);
+
+/* ---------- 2) rostro interactivo: puntos de aplicación ---------- */
+let arFaceAdd = true;
+const AR_FACE_NS = 'http://www.w3.org/2000/svg';
+function arRenderMarks() {
+  const g = document.getElementById('arFaceMarks');
+  if (!g) return;
+  g.innerHTML = arPuntos.map((p, i) => `<g class="ar-mark" transform="translate(${p.x} ${p.y})"><circle r="7"></circle><text y="3.4" text-anchor="middle">${i + 1}</text></g>`).join('');
+}
+function arFaceCoords(evt) {
+  const svg = document.getElementById('arFaceSvg');
+  const rect = svg.getBoundingClientRect();
+  const t = (evt.touches && evt.touches[0]) || evt;
+  const x = (t.clientX - rect.left) * (220 / rect.width);
+  const y = (t.clientY - rect.top) * (272 / rect.height);
+  return { x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10 };
+}
+$('#arFaceSvg').addEventListener('click', (e) => {
+  if (!arFaceAdd) return;
+  arPuntos.push(arFaceCoords(e));
+  arDirty = true;
+  arRenderMarks();
+});
+function arSetFaceTool(add) {
+  arFaceAdd = add;
+  $('#arToolAdd').classList.toggle('active', add);
+}
+$('#arToolAdd').addEventListener('click', () => arSetFaceTool(true));
+$('#arUndoBtn').addEventListener('click', () => { if (arPuntos.length) { arPuntos.pop(); arDirty = true; arRenderMarks(); } });
+$('#arClearBtn').addEventListener('click', async () => {
+  if (!arPuntos.length) return;
+  if (!(await showConfirm('Limpiar puntos', '¿Borrar todos los puntos marcados en el rostro?'))) return;
+  arPuntos.length = 0; arDirty = true; arRenderMarks();
+});
+
+/* ---------- 3) recolección / carga / guardado ---------- */
+function arCollect() {
+  const d = {};
+  $$('#arSheet [data-ar]').forEach((el) => {
+    const k = el.dataset.ar;
+    if (el.type === 'radio') { if (el.checked) d[k] = el.value; return; }
+    if (el.type === 'checkbox') { (d[k] = d[k] || []).push(el.value); return; }
+    d[k] = el.value;
+  });
+  d.__puntos = JSON.parse(JSON.stringify(arPuntos));
+  return d;
+}
+function arFill(d) {
+  d = d || {};
+  $$('#arSheet [data-ar]').forEach((el) => {
+    const k = el.dataset.ar;
+    if (el.type === 'radio') { el.checked = d[k] === el.value; return; }
+    if (el.type === 'checkbox') {
+      const arr = Array.isArray(d[k]) ? d[k] : String(d[k] || '').split(',');
+      el.checked = arr.includes(el.value);
+      return;
+    }
+    el.value = d[k] ?? '';
+  });
+  arPuntos.length = 0;
+  (d.__puntos || []).forEach((p) => arPuntos.push(p));
+  arRenderMarks();
+  arDirty = false;
+}
+function arReset() { arFill({}); arDirty = false; }
+function arShowSetup(show) {
+  const n = $('#arSetupNotice'); if (n) n.hidden = !show;
+  if (show) { const p = $('#arSqlPre'); if (p && !p.textContent) p.textContent = AR_SQL; }
+}
+$('#copyArSqlBtn').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(AR_SQL); toast('SQL copiado ✓'); }
+  catch { toast('No pude copiar. Seleccioná el texto del recuadro y copialo a mano.'); }
+});
+function arPopulatePatients() {
+  const sel = $('#arPaciente');
+  const patients = [...((store && store.patients) || [])].sort((a, b) => String(a.nombre).localeCompare(String(b.nombre), 'es'));
+  const prev = sel.value || arCurrentPatientId;
+  sel.innerHTML = '<option value="">— Elegí un paciente —</option>' + patients.map((p) => `<option value="${esc(p.id)}">${esc(p.nombre)}</option>`).join('');
+  if (prev && patients.some((p) => p.id === prev)) sel.value = prev;
+}
+function arSetEstado(msg) { $('#arEstado').textContent = msg; }
+
+async function arLoad(patientId) {
+  arCurrentPatientId = patientId;
+  if (!patientId) { arReset(); arSetEstado('Elegí un paciente para cargar o guardar su ficha.'); return; }
+  arSetEstado('Cargando…');
+  try {
+    const res = await sbFetch(`/rest/v1/clinical_records?select=*&patient_id=eq.${encodeURIComponent(patientId)}&area=eq.${AR_AREA}`);
+    if (res.status === 404 || res.status === 400) { arShowSetup(true); arSetEstado('Falta crear la tabla (ver aviso).'); return; }
+    arShowSetup(false);
+    const rows = await res.json();
+    const rec = Array.isArray(rows) ? rows[0] : null;
+    if (rec) {
+      arFill(rec.data || {});
+      arSetEstado(`Guardada · última actualización: ${fmtFechaISO(rec.updated_at)}`);
+    } else {
+      arReset();
+      const p = ((store && store.patients) || []).find((x) => x.id === patientId);
+      if (p) { const el = document.querySelector('[data-ar="paciente_nombre"]'); if (el && !el.value) el.value = p.nombre; }
+      arSetEstado('Sin ficha todavía — completá y guardá.');
+    }
+  } catch (e) {
+    console.error(e);
+    arSetEstado('Error al cargar. Revisá tu conexión.');
+  }
+}
+$('#arPaciente').addEventListener('change', async (e) => {
+  const next = e.target.value;
+  if (arDirty && !(await showConfirm('Descartar cambios', 'Tenés cambios sin guardar. ¿Descartarlos y cambiar de paciente?'))) {
+    e.target.value = arCurrentPatientId; return;
+  }
+  arLoad(next);
+});
+$('#arNewBtn').addEventListener('click', async () => {
+  if (arDirty && !(await showConfirm('Nueva ficha', 'Tenés cambios sin guardar. ¿Borrarlos y empezar una ficha en blanco?'))) return;
+  arReset();
+  const p = ((store && store.patients) || []).find((x) => x.id === arCurrentPatientId);
+  if (p) { const el = document.querySelector('[data-ar="paciente_nombre"]'); if (el) el.value = p.nombre; }
+  arSetEstado('Ficha en blanco (sin guardar).');
+});
+$('#arGuardarBtn').addEventListener('click', async () => {
+  if (!arCurrentPatientId) { toast('Elegí un paciente primero.'); return; }
+  const btn = $('#arGuardarBtn'); const label = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Guardando…';
+  const data = arCollect();
+  try {
+    const res = await sbFetch('/rest/v1/clinical_records?on_conflict=patient_id,area', {
+      method: 'POST',
+      headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({ patient_id: arCurrentPatientId, area: AR_AREA, data, odontogram: {}, updated_at: new Date().toISOString() }),
+    });
+    if (!res.ok) {
+      const txt = await res.text().catch(() => '');
+      if (/clinical_records/i.test(txt) || res.status === 404) { arShowSetup(true); toast('Falta crear la tabla. Mirá el aviso de arriba.'); }
+      else toast('No se pudo guardar la ficha.');
+      return;
+    }
+    arShowSetup(false);
+    arDirty = false;
+    arSetEstado('Guardada · justo ahora');
+    toast('Ficha guardada ✓');
+  } catch (e) {
+    console.error(e);
+    toast('No se pudo guardar. Revisá tu conexión.');
+  } finally {
+    btn.disabled = false; btn.textContent = label;
+  }
+});
+$('#arSheet').addEventListener('input', () => { arDirty = true; });
+
+/* ---------- 4) compartir / imprimir ---------- */
+function arBuildShareText() {
+  const d = arCollect();
+  const L = [];
+  const val = (k, label) => { if (d[k] != null && String(d[k]).trim()) L.push(`${label}: ${d[k]}`); };
+  const arr = (k, label) => { if (Array.isArray(d[k]) && d[k].length) L.push(`${label}: ${d[k].join(', ')}`); };
+  L.push('PLAN DE APLICACIÓN + CONSENTIMIENTO — Armonización orofacial');
+  L.push(`Sexo: ${d.sexo || '—'}   |   Paciente: ${d.paciente_nombre || '—'}`);
+  L.push('— BOTOX Onabotulinumtoxin A —');
+  val('botox_fecha', 'Fecha aplicación');
+  AR_BOTOX_UNITS.forEach(([k, l]) => val(k, l));
+  val('u_otras_det', 'Otras cuáles'); val('u_total', 'TOTAL unidades');
+  val('botox_venc', 'Vencimiento'); val('botox_lote', 'Lote'); val('botox_dil', 'Volumen de dilución'); val('botox_obs', 'Observaciones');
+  L.push('— HArmonyCa (bioestimulador) —');
+  val('har_fecha', 'Fecha aplicación');
+  for (let i = 1; i <= 7; i++) { const r = d[`har_reg${i}`], v = d[`har_vol${i}`]; if (r || v) L.push(`Región ${i}: ${r || '—'}${v ? ` — ${v} ml` : ''}`); }
+  val('har_obs', 'Observaciones');
+  L.push('— Juvéderm (relleno HA) —');
+  val('juv_fecha', 'Fecha aplicación');
+  for (let i = 1; i <= 7; i++) { const r = d[`juv_reg${i}`], p = d[`juv_prod${i}`], v = d[`juv_vol${i}`]; if (r || p || v) L.push(`Región ${i}: ${[r, p, v].filter(Boolean).join(' · ')}`); }
+  val('juv_obs', 'Observaciones');
+  L.push('— Skinvive (gel HA hidratante) —');
+  val('skin_fecha', 'Fecha aplicación');
+  for (let i = 1; i <= 7; i++) { const r = d[`skin_reg${i}`], v = d[`skin_vol${i}`]; if (r || v) L.push(`Región ${i}: ${r || '—'}${v ? ` — ${v} ml` : ''}`); }
+  val('skin_obs', 'Observaciones');
+  L.push('— Retorno —');
+  if (d.ret_eval_fecha || d.ret_eval_hora) L.push(`Evaluación: ${d.ret_eval_fecha || ''} ${d.ret_eval_hora || ''}`.trim());
+  if (d.ret_nueva_fecha || d.ret_nueva_hora) L.push(`Nueva aplicación: ${d.ret_nueva_fecha || ''} ${d.ret_nueva_hora || ''}`.trim());
+  L.push('— Consentimiento informado —');
+  val('c_fecha', 'Fecha aplicación'); val('c_nombre', 'Nombre completo'); val('c_edad', 'Edad'); val('c_direccion', 'Dirección'); val('c_tel', 'Teléfono/celular');
+  val('c_yo', 'Yo'); val('c_nacionalidad', 'Nacionalidad'); val('c_documento', 'Documento'); val('c_autorizo_a', 'Autorizo a');
+  arr('proc', 'Procedimientos autorizados');
+  arr('foto', 'Autoriza foto');
+  val('nombre_paciente', 'Nombre del paciente'); val('nombre_medico', 'Nombre del médico');
+  const pts = (d.__puntos || []).length;
+  if (pts) L.push(`Puntos de aplicación marcados en el rostro: ${pts}`);
+  return L.join('\n');
+}
+$('#arCompartirBtn').addEventListener('click', async () => {
+  const text = arBuildShareText();
+  const title = `Armonización — ${arCollect().paciente_nombre || 'paciente'}`;
+  if (navigator.share) {
+    try { await navigator.share({ title, text }); } catch { /* cancelada */ }
+    return;
+  }
+  try { await navigator.clipboard.writeText(text); toast('Ficha copiada al portapapeles ✓'); }
+  catch { toast('No se pudo compartir desde este navegador.'); }
+});
+function arPrint(blank) {
+  document.body.classList.add('print-armon');
+  if (blank) document.body.classList.add('blank-print');
+  window.print();
+}
+$('#arPrintBtn').addEventListener('click', () => arPrint(false));
+$('#arPrintBlankBtn').addEventListener('click', () => arPrint(true));
+window.addEventListener('afterprint', () => { document.body.classList.remove('print-armon', 'blank-print'); });
+
+/* ---------- 5) pacientes en el selector + arranque ---------- */
+function renderArmon() {
+  arPopulatePatients();
+}
+
+
+/* ============================================================
    Gastos de insumos
    ============================================================ */
 const gastosTable = $('#gastosTable'), gastosMonth = $('#gastosMonth'), gastosStats = $('#gastosStats');
@@ -2989,6 +3552,7 @@ function renderAll() {
   renderPrecios();
   renderAranceles();
   renderHistoria();
+  renderArmon();
   renderTarjetas();
   loadContactoSite();
   renderGastos();

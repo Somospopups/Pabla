@@ -244,15 +244,25 @@ em { font-family: var(--font-display); font-style: italic; color: var(--bordo-2)
   font-family: var(--font-body);
 }
 .tcard-btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
-.tcard-btn-book { background: var(--bordo); color: #fff; }
-.treatments-alt .tcard-btn-book { background: var(--dorado); color: var(--vino); }
-.tcard-btn-wa {
-  width: 42px; flex: 0 0 42px; background: transparent; border: none;
-  display: inline-flex; align-items: center; justify-content: center;
-  text-decoration: none; transition: transform .2s ease; border-radius: 10px;
+.tcard-btn-book {
+  background: var(--bordo); color: #fdf3ec; gap: .55rem;
+  box-shadow: 0 8px 18px -8px rgba(94,18,36,.55);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
-.tcard-btn-wa:hover { transform: scale(1.18); background: rgba(20,56,44,.08); }
-.tcard-btn-wa img { width: 30px; height: 30px; display: block; }
+.tcard-btn-book svg { stroke: var(--dorado-suave); transition: transform .25s ease; }
+.tcard-btn-book:hover { transform: translateY(-2px); box-shadow: 0 13px 26px -10px rgba(94,18,36,.6); }
+.tcard-btn-book:hover svg { animation: calJiggle .45s ease; }
+.treatments-alt .tcard-btn-book {
+  background: var(--dorado); color: var(--vino);
+  box-shadow: 0 8px 18px -8px rgba(201,162,75,.55);
+}
+.treatments-alt .tcard-btn-book svg { stroke: var(--vino); }
+.treatments-alt .tcard-btn-book:hover { box-shadow: 0 13px 26px -10px rgba(201,162,75,.6); }
+@keyframes calJiggle {
+  0%,100% { transform: rotate(0); }
+  30% { transform: rotate(-10deg) scale(1.12); }
+  60% { transform: rotate(8deg); }
+}
 
 /* ---------- Turnero ---------- */
 .booking { padding: 5rem 0; background: var(--crema); position: relative; }
@@ -553,14 +563,6 @@ textarea { resize: vertical; }
 .final-call:hover { color: var(--dorado-suave); border-color: var(--dorado-suave); }
 .final-call strong { color: inherit; }
 
-.tcard-price {
-  display: inline-block; margin-top: .55rem; font-size: .72rem; font-weight: 500;
-  color: var(--texto-suave); text-decoration: none;
-  border-bottom: 1px dashed var(--nude-2); padding-bottom: .1rem; transition: color .2s, border-color .2s;
-}
-.treatments-alt .tcard-price { color: rgba(253,243,236,.65); border-color: rgba(253,243,236,.25); }
-.tcard-price:hover { color: var(--bordo-2); border-color: var(--bordo-2); }
-.treatments-alt .tcard-price:hover { color: var(--dorado-suave); border-color: var(--dorado-suave); }
 
 /* ---------- Blog ---------- */
 .blog-hero { padding: 120px 0 3rem; background:

@@ -71,9 +71,8 @@ function renderCards(gridId, area) {
       <h3>${s.name}</h3>
       <p>${s.desc}</p>
       <div class="tcard-actions">
-        <button class="tcard-btn tcard-btn-book" data-book-open data-book-area="${area}" data-book-treatment="${s.name}">Reservar turno</button>
+        <button class="tcard-btn tcard-btn-book" data-book-open data-book-area="${area}" data-book-treatment="${s.name}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>Reservar turno</button>
       </div>
-      <a class="tcard-price" data-fx="${area === 'odontologia' ? 'tooth' : 'sparkle'}" href="${waLink(`Hola Pabla! ¿Me pasás el valor de: ${s.name}?`)}" target="_blank" rel="noopener">Valor a consultar por WhatsApp <span aria-hidden="true">→</span></a>
     </article>`).join('');
 }
 renderCards('grid-odontologia', 'odontologia');

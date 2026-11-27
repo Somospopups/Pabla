@@ -392,7 +392,7 @@ textarea { resize: vertical; }
 
 /* ---------- CTA final ---------- */
 .final-cta {
-  padding: 5rem 0; text-align: center; color: #fdf3ec;
+  padding: 4rem 0 5rem; text-align: center; color: #fdf3ec;
   background:
     radial-gradient(700px 350px at 50% -10%, rgba(228,200,122,.28), transparent 60%),
     linear-gradient(160deg, var(--bordo-2), var(--vino));
@@ -526,10 +526,11 @@ textarea { resize: vertical; }
 .gift-copy p { color: rgba(253,243,236,.78); font-size: .92rem; max-width: 52ch; }
 .gift-card .btn { flex-shrink: 0; }
 
-.reviews-cta { padding: 3rem 0 0; background: var(--vino); }
 .reviews-box {
-  text-align: center; padding: 2.5rem 2rem; border-radius: var(--radius);
-  background: rgba(255,255,255,.05); border: 1px solid rgba(228,200,122,.3);
+  text-align: center; padding: 2.1rem 2rem; border-radius: var(--radius);
+  background: rgba(0,0,0,.22); border: 1px solid rgba(228,200,122,.32);
+  max-width: 640px; margin: 0 auto 2.6rem;
+  box-shadow: 0 12px 40px rgba(0,0,0,.28);
 }
 .reviews-stars { color: var(--dorado-suave); font-size: 1.5rem; letter-spacing: .3em; margin-bottom: .8rem; text-shadow: 0 0 18px rgba(228,200,122,.5); }
 .reviews-box h3 { font-family: var(--font-display); color: #fdf3ec; font-size: 1.6rem; margin-bottom: .5rem; }

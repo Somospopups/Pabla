@@ -22,7 +22,7 @@
 <meta name="twitter:description" content="Odontología y armonización orofacial con enfoque natural. MP 12469 · Córdoba." />
 <meta name="twitter:image" content="https://somospopups.github.io/Pabla/img/hero.jpg" />
 <!-- Datos estructurados: negocio + FAQ -->
-<script type="application/ld+json">
+<script type="application/ld+json" id="ldSameAs">
 {
   "@context": "https://schema.org",
   "@type": "Dentist",
@@ -45,7 +45,7 @@
   "sameAs": ["https://www.instagram.com/od.pablabonaudi"]
 }
 </script>
-<script type="application/ld+json">
+<script type="application/ld+json" id="ldFaq">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -315,9 +315,9 @@
         <li><span class="value-num">02</span><div><strong>Naturalidad ante todo</strong><p>Resultados armónicos que respetan tus rasgos y tu esencia.</p></div></li>
         <li><span class="value-num">03</span><div><strong>Acompañamiento real</strong><p>Cada plan se explica paso a paso, con seguimiento personalizado.</p></div></li>
       </ul>
-      <a class="btn btn-ig" href="https://www.instagram.com/od.pablabonaudi" target="_blank" rel="noopener">
+      <a class="btn btn-ig ig-link" href="https://www.instagram.com/od.pablabonaudi" target="_blank" rel="noopener">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="url(#igGrad)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="igGrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#feda75"/><stop offset=".35" stop-color="#f58529"/><stop offset=".6" stop-color="#dd2a7b"/><stop offset=".8" stop-color="#8134af"/><stop offset="1" stop-color="#515bd4"/></linearGradient></defs><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.8" cy="6.2" r="1.3" fill="#dd2a7b" stroke="none"/></svg>
-        Seguila en Instagram <b>@od.pablabonaudi</b>
+        Seguila en Instagram <b class="ig-handle">@od.pablabonaudi</b>
       </a>
     </div>
   </div>
@@ -349,7 +349,7 @@
     <div class="faq-list reveal">
       <details>
         <summary>¿Cómo reservo un turno?</summary>
-        <p>Elegí tu tratamiento acá en la web, seleccioná el día y el horario, completá tus datos y ¡listo! Tu solicitud llega directo al consultorio. También podés escribir por WhatsApp al <a class="wa-link" data-wa-text="Hola Pabla! Quiero reservar un turno." href="https://wa.me/5493512166540" target="_blank" rel="noopener">351 216 6540</a>.</p>
+        <p>Elegí tu tratamiento acá en la web, seleccioná el día y el horario, completá tus datos y ¡listo! Tu solicitud llega directo al consultorio. También podés escribir por WhatsApp al <a class="wa-link wa-number" data-wa-text="Hola Pabla! Quiero reservar un turno." href="https://wa.me/5493512166540" target="_blank" rel="noopener">351 216 6540</a>.</p>
       </details>
       <details>
         <summary>¿El turno queda confirmado cuando reservo online?</summary>
@@ -445,11 +445,11 @@
       <h4>Contacto</h4>
       <a class="wa-link footer-link" data-wa-text="Hola Pabla! Quería hacer una consulta." href="https://wa.me/5493512166540" target="_blank" rel="noopener">
         <img src="img/whatsapp.svg" alt="" width="20" height="20" class="wa-icon" />
-        351 216 6540
+        <span class="wa-number">351 216 6540</span>
       </a>
-      <a class="footer-link" href="tel:+5493512166540">
+      <a class="footer-link tel-link" href="tel:+5493512166540">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 11.91a16 16 0 0 0 6 6l3.27-1.27a2 2 0 0 1 2.11.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        351 216 6540 (Llamada)
+        <span class="wa-number">351 216 6540</span> (Llamada)
       </a>
       <a class="footer-link" href="blog.html">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
@@ -458,12 +458,12 @@
     </div>
     <div class="footer-col">
       <h4>Seguinos</h4>
-      <a class="ig-card" href="https://www.instagram.com/od.pablabonaudi" target="_blank" rel="noopener" aria-label="Seguinos en Instagram — @od.pablabonaudi">
+      <a class="ig-card ig-link" href="https://www.instagram.com/od.pablabonaudi" target="_blank" rel="noopener" aria-label="Seguinos en Instagram — @od.pablabonaudi">
         <span class="ig-badge" aria-hidden="true">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.8" cy="6.2" r="1.3" fill="#fff" stroke="none"/></svg>
         </span>
         <span class="ig-txt">
-          <strong>@od.pablabonaudi</strong>
+          <strong class="ig-handle">@od.pablabonaudi</strong>
           <small>Casos reales, antes y después, y consejos de Pabla</small>
         </span>
         <span class="ig-arrow" aria-hidden="true">↗</span>

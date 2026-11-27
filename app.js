@@ -3,7 +3,9 @@
    ============================================================ */
 'use strict';
 
-const WA_NUMBER = '5493512166540';
+let WA_NUMBER = '5493512166540';
+let IG_URL = 'https://www.instagram.com/od.pablabonaudi';
+let WA_DISPLAY = '351 216 6540';
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 /* ---------- Iconos SVG (trazo) ---------- */
@@ -108,6 +110,45 @@ async function refreshCardsFromCloud() {
   } catch (e) { /* sin conexion: quedan las tarjetas por defecto */ }
 }
 refreshCardsFromCloud();
+
+/* ---------- Contacto del sitio: WhatsApp / Instagram globales ----------
+   Se leen de la tabla site_settings (la edita Pabla desde el panel).
+   Si no hay conexion o tabla, quedan los valores por defecto. */
+async function refreshSiteSettings() {
+  if (!SUPABASE_CFG.url || !SUPABASE_CFG.anonKey) return;
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 4000);
+    const res = await fetch(`${SUPABASE_CFG.url}/rest/v1/site_settings?select=whatsapp,whatsapp_display,instagram&id=eq.1`, {
+      headers: { apikey: SUPABASE_CFG.anonKey, Authorization: 'Bearer ' + SUPABASE_CFG.anonKey },
+      signal: ctrl.signal,
+    });
+    clearTimeout(timer);
+    if (!res.ok) return;
+    const rows = await res.json();
+    const cfg = Array.isArray(rows) ? rows[0] : rows;
+    if (!cfg) return;
+    const wa = String(cfg.whatsapp || '').replace(/\D/g, '');
+    if (wa) WA_NUMBER = wa;
+    if (cfg.whatsapp_display) WA_DISPLAY = String(cfg.whatsapp_display);
+    if (cfg.instagram) IG_URL = String(cfg.instagram);
+    applyWaLinks();
+    document.querySelectorAll('.wa-number').forEach((el) => { el.textContent = WA_DISPLAY; });
+    document.querySelectorAll('.tel-link').forEach((el) => { el.setAttribute('href', 'tel:+' + WA_NUMBER); });
+    document.querySelectorAll('.ig-link').forEach((el) => { el.setAttribute('href', IG_URL); });
+    const igMatch = String(IG_URL).match(/instagram\.com\/([^\/?#]+)/i);
+    if (igMatch) {
+      const handle = '@' + igMatch[1];
+      document.querySelectorAll('.ig-handle').forEach((el) => { el.textContent = handle; });
+      document.querySelectorAll('.ig-card').forEach((el) => { el.setAttribute('aria-label', 'Seguinos en Instagram - ' + handle); });
+    }
+    const ld = document.getElementById('ldSameAs');
+    if (ld) { try { const d = JSON.parse(ld.textContent); d.sameAs = [IG_URL]; ld.textContent = JSON.stringify(d); } catch (e) { /* no critico */ } }
+    const faq = document.getElementById('ldFaq');
+    if (faq) faq.textContent = faq.textContent.replace(/351 216 6540/g, WA_DISPLAY);
+  } catch (e) { /* sin conexion: quedan los valores por defecto */ }
+}
+refreshSiteSettings();
 
 /* ---------- WhatsApp links con texto precargado ---------- */
 function applyWaLinks(root = document) {

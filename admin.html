@@ -217,6 +217,13 @@ tbody tr:hover{background:var(--nude)}
 @media (max-width:640px){.tarj-row{grid-template-columns:48px 1fr}.tarj-actions{grid-column:1/-1;justify-content:flex-start}.tarj-icon{width:44px;height:44px}}
 .tarj-preview{display:flex;align-items:center;gap:.7rem}
 .tarj-preview .tarj-icon{background:var(--nude)}
+/* ---------- Accesos editables ---------- */
+.access-item{display:flex;gap:.3rem;align-items:stretch}
+.access-item .access-card{flex:1;min-width:0}
+.access-item.acceso-oculta .access-card{opacity:.5}
+.access-actions{display:flex;flex-direction:column;gap:.3rem;justify-content:center}
+.ai-globe{background:linear-gradient(160deg,#93314d,#3f0b1a)}
+@media (max-width:640px){.access-item{flex-direction:column}.access-actions{flex-direction:row;justify-content:flex-start}}
 </style>
 </head>
 <body>
@@ -459,7 +466,30 @@ tbody tr:hover{background:var(--nude)}
 
     <!-- ════ ACCESOS ════ -->
     <section class="page" id="page-accesos">
-      <div class="page-head"><div><h1>Accesos</h1><p>Las herramientas que usás todos los días, a un toque. Se abren en una pestaña nueva.</p></div></div>
+      <div class="page-head"><div><h1>Accesos</h1><p>Las herramientas que usás todos los días, a un toque. Se abren en una pestaña nueva. Editalos o agregá más cuando quieras.</p></div>
+        <button class="btn btn-bordo" id="addAccesoBtn" type="button">+ Nuevo acceso</button>
+      </div>
+
+      <div class="panel" id="contactoPanel">
+        <div class="panel-head"><h2>Contacto del sitio</h2><span class="muted" id="contactoEstado"></span></div>
+        <div class="panel-body">
+          <p class="hint" style="margin-top:0">Estos datos se aplican en TODA la web pública: botones de WhatsApp, teléfono de llamada, número visible, Instagram (botones y mensajes) y hasta las respuestas frecuentes. Se ve al instante con solo recargar la página.</p>
+          <div class="grid2">
+            <div class="field"><label class="f" for="siteWa">WhatsApp (código de país + número, solo dígitos)</label><input class="input" id="siteWa" inputmode="numeric" placeholder="Ej.: 5493512166540" maxlength="15" /></div>
+            <div class="field"><label class="f" for="siteWaDisplay">Cómo se muestra en la web</label><input class="input" id="siteWaDisplay" placeholder="Ej.: 351 216 6540" maxlength="24" /></div>
+          </div>
+          <div class="field"><label class="f" for="siteIg">Instagram (link completo)</label><input class="input" id="siteIg" inputmode="url" placeholder="https://www.instagram.com/od.pablabonaudi" maxlength="120" /></div>
+          <div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap"><button class="btn btn-bordo" id="saveContactoBtn" type="button">Guardar contacto</button><span class="hint" id="contactoMissing" hidden style="margin:0">Falta la tabla <code>site_settings</code>: corré el mismo SQL del aviso de abajo (ya está incluido).</span></div>
+        </div>
+      </div>
+      <div class="panel setup-missing" id="accesosSetupNotice" hidden>
+        <div class="panel-body">
+          <h2 style="margin:0 0 .4rem">Falta un paso único: crear la tabla en la nube</h2>
+          <p class="hint" style="margin-top:0">Todavía no existen las tablas <code>accesses</code> y <code>site_settings</code>. Copiá el SQL, pegalo en el editor SQL de Supabase y tocá RUN. Después recargá el panel.</p>
+          <pre id="accesosSqlPre" class="sql-block"></pre>
+          <button class="btn btn-line btn-sm" id="copyAccesosSqlBtn" type="button">Copiar SQL</button>
+        </div>
+      </div>
       <div class="access-grid" id="fullAccessGrid"></div>
       <p class="hint">Las contraseñas de APROSS y RCTA no se guardan acá (ni conviene). Si una página pide login, ingresalo en el sitio oficial.</p>
     </section>
@@ -539,6 +569,27 @@ tbody tr:hover{background:var(--nude)}
       <div class="modal-foot">
         <button class="btn btn-line" data-close-modal type="button">Cancelar</button>
         <button class="btn btn-bordo" type="submit">Guardar paciente</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="accesoModal" role="dialog" aria-modal="true" aria-label="Acceso">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card">
+    <div class="modal-head"><h3 id="accesoModalTitle">Nuevo acceso</h3><button class="close-x" data-close-modal type="button">✕</button></div>
+    <form id="accesoForm">
+      <div class="modal-body">
+        <div class="field"><label class="f" for="accesoNombre">Nombre *</label><input class="input" id="accesoNombre" required maxlength="60" placeholder="Ej.: Instagram, WhatsApp, RCTA…" /></div>
+        <div class="field"><label class="f" for="accesoLink">Link *</label><input class="input" id="accesoLink" required maxlength="300" inputmode="url" placeholder="https://wa.me/5493512166540 o instagram.com/od.pablabonaudi" /><small class="hint" style="margin:.3rem 0 0">Si te olvidás el “https://”, lo agregamos solos.</small></div>
+        <div class="field"><label class="f" for="accesoDesc">Descripción corta</label><input class="input" id="accesoDesc" maxlength="90" placeholder="Una línea de ayuda…" /></div>
+        <div class="field"><label class="f" for="accesoIcon">Ícono</label>
+          <select class="input" id="accesoIcon"></select>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-line" data-close-modal type="button">Cancelar</button>
+        <button class="btn btn-bordo" type="submit">Guardar acceso</button>
       </div>
     </form>
   </div>
@@ -725,6 +776,9 @@ const MAP = {
   treatments: { table: 'treatments',
     toStore: (r) => ({ id: r.id, area: r.area ?? 'odontologia', name: r.name, descr: r.descr ?? '', icon: r.icon || 'limpieza', sort: r.sort ?? 100, active: r.active !== false, createdAt: r.created_at }),
     toRow: (o) => ({ id: o.id, area: o.area, name: o.name, descr: o.descr ?? '', icon: o.icon || 'limpieza', sort: o.sort ?? 100, active: o.active !== false, created_at: o.createdAt || new Date().toISOString() }) },
+  accesses: { table: 'accesses',
+    toStore: (r) => ({ id: r.id, title: r.title, href: r.href, descr: r.descr ?? '', icon: r.icon || 'globe', sort: r.sort ?? 100, active: r.active !== false, createdAt: r.created_at }),
+    toRow: (o) => ({ id: o.id, title: o.title, href: o.href, descr: o.descr ?? '', icon: o.icon || 'globe', sort: o.sort ?? 100, active: o.active !== false, created_at: o.createdAt || new Date().toISOString() }) },
 };
 
 /* ---------- bajo nivel: auth + REST ---------- */
@@ -821,6 +875,7 @@ async function cloudDeleteAll(tableKey) {
 }
 
 let treatmentsAvailable = true;
+let accessesAvailable = true;
 const DEFAULT_TREATMENTS = [
   { area: 'odontologia', name: 'Limpieza y profilaxis dental', descr: 'Eliminación de placa y sarro, pulido y flúor para prevenir caries y encías sanas.', icon: 'limpieza', sort: 0 },
   { area: 'odontologia', name: 'Blanqueamiento dental', descr: 'Aclaramiento profesional en consultorio para una sonrisa más luminosa y pareja.', icon: 'blanqueamiento', sort: 1 },
@@ -840,7 +895,7 @@ const DEFAULT_TREATMENTS = [
   { area: 'armonizacion', name: 'Mesoterapia y skinbooster', descr: 'Vitaminas e hidratación profunda para piel luminosa y revitalizada.', icon: 'mesoterapia', sort: 7 },
 ];
 async function fetchAll() {
-  const KEYS = ['patients', 'appointments', 'prices', 'expenses', 'incomes', 'treatments'];
+  const KEYS = ['patients', 'appointments', 'prices', 'expenses', 'incomes', 'treatments', 'accesses'];
   const results = {};
   const failed = [];
   await Promise.all(KEYS.map(async (k) => {
@@ -857,7 +912,9 @@ async function fetchAll() {
     incomes: (results.incomes || []).map(MAP.incomes.toStore),
     treatments: (results.treatments || []).map(MAP.treatments.toStore).sort((a, b) => a.sort - b.sort || (a.createdAt || '').localeCompare(b.createdAt || '')),
   };
-  if (failed.length) toast('No se pudieron cargar: ' + failed.join(', ') + (failed.includes('treatments') ? ' (ver pestaña Tarjetas)' : ''));
+  accessesAvailable = results.accesses !== null;
+  store.accesses = (results.accesses || []).map(MAP.accesses.toStore).sort(byAccessSort);
+  if (failed.length) toast('No se pudieron cargar: ' + failed.join(', ') + (failed.includes('treatments') ? ' (ver Tarjetas)' : '') + (failed.includes('accesses') ? ' (ver Accesos)' : ''));
   if (!store.prices.length && results.prices) {
     const seed = ALL_SERVICES.map((name, i) => ({ area: i < SERVICES.odontologia.length ? 'odontologia' : 'armonizacion', tratamiento: name, precioCents: null }));
     try { store.prices = await cloudInsertMany('prices', seed); } catch (e) { console.error(e); toast('No se pudo precargar la lista de precios.'); }
@@ -867,6 +924,11 @@ async function fetchAll() {
     try {
       store.treatments = (await cloudInsertMany('treatments', seed)).sort((a, b) => a.sort - b.sort);
     } catch (e) { console.error(e); toast('No se pudieron precargar las tarjetas.'); }
+  }
+  if (accessesAvailable && !store.accesses.length) {
+    try {
+      store.accesses = (await cloudInsertMany('accesses', DEFAULT_ACCESSES.map((a) => ({ ...a, active: true, createdAt: new Date().toISOString() })))).sort(byAccessSort);
+    } catch (e) { console.error(e); toast('No se pudieron precargar los accesos.'); }
   }
 }
 async function loadAll() { await fetchAll(); renderAll(); }
@@ -984,30 +1046,226 @@ document.addEventListener('click', (e) => {
 });
 
 /* ============================================================
-   Accesos externos (contacto + gestión profesional)
+   Accesos editables (contacto + gestión profesional)
    ============================================================ */
-const ACCESS_ITEMS = [
-  { id: 'ig', cls: 'ai-ig', title: 'Instagram · @od.pablabonaudi', desc: 'Casos reales, antes y después, y consejos de Pabla.', host: 'instagram.com/od.pablabonaudi', href: 'https://www.instagram.com/od.pablabonaudi',
-    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>' },
-  { id: 'wa', cls: 'ai-wa', title: 'WhatsApp directo', desc: 'Chatear con el número del consultorio.', host: 'wa.me/5493512166540', href: waLink('Hola Pabla!'),
-    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.14 1.6 5.95L2.05 22l4.29-1.12a9.87 9.87 0 0 0 5.7 1.8h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.16 8.16 0 0 1-4.16-1.14l-.3-.18-2.46.64.66-2.4-.19-.31a8.18 8.18 0 0 1-1.26-4.37 8.2 8.2 0 0 1 8.22-8.22 8.17 8.17 0 0 1 5.81 2.41 8.17 8.17 0 0 1 2.4 5.8c0 4.54-3.7 8.2-8.21 8.2zm4.5-6.13c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.13-.17.25-.64.8-.79.96-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23a7.5 7.5 0 0 1-1.39-1.73c-.14-.25.15-.23.42-.79.05-.09.02-.2-.01-.28-.03-.07-.6-1.44-.82-1.97-.22-.51-.44-.44-.6-.45h-.51c-.18 0-.47.06-.71.33-.25.25-.94.92-.94 2.25 0 1.33.96 2.61 1.09 2.79.14.17 1.9 2.9 4.6 4.07.64.28 1.15.44 1.54.56.65.21 1.24.18 1.7.11.52-.08 1.46-.6 1.67-1.17.21-.58.21-1.07.14-1.17-.06-.1-.23-.16-.48-.28z"/></svg>' },
-  { id: 'rcta', cls: 'ai-rcta', title: 'RCTA', desc: 'Gestión y recetas profesionales RCTA.', host: 'app.rcta.me/home', href: 'https://app.rcta.me/home',
-    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 10h8M8 14h5M8 2v4M16 2v4"/></svg>' },
-  { id: 'apross', cls: 'ai-apross', title: 'APROSS · OdontoCube', desc: 'Portal para prestadores APROSS (odontología).', host: 'traditum.odontocube.com/usuario/login', href: 'https://traditum.odontocube.com/usuario/login',
-    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.5-9.5-10A5.4 5.4 0 0 1 12 6.5 5.4 5.4 0 0 1 21.5 11c-2 5.5-9.5 10-9.5 10z"/></svg>' },
-  { id: 'recetas', cls: 'ai-recetas', title: 'APROSS · Recetas', desc: 'Menú Traditum — receta de medicamentos.', host: 'menu.traditum.com/View/Login.aspx', href: 'https://menu.traditum.com/View/Login.aspx',
-    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3.5l10 10a5 5 0 0 1-7 7l-10-10a5 5 0 0 1 7-7z"/><path d="M8.5 11.5l4 4"/></svg>' },
+const ACCESOS_SQL = `create table if not exists public.accesses (
+  id         uuid primary key default gen_random_uuid(),
+  user_id    uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  title      text not null,
+  href       text not null,
+  descr      text not null default '',
+  icon       text not null default 'globe',
+  sort       int  not null default 100,
+  active     boolean not null default true,
+  created_at timestamptz not null default now(),
+  unique (user_id, title)
+);
+
+alter table public.accesses enable row level security;
+
+drop policy if exists "accesses_owner" on public.accesses;
+create policy "accesses_owner" on public.accesses
+  for all to authenticated
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
+create table if not exists public.site_settings (
+  id               int primary key default 1 check (id = 1),
+  whatsapp         text not null default '5493512166540',
+  whatsapp_display text not null default '351 216 6540',
+  instagram        text not null default 'https://www.instagram.com/od.pablabonaudi',
+  updated_at       timestamptz not null default now()
+);
+
+insert into public.site_settings (id) values (1) on conflict (id) do nothing;
+
+alter table public.site_settings enable row level security;
+
+drop policy if exists "site_settings_public_read" on public.site_settings;
+create policy "site_settings_public_read" on public.site_settings
+  for select to anon using (true);
+
+drop policy if exists "site_settings_auth_read" on public.site_settings;
+create policy "site_settings_auth_read" on public.site_settings
+  for select to authenticated using (true);
+
+drop policy if exists "site_settings_update" on public.site_settings;
+create policy "site_settings_update" on public.site_settings
+  for update to authenticated using (true) with check (true);
+
+notify pgrst, 'reload schema';`;
+
+const ACCESS_ICONS = {
+  ig:      { cls: 'ai-ig',      label: 'Instagram',               svg: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>' },
+  wa:      { cls: 'ai-wa',      label: 'WhatsApp',                svg: '<svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.14 1.6 5.95L2.05 22l4.29-1.12a9.87 9.87 0 0 0 5.7 1.8h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.16 8.16 0 0 1-4.16-1.14l-.3-.18-2.46.64.66-2.4-.19-.31a8.18 8.18 0 0 1-1.26-4.37 8.2 8.2 0 0 1 8.22-8.22 8.17 8.17 0 0 1 5.81 2.41 8.17 8.17 0 0 1 2.4 5.8c0 4.54-3.7 8.2-8.21 8.2zm4.5-6.13c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.13-.17.25-.64.8-.79.96-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23a7.5 7.5 0 0 1-1.39-1.73c-.14-.25.15-.23.42-.79.05-.09.02-.2-.01-.28-.03-.07-.6-1.44-.82-1.97-.22-.51-.44-.44-.6-.45h-.51c-.18 0-.47.06-.71.33-.25.25-.94.92-.94 2.25 0 1.33.96 2.61 1.09 2.79.14.17 1.9 2.9 4.6 4.07.64.28 1.15.44 1.54.56.65.21 1.24.18 1.7.11.52-.08 1.46-.6 1.67-1.17.21-.58.21-1.07.14-1.17-.06-.1-.23-.16-.48-.28z"/></svg>' },
+  rcta:    { cls: 'ai-rcta',    label: 'Agenda / calendario',     svg: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 10h8M8 14h5M8 2v4M16 2v4"/></svg>' },
+  apross:  { cls: 'ai-apross',  label: 'Corazón / salud',         svg: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.5-9.5-10A5.4 5.4 0 0 1 12 6.5 5.4 5.4 0 0 1 21.5 11c-2 5.5-9.5 10-9.5 10z"/></svg>' },
+  recetas: { cls: 'ai-recetas', label: 'Receta / píldora',        svg: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3.5l10 10a5 5 0 0 1-7 7l-10-10a5 5 0 0 1 7-7z"/><path d="M8.5 11.5l4 4"/></svg>' },
+  globe:   { cls: 'ai-globe',   label: 'Globo (genérico)',        svg: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 5.7 4 9s-1.5 6.4-4 9c-2.5-2.6-4-5.7-4-9s1.5-6.4 4-9z"/></svg>' },
+};
+const DEFAULT_ACCESSES = [
+  { id: 'seed-ig',      title: 'Instagram · @od.pablabonaudi', descr: 'Casos reales, antes y después, y consejos de Pabla.', href: 'https://www.instagram.com/od.pablabonaudi', icon: 'ig', sort: 0 },
+  { id: 'seed-wa',      title: 'WhatsApp directo',             descr: 'Chatear con el número del consultorio.',              href: 'https://wa.me/5493512166540?text=Hola%20Pabla!', icon: 'wa', sort: 1 },
+  { id: 'seed-rcta',    title: 'RCTA',                         descr: 'Gestión y recetas profesionales RCTA.',                href: 'https://app.rcta.me/home', icon: 'rcta', sort: 2 },
+  { id: 'seed-apross',  title: 'APROSS · OdontoCube',          descr: 'Portal para prestadores APROSS (odontología).',        href: 'https://traditum.odontocube.com/usuario/login', icon: 'apross', sort: 3 },
+  { id: 'seed-recetas', title: 'APROSS · Recetas',             descr: 'Menú Traditum — receta de medicamentos.',              href: 'https://menu.traditum.com/View/Login.aspx', icon: 'recetas', sort: 4 },
 ];
-function accessCard(item) {
-  return `<a class="access-card" href="${esc(item.href)}" target="_blank" rel="noopener noreferrer">
-    <span class="access-icon ${esc(item.cls)}">${item.icon}</span>
-    <span><h3>${esc(item.title)}</h3><p>${esc(item.desc)}</p><span class="host">${esc(item.host)} ↗</span></span>
+function byAccessSort(a, b) { return (a.sort - b.sort) || String(a.createdAt || '').localeCompare(String(b.createdAt || '')); }
+function accessHost(href) {
+  try { const u = new URL(href); const p = u.pathname.replace(/\/+$/, ''); return ((u.hostname.replace(/^www\./, '') + (p === '/' ? '' : p)) || String(href)).slice(0, 52); }
+  catch { return String(href || '').slice(0, 52); }
+}
+function accessCard(item, editable) {
+  const icon = ACCESS_ICONS[item.icon] || ACCESS_ICONS.globe;
+  const card = `<a class="access-card" href="${esc(item.href)}" target="_blank" rel="noopener noreferrer">
+    <span class="access-icon ${esc(icon.cls)}">${icon.svg}</span>
+    <span><h3>${esc(item.title)}</h3><p>${esc(item.descr || '')}</p><span class="host">${esc(accessHost(item.href))} ↗</span></span>
   </a>`;
+  if (!editable) return card;
+  return `<div class="access-item ${item.active === false ? 'acceso-oculta' : ''}" data-id="${esc(item.id)}">${card}
+    <div class="access-actions">
+      <button class="icon-btn" data-aact="up" title="Subir" type="button">↑</button>
+      <button class="icon-btn" data-aact="down" title="Bajar" type="button">↓</button>
+      <button class="icon-btn" data-aact="toggle" title="${item.active !== false ? 'Ocultar del Resumen' : 'Mostrar en el Resumen'}" type="button">${item.active !== false ? '👁' : '🚫'}</button>
+      <button class="icon-btn" data-aact="edit" title="Editar" type="button">✏️</button>
+      <button class="icon-btn danger" data-aact="delete" title="Eliminar" type="button">🗑</button>
+    </div>
+  </div>`;
 }
+async function loadContactoSite() {
+  try {
+    const res = await sbFetch('/rest/v1/site_settings?select=whatsapp,whatsapp_display,instagram&id=eq.1');
+    if (!res.ok) throw new Error('settings');
+    const rows = await res.json();
+    const r = Array.isArray(rows) ? rows[0] : rows;
+    if (!r) throw new Error('settings');
+    $('#siteWa').value = r.whatsapp || '';
+    $('#siteWaDisplay').value = r.whatsapp_display || '';
+    $('#siteIg').value = r.instagram || '';
+    $('#contactoMissing').hidden = true;
+    $('#contactoEstado').textContent = 'Conectado';
+  } catch (e) {
+    $('#contactoMissing').hidden = false;
+    $('#contactoEstado').textContent = 'Falta crear la tabla (SQL abajo)';
+    if (!$('#siteWa').value) { $('#siteWa').value = '5493512166540'; $('#siteWaDisplay').value = '351 216 6540'; $('#siteIg').value = 'https://www.instagram.com/od.pablabonaudi'; }
+  }
+}
+$('#saveContactoBtn').addEventListener('click', async () => {
+  const wa = $('#siteWa').value.replace(/\D/g, '');
+  if (wa.length < 10 || wa.length > 15) { toast('El WhatsApp: código de país + número, solo dígitos (ej.: 5493512166540).'); return; }
+  const igRaw = $('#siteIg').value.trim();
+  const ig = /^https?:\/\//i.test(igRaw) ? igRaw : 'https://' + igRaw;
+  if (!/instagram\.com\//i.test(ig)) { toast('El link tiene que ser de instagram.com (ej.: https://www.instagram.com/usuario)'); return; }
+  const display = $('#siteWaDisplay').value.trim() || wa;
+  const done = await persist(async () => {
+    const res = await sbFetch('/rest/v1/site_settings?id=eq.1', { method: 'PATCH', headers: { Prefer: 'return=representation' }, body: { whatsapp: wa, whatsapp_display: display, instagram: ig, updated_at: new Date().toISOString() } });
+    if (!res.ok) throw new Error('save');
+  }, 'No se pudo guardar el contacto. ¿Ya corriste el SQL (tiene que decir Success)?');
+  if (!done) return;
+  $('#contactoEstado').textContent = 'Guardado ✓';
+  toast('Contacto actualizado en toda la web ✓');
+});
 function renderAccessGrids() {
-  $('#fullAccessGrid').innerHTML = ACCESS_ITEMS.map(accessCard).join('');
-  $('#quickAccessGrid').innerHTML = ACCESS_ITEMS.map(accessCard).join('');
+  if (!store) return;
+  const notice = $('#accesosSetupNotice');
+  if (notice) notice.hidden = accessesAvailable;
+  const sqlPre = $('#accesosSqlPre');
+  if (sqlPre && !sqlPre.textContent) sqlPre.textContent = ACCESOS_SQL;
+  const items = accessesAvailable ? (store.accesses || []).slice().sort(byAccessSort) : DEFAULT_ACCESSES;
+  $('#quickAccessGrid').innerHTML = items.filter((i) => i.active !== false).map((i) => accessCard(i, false)).join('');
+  $('#fullAccessGrid').innerHTML = items.map((i) => accessCard(i, accessesAvailable)).join('');
 }
+let accesoEditingId = null;
+const accesoIconSelect = $('#accesoIcon');
+accesoIconSelect.innerHTML = Object.keys(ACCESS_ICONS).map((k) => `<option value="${k}">${ACCESS_ICONS[k].label}</option>`).join('');
+function openAccesoModal(a) {
+  accesoEditingId = a ? a.id : null;
+  $('#accesoModalTitle').textContent = a ? 'Editar acceso' : 'Nuevo acceso';
+  $('#accesoNombre').value = a?.title || '';
+  $('#accesoLink').value = a?.href || '';
+  $('#accesoDesc').value = a?.descr || '';
+  accesoIconSelect.value = a?.icon || 'globe';
+  openModal('#accesoModal');
+}
+$('#addAccesoBtn').addEventListener('click', () => {
+  if (!accessesAvailable) { toast('Primero creá la tabla (ver el aviso amarillo).'); return; }
+  openAccesoModal(null);
+});
+$('#copyAccesosSqlBtn').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(ACCESOS_SQL); toast('SQL copiado ✓'); }
+  catch { toast('No pude copiar: seleccionalo del recuadro y Ctrl+C.'); }
+});
+function normalizeHref(v) {
+  let h = String(v || '').trim();
+  if (!h) return '';
+  if (!/^https?:\/\//i.test(h) && !/^mailto:|^tel:/i.test(h)) h = 'https://' + h;
+  return h;
+}
+$('#accesoForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const title = $('#accesoNombre').value.trim();
+  if (title.length < 2) { toast('Poné un nombre al acceso.'); return; }
+  const href = normalizeHref($('#accesoLink').value);
+  if (!href) { toast('Poné el link.'); return; }
+  const descr = $('#accesoDesc').value.trim();
+  const icon = accesoIconSelect.value;
+  const done = await persist(async () => {
+    if (accesoEditingId) {
+      const a = (store.accesses || []).find((x) => x.id === accesoEditingId); if (!a) throw new Error('no encontrado');
+      const updated = await cloudUpdate('accesses', a.id, { ...a, title, href, descr, icon });
+      store.accesses = store.accesses.map((x) => (x.id === a.id ? updated : x));
+    } else {
+      const maxSort = (store.accesses || []).reduce((m, x) => Math.max(m, x.sort), -1);
+      const created = await cloudInsert('accesses', { id: uid(), title, href, descr, icon, sort: maxSort + 1, active: true, createdAt: new Date().toISOString() });
+      store.accesses.push(created);
+    }
+  }, 'No se pudo guardar el acceso.');
+  if (!done) return;
+  closeModals();
+  renderAccessGrids();
+  toast(accesoEditingId ? 'Acceso actualizado ✓' : 'Acceso agregado ✓');
+});
+$('#page-accesos').addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-aact]'); if (!btn) return;
+  const item = btn.closest('.access-item'); const id = item?.dataset.id;
+  const a = (store.accesses || []).find((x) => x.id === id); if (!a) return;
+  const act = btn.dataset.aact;
+  if (act === 'edit') { openAccesoModal(a); return; }
+  if (act === 'toggle') {
+    const next = a.active === false;
+    const ok = await persist(() => cloudUpdateFields('accesses', a.id, { active: next }), 'No se pudo cambiar la visibilidad.');
+    if (!ok) return;
+    a.active = next;
+    renderAccessGrids();
+    toast(a.active ? 'Acceso visible en el Resumen ✓' : 'Acceso oculto del Resumen ✓');
+    return;
+  }
+  if (act === 'delete') {
+    const ok = await showConfirm('Eliminar acceso', `¿Eliminar “${a.title}” de los accesos? No se puede deshacer.`);
+    if (!ok) return;
+    const done = await persist(() => cloudDelete('accesses', a.id), 'No se pudo eliminar el acceso.');
+    if (!done) return;
+    store.accesses = store.accesses.filter((x) => x.id !== a.id);
+    renderAccessGrids();
+    toast('Acceso eliminado');
+    return;
+  }
+  if (act === 'up' || act === 'down') {
+    const dir = act === 'up' ? -1 : 1;
+    const arr = (store.accesses || []).slice().sort(byAccessSort);
+    const idx = arr.findIndex((x) => x.id === a.id);
+    const j = idx + dir;
+    if (j < 0 || j >= arr.length) return;
+    const moved = arr.splice(idx, 1)[0];
+    arr.splice(j, 0, moved);
+    const changed = [];
+    arr.forEach((x, i) => { if (x.sort !== i) { x.sort = i; changed.push(x); } });
+    const ok = await persist(async () => { for (const x of changed) await cloudUpdateFields('accesses', x.id, { sort: x.sort }); }, 'No se pudo cambiar el orden.');
+    if (!ok) return;
+    store.accesses = (store.accesses || []).slice().sort(byAccessSort);
+    renderAccessGrids();
+  }
+});
 
 /* ============================================================
    Resumen
@@ -1558,13 +1816,13 @@ $('#changePassBtn').addEventListener('click', async () => {
 });
 
 $('#wipePanelBtn').addEventListener('click', async () => {
-  const ok1 = await showConfirm('Borrar TODOS tus datos', 'Se borran pacientes, turnos, precios, gastos e ingresos en la nube. Esto no se puede deshacer. Te conviene exportar una copia antes.');
+  const ok1 = await showConfirm('Borrar TODOS tus datos', 'Se borran pacientes, turnos, precios, gastos, ingresos, tarjetas y accesos en la nube. Esto no se puede deshacer. Te conviene exportar una copia antes.');
   if (!ok1) return;
   const ok2 = await showConfirm('Última confirmación', '¿Borrar definitivamente todos tus datos del consultorio?');
   if (!ok2) return;
   setSaveState('guardando');
   try {
-    for (const key of ['patients', 'appointments', 'expenses', 'incomes', 'prices']) await cloudDeleteAll(key);
+    for (const key of ['patients', 'appointments', 'expenses', 'incomes', 'prices', 'treatments', 'accesses']) await cloudDeleteAll(key);
     store.patients = []; store.appointments = []; store.expenses = []; store.incomes = [];
     // La lista de precios se recrea vacía (16 tratamientos "a definir")
     const seed = ALL_SERVICES.map((name, i) => ({ area: i < SERVICES.odontologia.length ? 'odontologia' : 'armonizacion', tratamiento: name, precioCents: null }));
@@ -1806,6 +2064,7 @@ function renderAll() {
   renderPacientes();
   renderPrecios();
   renderTarjetas();
+  loadContactoSite();
   renderGastos();
   renderIngresos();
   renderBalance();

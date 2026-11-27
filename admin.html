@@ -1104,11 +1104,11 @@ const ACCESS_ICONS = {
   globe:   { cls: 'ai-globe',   label: 'Globo (genérico)',        svg: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 5.7 4 9s-1.5 6.4-4 9c-2.5-2.6-4-5.7-4-9s1.5-6.4 4-9z"/></svg>' },
 };
 const DEFAULT_ACCESSES = [
-  { id: 'seed-ig',      title: 'Instagram · @od.pablabonaudi', descr: 'Casos reales, antes y después, y consejos de Pabla.', href: 'https://www.instagram.com/od.pablabonaudi', icon: 'ig', sort: 0 },
-  { id: 'seed-wa',      title: 'WhatsApp directo',             descr: 'Chatear con el número del consultorio.',              href: 'https://wa.me/5493512166540?text=Hola%20Pabla!', icon: 'wa', sort: 1 },
-  { id: 'seed-rcta',    title: 'RCTA',                         descr: 'Gestión y recetas profesionales RCTA.',                href: 'https://app.rcta.me/home', icon: 'rcta', sort: 2 },
-  { id: 'seed-apross',  title: 'APROSS · OdontoCube',          descr: 'Portal para prestadores APROSS (odontología).',        href: 'https://traditum.odontocube.com/usuario/login', icon: 'apross', sort: 3 },
-  { id: 'seed-recetas', title: 'APROSS · Recetas',             descr: 'Menú Traditum — receta de medicamentos.',              href: 'https://menu.traditum.com/View/Login.aspx', icon: 'recetas', sort: 4 },
+  { title: 'Instagram · @od.pablabonaudi', descr: 'Casos reales, antes y después, y consejos de Pabla.', href: 'https://www.instagram.com/od.pablabonaudi', icon: 'ig', sort: 0 },
+  { title: 'WhatsApp directo',             descr: 'Chatear con el número del consultorio.',              href: 'https://wa.me/5493512166540?text=Hola%20Pabla!', icon: 'wa', sort: 1 },
+  { title: 'RCTA',                         descr: 'Gestión y recetas profesionales RCTA.',                href: 'https://app.rcta.me/home', icon: 'rcta', sort: 2 },
+  { title: 'APROSS · OdontoCube',          descr: 'Portal para prestadores APROSS (odontología).',        href: 'https://traditum.odontocube.com/usuario/login', icon: 'apross', sort: 3 },
+  { title: 'APROSS · Recetas',             descr: 'Menú Traditum — receta de medicamentos.',              href: 'https://menu.traditum.com/View/Login.aspx', icon: 'recetas', sort: 4 },
 ];
 function byAccessSort(a, b) { return (a.sort - b.sort) || String(a.createdAt || '').localeCompare(String(b.createdAt || '')); }
 function accessHost(href) {
@@ -1171,9 +1171,10 @@ function renderAccessGrids() {
   if (notice) notice.hidden = accessesAvailable;
   const sqlPre = $('#accesosSqlPre');
   if (sqlPre && !sqlPre.textContent) sqlPre.textContent = ACCESOS_SQL;
-  const items = accessesAvailable ? (store.accesses || []).slice().sort(byAccessSort) : DEFAULT_ACCESSES;
+  const editable = accessesAvailable && (store.accesses || []).length > 0;
+  const items = editable ? store.accesses.slice().sort(byAccessSort) : DEFAULT_ACCESSES;
   $('#quickAccessGrid').innerHTML = items.filter((i) => i.active !== false).map((i) => accessCard(i, false)).join('');
-  $('#fullAccessGrid').innerHTML = items.map((i) => accessCard(i, accessesAvailable)).join('');
+  $('#fullAccessGrid').innerHTML = items.map((i) => accessCard(i, editable)).join('');
 }
 let accesoEditingId = null;
 const accesoIconSelect = $('#accesoIcon');

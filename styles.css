@@ -194,7 +194,7 @@ em { font-family: var(--font-display); font-style: italic; color: var(--bordo-2)
 .section-head p { color: var(--texto-suave); font-size: 1.02rem; }
 
 /* ---------- Áreas ---------- */
-.areas { padding: 4.5rem 0 5rem; background: var(--crema); }
+.areas { padding: calc(76px + 2.5rem) 0 5rem; background: var(--crema); }
 .areas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
 .area-card {
   position: relative; border-radius: var(--radius); overflow: hidden;

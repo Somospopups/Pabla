@@ -219,6 +219,14 @@ tbody tr:hover{background:var(--nude)}
 .tarj-actions{display:flex;gap:.3rem;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .sql-block{user-select:all;white-space:pre-wrap;font-size:.72rem;background:#2a0611;color:#fdf3ec;border-radius:12px;padding:.8rem 1rem;max-height:250px;overflow:auto;margin:.6rem 0;line-height:1.45}
 .setup-missing{border:1px dashed var(--dorado);margin-bottom:1rem}
+.aranceles-meta{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.aranceles-map{display:flex;flex-direction:column;gap:.4rem;max-height:46vh;overflow:auto;margin:.4rem 0 .2rem}
+.aranceles-map-row{display:grid;grid-template-columns:auto 1fr auto;gap:.6rem;align-items:center;border:1px solid rgba(0,0,0,.14);border-radius:12px;padding:.5rem .6rem;cursor:pointer;background:#fff}
+.aranceles-map-row.off{opacity:.55;cursor:not-allowed}
+.aranceles-map-row input{width:18px;height:18px;accent-color:#6b1230}
+.aranceles-map-mi{font-weight:600}
+.aranceles-map-val{font-weight:700;white-space:nowrap}
+.aranceles-empty{text-align:center;padding:1.1rem .5rem;color:#8a7a72}
 @media (max-width:640px){.tarj-row{grid-template-columns:48px 1fr}.tarj-actions{grid-column:1/-1;justify-content:flex-start}.tarj-icon{width:44px;height:44px}}
 .tarj-preview{display:flex;align-items:center;gap:.7rem}
 .tarj-preview .tarj-icon{background:var(--nude)}
@@ -271,6 +279,7 @@ tbody tr:hover{background:var(--nude)}
     <button class="nav-btn" data-tab="agenda"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>Agenda</button>
     <button class="nav-btn" data-tab="pacientes"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M15.5 3.13a4 4 0 0 1 0 7.75"/></svg>Pacientes</button>
     <button class="nav-btn" data-tab="precios"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3H5a2 2 0 0 0-2 2v4.59a2 2 0 0 0 .59 1.41l9.58 9.59a2 2 0 0 0 2.83 0l4.59-4.59a2 2 0 0 0 0-2.59z"/><circle cx="7.5" cy="7.5" r=".5"/></svg>Precios</button>
+    <button class="nav-btn" data-tab="aranceles"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9.3 15.4 11.4 17.5 15 12.5"/></svg>Aranceles CO</button>
     <button class="nav-btn" data-tab="tarjetas"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7.6" height="7.2" rx="1.8"/><rect x="13.4" y="4" width="7.6" height="7.2" rx="1.8"/><rect x="3" y="14" width="7.6" height="7.2" rx="1.8"/><rect x="13.4" y="14" width="7.6" height="7.2" rx="1.8"/></svg>Tarjetas</button>
     <button class="nav-btn" data-tab="gastos"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12v20l-2-1.2-2 1.2-2-1.2L10 22l-2-1.2L6 22z"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>Gastos de insumos</button>
     <button class="nav-btn" data-tab="ingresos"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Ingresos</button>
@@ -381,7 +390,47 @@ tbody tr:hover{background:var(--nude)}
           <thead><tr><th>Tratamiento</th><th style="width:170px">Precio ($)</th><th style="width:90px">Estado</th></tr></thead>
           <tbody id="preciosArmoTable"></tbody>
         </table></div></div></div>
-      <p class="hint">Los precios se guardan solo en este navegador, cifrados. Nadie los ve desde afuera. Dejá vacío lo que todavía no quieras definir — aparece “a definir”.</p>
+      <p class="hint">Los precios se guardan en la nube y los ve solo la cuenta del consultorio. Dejá vacío lo que todavía no quieras definir — aparece “a definir”.</p>
+      <p class="hint" id="preciosRefHint" hidden></p>
+    </section>
+
+    <!-- ════ ARANCELES OFICIALES ════ -->
+    <section class="page" id="page-aranceles">
+      <div class="page-head">
+        <div><h1>Aranceles oficiales</h1><p>Lista de referencia del Colegio Odontológico de Córdoba (solo lectura). No cambian tus Precios hasta que toques “Aplicar a mis Precios”.</p></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button class="btn btn-line btn-sm" id="arancelesPdfBtn" type="button">📄 Ver PDF oficial</button>
+          <button class="btn btn-line btn-sm" id="arancelesSyncBtn" type="button">🔄 Actualizar ahora</button>
+          <button class="btn btn-bordo btn-sm" id="arancelesApplyBtn" type="button">Aplicar a mis Precios</button>
+          <button class="btn btn-line btn-sm" id="exportArancelesBtn" type="button">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="panel"><div class="panel-body aranceles-meta">
+        <span class="badge badge-confirmado" id="arancelesVigencia">Sin datos todavía</span>
+        <span class="muted" id="arancelesActualizado">Tocá “Actualizar ahora” para bajar la lista oficial.</span>
+      </div></div>
+      <div class="panel setup-missing" id="arancelesSetupNotice" hidden>
+        <div class="panel-body">
+          <h2 style="margin:0 0 .4rem">Falta un paso único: crear las tablas en la nube</h2>
+          <p class="hint" style="margin-top:0">Todavía no existen las tablas de aranceles. Copiá el SQL, pegalo en el editor SQL de Supabase y tocá RUN. Después recargá el panel y tocá “Actualizar ahora”.</p>
+          <pre id="arancelesSqlPre" class="sql-block"></pre>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap"><button class="btn btn-line btn-sm" id="copyArancelesSqlBtn" type="button">Copiar SQL</button></div>
+        </div>
+      </div>
+      <div class="panel" id="arancelesListPanel">
+        <div class="panel-head"><h2>Prácticas y valores</h2><span class="muted" id="arancelesCount"></span></div>
+        <div class="panel-body">
+          <div class="grid2">
+            <input class="input" id="arancelesSearch" placeholder="Buscar por código o práctica… (ej.: 1001 o “extracción”)" />
+            <select class="input" id="arancelesChapter"><option value="">Todos los capítulos</option></select>
+          </div>
+          <div class="table-wrap" style="margin-top:.7rem"><table>
+            <thead><tr><th style="width:104px">Código</th><th>Práctica</th><th style="width:160px;text-align:right">Total arancel</th></tr></thead>
+            <tbody id="arancelesTable"></tbody>
+          </table></div>
+          <p class="hint" style="margin-top:.6rem">Valores orientadores, no obligatorios (Código de Ética CO, Art. 14). Los que figuran “A convenir” no tienen valor publicado en la escala oficial. Buscador sobre la vigencia que se ve arriba.</p>
+        </div>
+      </div>
     </section>
 
     <!-- ════ TARJETAS DEL SITIO ════ -->
@@ -625,6 +674,22 @@ tbody tr:hover{background:var(--nude)}
         <button class="btn btn-bordo" type="submit">Guardar tarjeta</button>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="modal" id="arancelesAplicarModal" role="dialog" aria-modal="true" aria-label="Aplicar arancel oficial">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card">
+    <div class="modal-head"><h3>Aplicar arancel oficial a tus Precios</h3><button class="close-x" data-close-modal type="button">✕</button></div>
+    <div class="modal-body">
+      <p class="hint" id="arancelesAplicarIntro" style="margin-top:0"></p>
+      <div class="aranceles-map" id="arancelesMapRows"></div>
+      <p class="hint">Solo Odontología; Armonización no se toca. “Diseño de sonrisa” no tiene un código oficial único y queda como está. Implante = colocación quirúrgica (código 11.02, no incluye la corona). Ortodoncia = total del primer año (código 603). Endodoncia = 2 conductos (código 302). Carillas = porcelana (código 40123; la de resina es 40124).</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-line" data-close-modal type="button">Cancelar</button>
+      <button class="btn btn-bordo" id="confirmarAplicarArancelesBtn" type="button">Aplicar seleccionados</button>
+    </div>
   </div>
 </div>
 
@@ -930,6 +995,7 @@ async function fetchAll() {
       store.treatments = (await cloudInsertMany('treatments', seed)).sort((a, b) => a.sort - b.sort);
     } catch (e) { console.error(e); toast('No se pudieron precargar las tarjetas.'); }
   }
+  try { await fetchAranceles(); } catch (e) { console.error('aranceles', e); arancelesAvailable = false; }
   if (accessesAvailable && !store.accesses.length) {
     try {
       store.accesses = (await cloudInsertMany('accesses', DEFAULT_ACCESSES.map((a) => ({ ...a, active: true, createdAt: new Date().toISOString() })))).sort(byAccessSort);
@@ -1636,6 +1702,187 @@ $('#page-precios').addEventListener('change', async (e) => {
 });
 
 /* ============================================================
+   Aranceles oficiales (Colegio Odontológico de Córdoba)
+   Lista de referencia de solo lectura + aplicar a Precios.
+   ============================================================ */
+const ARANCELES_PAGINA = 'https://colodontcba.org.ar/informacion-general/aranceles/';
+const ARANCELES_PDF_DEFECTO = 'https://colodontcba.org.ar/wp-content/uploads/ARANCELES-GENERALES-23.pdf';
+const ARANCELES_SQL = `create table if not exists public.official_aranceles (
+  codigo          text primary key,
+  practica        text not null,
+  total_cents     bigint,
+  capitulo        int  not null default 0,
+  capitulo_nombre text not null default '',
+  nota            text
+);
+create table if not exists public.official_aranceles_meta (
+  id              int primary key default 1 check (id = 1),
+  vigencia        text,
+  pdf_url         text,
+  pagina_url      text,
+  actualizado_en  timestamptz
+);
+alter table public.official_aranceles enable row level security;
+alter table public.official_aranceles_meta enable row level security;
+drop policy if exists "aranceles auth lee" on public.official_aranceles;
+create policy "aranceles auth lee" on public.official_aranceles for select to authenticated using (true);
+drop policy if exists "aranceles auth escribe" on public.official_aranceles;
+create policy "aranceles auth escribe" on public.official_aranceles for all to authenticated using (true) with check (true);
+drop policy if exists "aranceles meta auth lee" on public.official_aranceles_meta;
+create policy "aranceles meta auth lee" on public.official_aranceles_meta for select to authenticated using (true);
+drop policy if exists "aranceles meta auth escribe" on public.official_aranceles_meta;
+create policy "aranceles meta auth escribe" on public.official_aranceles_meta for all to authenticated using (true) with check (true);`;
+const ARANCEL_MAP = [
+  { t: 'Limpieza y profilaxis dental', c: '501' },
+  { t: 'Blanqueamiento dental', c: '219' },
+  { t: 'Carillas de porcelana y composite', c: '40123' },
+  { t: 'Ortodoncia y alineadores', c: '603' },
+  { t: 'Implantes dentales', c: '11.02' },
+  { t: 'Endodoncia (tratamiento de conducto)', c: '302' },
+  { t: 'Periodoncia y encías', c: '802' },
+];
+let arancelesRows = [];
+let arancelesMeta = null;
+let arancelesAvailable = false;
+let arancelesChapterInit = false;
+
+async function fetchAranceles() {
+  try {
+    const [metaRes, rowsRes] = await Promise.all([
+      sbFetch('/rest/v1/official_aranceles_meta?select=*&id=eq.1'),
+      sbFetch('/rest/v1/official_aranceles?select=*&order=capitulo.asc,codigo.asc'),
+    ]);
+    if (!metaRes.ok || !rowsRes.ok) throw new Error('aranceles http');
+    const metaRows = await metaRes.json();
+    arancelesMeta = Array.isArray(metaRows) ? (metaRows[0] || null) : null;
+    arancelesRows = await rowsRes.json();
+    if (!Array.isArray(arancelesRows)) arancelesRows = [];
+    arancelesAvailable = true;
+  } catch (e) {
+    console.error('aranceles', e);
+    arancelesAvailable = false; arancelesRows = []; arancelesMeta = null;
+  }
+}
+const fmtOfficial = (cents) => cents == null ? null : '$ ' + Math.round(Number(cents) / 100).toLocaleString('es-AR');
+const fmtFechaISO = (iso) => { if (!iso) return ''; const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString('es-AR'); };
+const vigenciaTexto = () => arancelesMeta?.vigencia ? `Arancel CO — ${arancelesMeta.vigencia}` : 'Sin datos todavía';
+
+function renderAranceles() {
+  const notice = $('#arancelesSetupNotice');
+  if (notice) {
+    notice.hidden = arancelesAvailable;
+    const sqlPre = $('#arancelesSqlPre');
+    if (sqlPre && !sqlPre.textContent) sqlPre.textContent = ARANCELES_SQL;
+  }
+  const listPanel = $('#arancelesListPanel');
+  if (listPanel) listPanel.style.display = arancelesAvailable ? '' : 'none';
+  $('#arancelesVigencia').textContent = vigenciaTexto();
+  $('#arancelesActualizado').textContent = arancelesMeta?.actualizado_en
+    ? `Actualizado: ${fmtFechaISO(arancelesMeta.actualizado_en)} · Fuente: colodontcba.org.ar`
+    : 'Tocá “Actualizar ahora” para bajar la lista oficial.';
+  const sel = $('#arancelesChapter');
+  if (sel && !arancelesChapterInit) {
+    const caps = [...new Map(arancelesRows.map((r) => [r.capitulo, r.capitulo_nombre])).entries()].sort((a, b) => a[0] - b[0]);
+    sel.innerHTML = '<option value="">Todos los capítulos</option>' + caps.map(([n, nombre]) => `<option value="${n}">Cap. ${n} — ${esc(nombre)}</option>`).join('');
+    arancelesChapterInit = true;
+  }
+  applyArancelesFilter();
+  const hint = $('#preciosRefHint');
+  if (hint) {
+    if (arancelesMeta?.vigencia) {
+      hint.hidden = false;
+      hint.textContent = `Referencia oficial: Colegio Odontológico de Córdoba — Arancel ${arancelesMeta.vigencia}. Actualizado el ${fmtFechaISO(arancelesMeta.actualizado_en)}.`;
+    } else hint.hidden = true;
+  }
+}
+function applyArancelesFilter() {
+  const q = ($('#arancelesSearch').value || '').trim().toLowerCase();
+  const cap = $('#arancelesChapter').value;
+  const filtered = arancelesRows.filter((r) =>
+    (!cap || String(r.capitulo) === cap) &&
+    (!q || String(r.codigo).toLowerCase().includes(q) || String(r.practica || '').toLowerCase().includes(q)));
+  $('#arancelesCount').textContent = `${filtered.length} de ${arancelesRows.length} prácticas`;
+  $('#arancelesTable').innerHTML = filtered.length ? filtered.map((r) => `
+    <tr><td class="mono">${esc(r.codigo)}</td><td>${esc(r.practica)}</td>
+    <td style="text-align:right" class="mono">${r.total_cents == null ? `<span class="badge badge-pendiente">${esc(r.nota || 'A convenir')}</span>` : esc(fmtOfficial(r.total_cents))}</td></tr>`).join('')
+  : '<tr><td colspan="3" class="empty"><span class="big">🔍</span>Sin resultados para esa búsqueda.</td></tr>';
+}
+$('#arancelesSearch').addEventListener('input', applyArancelesFilter);
+$('#arancelesChapter').addEventListener('change', applyArancelesFilter);
+$('#arancelesPdfBtn').addEventListener('click', () => {
+  window.open(arancelesMeta?.pdf_url || ARANCELES_PDF_DEFECTO, '_blank', 'noopener');
+});
+$('#exportArancelesBtn').addEventListener('click', () => {
+  const rows = arancelesRows.map((r) => [r.codigo, r.practica, `Cap. ${r.capitulo} — ${r.capitulo_nombre}`, r.total_cents == null ? (r.nota || 'A convenir') : (Number(r.total_cents) / 100).toFixed(0), arancelesMeta?.vigencia || '']);
+  download(`aranceles-oficiales-${String(arancelesMeta?.vigencia || 'lista').replace(/\s+/g, '-').toLowerCase()}.csv`, toCSV(['Código', 'Práctica', 'Capítulo', 'Total arancel ($)', 'Vigencia'], rows), 'text/csv;charset=utf-8');
+});
+$('#copyArancelesSqlBtn').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(ARANCELES_SQL); toast('SQL copiado ✓'); }
+  catch { toast('No pude copiar. Seleccioná el texto del recuadro y copialo a mano.'); }
+});
+$('#arancelesSyncBtn').addEventListener('click', async () => {
+  const btn = $('#arancelesSyncBtn');
+  const label = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Actualizando…';
+  try {
+    const res = await sbFetch('/functions/v1/aranceles-sync', { method: 'POST' });
+    let data = null; try { data = await res.json(); } catch { /* sin json */ }
+    if (res.ok && data?.ok) {
+      toast(`Aranceles actualizados: ${data.vigencia} (${data.filas} prácticas) ✓`);
+      arancelesChapterInit = false;
+      await fetchAranceles();
+      renderAranceles(); renderPrecios();
+    } else {
+      toast('No se pudo actualizar: ' + (data?.error || `error ${res.status}`) + '. Seguís con la versión anterior.');
+    }
+  } catch (e) {
+    console.error(e);
+    toast('No se pudo actualizar. Revisá tu conexión e intentá de nuevo.');
+  } finally {
+    btn.disabled = false; btn.textContent = label;
+  }
+});
+function openAplicarAranceles() {
+  if (!arancelesAvailable || !arancelesRows.length) { toast('Primero tocá “Actualizar ahora” para bajar la lista oficial.'); return; }
+  const byCode = new Map(arancelesRows.map((r) => [String(r.codigo), r]));
+  const prices = (store?.prices || []).filter((p) => p.area === 'odontologia');
+  $('#arancelesAplicarIntro').textContent = `Vas a cargar en tus Precios los valores del Arancel ${arancelesMeta?.vigencia || 'vigente'} del Colegio Odontológico de Córdoba. Destildá lo que no quieras cambiar.`;
+  $('#arancelesMapRows').innerHTML = ARANCEL_MAP.map(({ t, c }) => {
+    const off = byCode.get(c);
+    const price = prices.find((p) => p.tratamiento === t);
+    const cents = off?.total_cents == null ? null : Number(off.total_cents);
+    const ok = !!(off && cents != null && price);
+    return `<label class="aranceles-map-row ${ok ? '' : 'off'}">
+      <input type="checkbox" data-map="${esc(t)}" data-cents="${cents == null ? '' : cents}" ${ok ? 'checked' : 'disabled'} />
+      <span><span class="aranceles-map-mi">${esc(t)}</span><br><span class="muted">Cód. ${esc(c)} · ${esc(off?.practica || 'sin valor en la escala oficial')}</span></span>
+      <span class="aranceles-map-val">${cents == null ? 'A convenir' : esc(fmtOfficial(cents))}</span>
+    </label>`;
+  }).join('');
+  openModal('#arancelesAplicarModal');
+}
+$('#arancelesApplyBtn').addEventListener('click', openAplicarAranceles);
+$('#confirmarAplicarArancelesBtn').addEventListener('click', async () => {
+  const boxes = $$('#arancelesMapRows input[type="checkbox"]').filter((b) => b.checked && !b.disabled);
+  if (!boxes.length) { toast('No hay nada tildado para aplicar.'); return; }
+  const btn = $('#confirmarAplicarArancelesBtn');
+  btn.disabled = true; btn.textContent = 'Aplicando…';
+  let okCount = 0, fail = 0;
+  for (const b of boxes) {
+    const tratamiento = b.dataset.map;
+    const cents = parseInt(b.dataset.cents, 10);
+    const price = (store.prices || []).find((p) => p.area === 'odontologia' && p.tratamiento === tratamiento);
+    if (!price || !Number.isFinite(cents)) { fail += 1; continue; }
+    try { await cloudUpdateFields('prices', price.id, { precio_cents: cents }); price.precioCents = cents; okCount += 1; }
+    catch (e) { console.error(e); fail += 1; }
+  }
+  btn.disabled = false; btn.textContent = 'Aplicar seleccionados';
+  closeModals();
+  renderPrecios(); renderAranceles();
+  if (okCount) toast(`Precios actualizados con el arancel oficial${arancelesMeta?.vigencia ? ` (${arancelesMeta.vigencia})` : ''} ✓ ${okCount} aplicado${okCount > 1 ? 's' : ''}${fail ? `, ${fail} no se pudo${fail > 1 ? 'eron' : ''}` : ''}`);
+  else toast('No se pudo actualizar ningún precio.');
+});
+
+/* ============================================================
    Gastos de insumos
    ============================================================ */
 const gastosTable = $('#gastosTable'), gastosMonth = $('#gastosMonth'), gastosStats = $('#gastosStats');
@@ -2076,6 +2323,7 @@ function renderAll() {
   renderAgenda();
   renderPacientes();
   renderPrecios();
+  renderAranceles();
   renderTarjetas();
   loadContactoSite();
   renderGastos();

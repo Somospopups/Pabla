@@ -684,3 +684,32 @@ textarea { resize: vertical; }
   .brand-logo { height: 44px; }
   .footer .brand-logo { height: 56px; }
 }
+
+
+/* ---------- SPLASH · trazo dorado (ingreso) ---------- */
+#splash {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .85rem;
+  background: radial-gradient(circle at 40% 33%, #93314d, #6b1a2e 58%, #470d1d);
+  transition: opacity .65s ease, visibility .65s;
+}
+#splash.splash-hide { opacity: 0; visibility: hidden; pointer-events: none; }
+body.splash-on { overflow: hidden; }
+.sp-svg { width: min(36vw, 150px); height: auto; filter: drop-shadow(0 10px 34px rgba(0,0,0,.35)); }
+.sp-ring { stroke-dasharray: 590; stroke-dashoffset: 590; animation: spDraw 1s .1s cubic-bezier(.4,0,.2,1) forwards; }
+.sp-tooth { stroke-dasharray: 132; stroke-dashoffset: 132; animation: spDraw .85s .72s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes spDraw { to { stroke-dashoffset: 0; } }
+.sp-name {
+  font-family: var(--font-display); font-weight: 600; font-size: clamp(1.02rem, 3.6vw, 1.4rem);
+  letter-spacing: .34em; text-indent: .34em; color: #eed88f;
+  animation: spFadeUp .6s 1.15s both;
+}
+.sp-tag {
+  font-size: .58rem; letter-spacing: .3em; text-transform: uppercase;
+  color: rgba(250,245,240,.72); animation: spFadeUp .6s 1.35s both;
+}
+@keyframes spFadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  #splash { display: none !important; }
+  body.splash-on { overflow: visible !important; }
+}

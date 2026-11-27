@@ -365,3 +365,26 @@ function celebrateBooking() {
   burst(cx, cy, 'tooth', 8);
   burst(cx, cy, 'sparkle', 8);
 }
+
+
+/* ============ SPLASH · trazo dorado ============ */
+(function initSplash() {
+  const ov = document.getElementById('splash');
+  if (!ov) return;
+  let seen = false;
+  try { seen = sessionStorage.getItem('pb-splash-seen') === '1'; } catch (e) {}
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || seen) { ov.remove(); return; }
+  try { sessionStorage.setItem('pb-splash-seen', '1'); } catch (e) {}
+  document.body.classList.add('splash-on');
+  let closed = false;
+  const done = () => {
+    if (closed) return; closed = true;
+    ov.classList.add('splash-hide');
+    document.body.classList.remove('splash-on');
+    setTimeout(() => ov.remove(), 750);
+  };
+  ov.addEventListener('click', done);
+  window.addEventListener('keydown', done, { once: true });
+  setTimeout(done, 2500);
+})();

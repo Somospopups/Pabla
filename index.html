@@ -86,6 +86,22 @@
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+<!-- ══════════════ SPLASH · trazo dorado (solo primera carga de la sesión) ══════════════ -->
+<div id="splash" aria-hidden="true">
+  <svg class="sp-svg" viewBox="0 0 220 220" fill="none">
+    <defs>
+      <linearGradient id="spGold" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#eed88f"/><stop offset=".5" stop-color="#c9a24b"/><stop offset="1" stop-color="#8a6a28"/>
+      </linearGradient>
+    </defs>
+    <circle class="sp-ring" cx="110" cy="110" r="94" stroke="url(#spGold)" stroke-width="3.4"/>
+    <g transform="translate(61.5,60.5) scale(4.05)" stroke="#e9d9cf" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+      <path class="sp-tooth" d="M12 5.5c-2.5-2-6-1.6-7.5.8-1.3 2-.7 5 .8 8 1.2 2.4 1.9 4.7 3.7 4.7 1.6 0 1.6-1.6 3-1.6s1.4 1.6 3 1.6c1.8 0 2.5-2.3 3.7-4.7 1.5-3 2.1-6 .8-8-1.5-2.4-5-2.8-7.5-.8z"/>
+    </g>
+  </svg>
+  <div class="sp-name">PABLA&nbsp;BONAUDI</div>
+  <div class="sp-tag">Odontología &amp; Armonización Orofacial</div>
+</div>
 
 <!-- ══════════════ NAV ══════════════ -->
 <header class="nav" id="nav">

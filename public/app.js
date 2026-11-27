@@ -1,0 +1,306 @@
+/* ============================================================
+   Od. Pabla María Bonaudi — Lógica del sitio
+   ============================================================ */
+'use strict';
+
+const WA_NUMBER = '5493512166540';
+
+/* ---------- Iconos SVG (trazo) ---------- */
+const ICONS = {
+  limpieza: '<path d="M12 5.5c-2.5-2-6-1.6-7.5.8-1.3 2-.7 5 .8 8 1.2 2.4 1.9 4.7 3.7 4.7 1.6 0 1.6-1.6 3-1.6s1.4 1.6 3 1.6c1.8 0 2.5-2.3 3.7-4.7 1.5-3 2.1-6 .8-8-1.5-2.4-5-2.8-7.5-.8z"/><path d="M9 10.5h6"/>',
+  blanqueamiento: '<path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/>',
+  carillas: '<path d="M4 13c2.5 4.5 5.2 6.8 8 6.8s5.5-2.3 8-6.8"/><path d="M7.5 13v3M12 14.5V18M16.5 13v3"/>',
+  diseno: '<path d="M12 21c-4.4 0-8-3.6-8-8 0-1 .2-2 .6-2.9 1 .6 2.3.9 3.6.9 1.5 0 2.9-.4 3.8-1.1 1 .7 2.4 1.1 3.8 1.1 1.3 0 2.6-.3 3.6-.9.4.9.6 1.9.6 2.9 0 4.4-3.6 8-8 8z"/>',
+  ortodoncia: '<rect x="4" y="9" width="16" height="6" rx="2"/><path d="M8 9v6M12 9v6M16 9v6"/>',
+  implantes: '<path d="M10 3h4l-.6 7h-2.8L10 3z"/><path d="M9.2 14h5.6M9.8 17.5h4.4M10.4 21h3.2"/>',
+  endodoncia: '<path d="M12 5.5c-2.5-2-6-1.6-7.5.8-1.3 2-.7 5 .8 8 1.2 2.4 1.9 4.7 3.7 4.7 1 0 1.3-1 2.2-1.6.4 1.4 1 3.3 2.5 3.6"/><path d="M12 5.5c2.5-2 6-1.6 7.5.8 1.3 2 .7 5-.8 8-1.2 2.4-1.9 4.7-3.7 4.7-1.6 0-1.6-1.6-3-1.6"/>',
+  periodoncia: '<path d="M12 3l8 3.5v5c0 5-3.5 8.5-8 9.5-4.5-1-8-4.5-8-9.5v-5L12 3z"/><path d="M9.5 12l2 2 3.5-4"/>',
+  botox: '<path d="M4 20l6.5-6.5"/><path d="M13 4l7 7-4.5 4.5a2.1 2.1 0 0 1-3-3L13 4z"/><path d="M15.5 6.5l2 2"/>',
+  labios: '<path d="M12 8.5c-1.5-1.3-4-1.5-6-.5 2 2.6 3.8 5 6 5s4-2.4 6-5c-2-1-4.5-.8-6 .5z"/>',
+  volumen: '<circle cx="12" cy="12" r="9"/><path d="M9 15s1.2 1.2 3 1.2 3-1.2 3-1.2"/><path d="M9.5 9.5h.01M14.5 9.5h.01"/>',
+  bioestimuladores: '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M12 13v3.5M10.2 14.8h3.6"/>',
+  rinomodelacion: '<path d="M9 3l6 9-6 3 1.5 6"/>',
+  hilos: '<path d="M4 7c4 5 12 5 16 0"/><path d="M4 13c4 5 12 5 16 0"/><path d="M4 19c4 5 12 5 16 0"/>',
+  peelings: '<path d="M8 3h8"/><path d="M10 3v6L5.5 17a2.4 2.4 0 0 0 2.3 3h8.4a2.4 2.4 0 0 0 2.3-3L14 9V3"/><path d="M8.5 14h7"/>',
+  mesoterapia: '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M12 10v5M9.5 12.5h5"/>',
+};
+
+const AREAS = {
+  odontologia: { label: 'Odontología', icon: ICONS.limpieza },
+  armonizacion: { label: 'Armonización Orofacial', icon: ICONS.blanqueamiento },
+};
+
+const SERVICES = {
+  odontologia: [
+    { name: 'Limpieza y profilaxis dental', desc: 'Eliminación de placa y sarro, pulido y flúor para prevenir caries y encías sanas.', icon: ICONS.limpieza },
+    { name: 'Blanqueamiento dental', desc: 'Aclaramiento profesional en consultorio para una sonrisa más luminosa y pareja.', icon: ICONS.blanqueamiento },
+    { name: 'Carillas de porcelana y composite', desc: 'Láminas ultrafinas que transforman color, forma y alineación de tu sonrisa.', icon: ICONS.carillas },
+    { name: 'Diseño de sonrisa', desc: 'Plan 100% personalizado: analizamos tu rostro y tu sonrisa para crear la ideal.', icon: ICONS.diseno },
+    { name: 'Ortodoncia y alineadores', desc: 'Alineadores invisibles e ortodoncia fija para corregir tu mordida y estética.', icon: ICONS.ortodoncia },
+    { name: 'Implantes dentales', desc: 'Reposición de piezas perdidas con implantes de titanio y coronas naturales.', icon: ICONS.implantes },
+    { name: 'Endodoncia (tratamiento de conducto)', desc: 'Salvamos dientes con infección o dolor profundo de forma indolora.', icon: ICONS.endodoncia },
+    { name: 'Periodoncia y encías', desc: 'Diagnóstico y tratamiento de gingivitis y periodontitis: la base de tu sonrisa.', icon: ICONS.periodoncia },
+  ],
+  armonizacion: [
+    { name: 'Toxina botulínica (arrugas de expresión)', desc: 'Suavizado de líneas de frente, entrecejo y patas de gallo con efecto natural.', icon: ICONS.botox },
+    { name: 'Relleno de labios con ácido hialurónico', desc: 'Volumen, definición y perfilado labial según la armonía de tu rostro.', icon: ICONS.labios },
+    { name: 'Voluminización facial (pómulos, mentón, ojeras)', desc: 'Restauramos volúmenes perdidos para un rostro fresco y descansado.', icon: ICONS.volumen },
+    { name: 'Bioestimuladores de colágeno', desc: 'Estimulamos tu propio colágeno para firmeza y luminosidad progresiva.', icon: ICONS.bioestimuladores },
+    { name: 'Rinomodelación', desc: 'Perfilado y corrección nasal sin cirugía, con ácido hialurónico.', icon: ICONS.rinomodelacion },
+    { name: 'Hilos tensores / lifting sin cirugía', desc: 'Efecto lifting inmediato y regeneración de colágeno con hilos tensores.', icon: ICONS.hilos },
+    { name: 'Peelings químicos', desc: 'Renovación de la piel: manchas, acné, poros y textura uniforme.', icon: ICONS.peelings },
+    { name: 'Mesoterapia y skinbooster', desc: 'Vitaminas e hidratación profunda para piel luminosa y revitalizada.', icon: ICONS.mesoterapia },
+  ],
+};
+
+const iconSvg = (inner) =>
+  `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
+
+const waIcon = (size = 18) =>
+  `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.718 2.006-1.41.248-.694.248-1.289.173-1.41-.074-.124-.272-.198-.57-.347m-5.421 4.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a8.19 8.19 0 01-1.26-4.827 8.203 8.203 0 018.224-8.207c2.196 0 4.258.858 5.815 2.414a8.187 8.187 0 012.402 5.822c-.003 4.544-3.715 8.037-8.27 8.037m7.119-18.148A10.16 10.16 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/></svg>`;
+
+const waLink = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+
+/* ---------- Render de tarjetas de tratamientos ---------- */
+function renderCards(gridId, area) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  grid.innerHTML = SERVICES[area].map((s) => `
+    <article class="tcard">
+      <div class="tcard-icon">${iconSvg(s.icon)}</div>
+      <h3>${s.name}</h3>
+      <p>${s.desc}</p>
+      <div class="tcard-actions">
+        <button class="tcard-btn tcard-btn-book" data-book-area="${area}" data-book-treatment="${s.name}">Reservar turno</button>
+        <a class="tcard-btn-wa" href="${waLink(`Hola Pabla! Quiero consultar por: ${s.name}.`)}" target="_blank" rel="noopener" aria-label="Consultar ${s.name} por WhatsApp" title="Consultar por WhatsApp">${waIcon(20)}</a>
+      </div>
+    </article>`).join('');
+}
+renderCards('grid-odontologia', 'odontologia');
+renderCards('grid-armonizacion', 'armonizacion');
+
+/* ---------- WhatsApp links con texto precargado ---------- */
+function applyWaLinks(root = document) {
+  root.querySelectorAll('.wa-link[data-wa-text]').forEach((a) => {
+    a.href = waLink(a.dataset.waText);
+  });
+}
+applyWaLinks();
+
+/* ---------- Nav: scroll + hamburguesa ---------- */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger?.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  hamburger.classList.toggle('active', open);
+  hamburger.setAttribute('aria-expanded', String(open));
+});
+navLinks?.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A') { navLinks.classList.remove('open'); hamburger.classList.remove('active'); }
+});
+
+/* ---------- Reveal on scroll ---------- */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+/* ---------- Footer: año ---------- */
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+/* ============================================================
+   TURNERO
+   ============================================================ */
+const state = { area: null, treatment: '', date: '', time: '' };
+let staticMode = false; // true cuando el backend no está disponible (ej.: GitHub Pages)
+
+const areaPills = document.querySelectorAll('.area-pill');
+const treatmentSelect = document.getElementById('treatmentSelect');
+const dateInput = document.getElementById('dateInput');
+const slotsGrid = document.getElementById('slotsGrid');
+const nameInput = document.getElementById('nameInput');
+const phoneInput = document.getElementById('phoneInput');
+const notesInput = document.getElementById('notesInput');
+const bookingForm = document.getElementById('bookingForm');
+const formError = document.getElementById('formError');
+const bookingSuccess = document.getElementById('bookingSuccess');
+const successDetail = document.getElementById('successDetail');
+const successWaBtn = document.getElementById('successWaBtn');
+const bookAnotherBtn = document.getElementById('bookAnotherBtn');
+const submitBtn = document.getElementById('submitBtn');
+
+const sumArea = document.getElementById('sumArea');
+const sumTreatment = document.getElementById('sumTreatment');
+const sumDate = document.getElementById('sumDate');
+const sumTime = document.getElementById('sumTime');
+
+function todayLocalISO() {
+  const now = new Date();
+  const off = now.getTimezoneOffset();
+  return new Date(now.getTime() - off * 60000).toISOString().slice(0, 10);
+}
+if (dateInput) dateInput.min = todayLocalISO();
+
+function prettyDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso + 'T12:00:00');
+  return d.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
+function updateSummary() {
+  sumArea.textContent = state.area ? AREAS[state.area].label : '—';
+  sumTreatment.textContent = state.treatment || '—';
+  sumDate.textContent = prettyDate(state.date);
+  sumTime.textContent = state.time ? state.time + ' hs' : '—';
+}
+
+function selectArea(area, treatment) {
+  state.area = area;
+  areaPills.forEach((p) => p.classList.toggle('selected', p.dataset.area === area));
+  treatmentSelect.innerHTML =
+    '<option value="">Elegí un tratamiento…</option>' +
+    SERVICES[area].map((s) => `<option value="${s.name}">${s.name}</option>`).join('');
+  treatmentSelect.disabled = false;
+  if (treatment) {
+    treatmentSelect.value = treatment;
+    state.treatment = treatment;
+  } else {
+    state.treatment = '';
+  }
+  updateSummary();
+}
+
+areaPills.forEach((pill) => pill.addEventListener('click', () => selectArea(pill.dataset.area)));
+treatmentSelect?.addEventListener('change', () => { state.treatment = treatmentSelect.value; updateSummary(); });
+
+/* Botones "Reservar turno" de las tarjetas */
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-book-area]');
+  if (!btn) return;
+  selectArea(btn.dataset.bookArea, btn.dataset.bookTreatment);
+  document.getElementById('turnos')?.scrollIntoView({ behavior: 'smooth' });
+});
+
+/* Horarios de respaldo si el backend no responde (hosting estático) */
+function renderFallbackSlots(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  const day = d.getDay();
+  if (day === 0) { slotsGrid.innerHTML = '<p class="slots-empty">Los domingos el consultorio está cerrado.</p>'; return; }
+  const end = day === 6 ? 13 : 19;
+  const pad2 = (n) => String(n).padStart(2, '0');
+  let html = '<p class="slots-empty">Horarios orientativos (la disponibilidad real se confirma por WhatsApp):</p>';
+  for (let h = 9; h < end; h++) {
+    for (const m of [0, 30]) {
+      const t = `${pad2(h)}:${pad2(m)}`;
+      html += `<button type="button" class="slot" data-time="${t}">${t}</button>`;
+    }
+  }
+  slotsGrid.innerHTML = html;
+}
+
+/* Disponibilidad */
+dateInput?.addEventListener('change', async () => {
+  state.date = dateInput.value;
+  state.time = '';
+  updateSummary();
+  if (!state.date) { slotsGrid.innerHTML = '<p class="slots-empty">Elegí una fecha para ver los horarios disponibles.</p>'; return; }
+  slotsGrid.innerHTML = '<p class="slots-empty">Cargando horarios…</p>';
+  try {
+    const res = await fetch(`/api/availability?date=${encodeURIComponent(state.date)}`);
+    const data = await res.json();
+    if (!res.ok) { slotsGrid.innerHTML = `<p class="slots-empty">${data.error || 'No se pudo cargar la disponibilidad.'}</p>`; return; }
+    if (!data.open) { slotsGrid.innerHTML = `<p class="slots-empty">${data.reason || 'Cerrado ese día.'}</p>`; return; }
+    slotsGrid.innerHTML = data.slots.map(({ time, taken }) =>
+      `<button type="button" class="slot" data-time="${time}" ${taken ? 'disabled title="Horario ocupado"' : ''}>${time}</button>`
+    ).join('');
+  } catch {
+    staticMode = true;
+    renderFallbackSlots(state.date);
+  }
+});
+
+slotsGrid?.addEventListener('click', (e) => {
+  const btn = e.target.closest('.slot:not(:disabled)');
+  if (!btn) return;
+  slotsGrid.querySelectorAll('.slot').forEach((s) => s.classList.remove('selected'));
+  btn.classList.add('selected');
+  state.time = btn.dataset.time;
+  updateSummary();
+});
+
+/* Envío del formulario */
+bookingForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  formError.textContent = '';
+
+  const name = nameInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const notes = notesInput.value.trim();
+
+  if (!state.area) return (formError.textContent = 'Elegí el área (paso 1).');
+  if (!state.treatment) return (formError.textContent = 'Elegí el tratamiento (paso 2).');
+  if (!state.date) return (formError.textContent = 'Elegí el día (paso 3).');
+  if (!state.time) return (formError.textContent = 'Elegí el horario (paso 4).');
+  if (name.length < 3) return (formError.textContent = 'Ingresá tu nombre y apellido.');
+  if (phone.replace(/\D/g, '').length < 8) return (formError.textContent = 'Ingresá un teléfono válido.');
+
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = 'Enviando…';
+
+  try {
+    const res = await fetch('/api/appointments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, phone, area: state.area, treatment: state.treatment, date: state.date, time: state.time, notes }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      formError.textContent = data.error || 'No se pudo reservar. Probá de nuevo.';
+      if (res.status === 409) dateInput.dispatchEvent(new Event('change'));
+      return;
+    }
+
+    // Éxito: mostrar confirmación
+    document.querySelector('.booking-wrap').hidden = true;
+    bookingSuccess.hidden = false;
+    successDetail.innerHTML = `<strong>${name}</strong>, tu turno para <strong>${state.treatment}</strong> quedó registrado para el <strong>${prettyDate(state.date)}</strong> a las <strong>${state.time} hs</strong>. Pabla lo confirmará a la brevedad por WhatsApp.`;
+    const waText = `Hola Pabla! Soy ${name}. Reservé un turno online para:\n• Área: ${AREAS[state.area].label}\n• Tratamiento: ${state.treatment}\n• Fecha: ${prettyDate(state.date)}\n• Horario: ${state.time} hs\n¡Gracias!`;
+    successWaBtn.dataset.waText = waText;
+    successWaBtn.href = waLink(waText);
+    bookingSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch {
+    // Backend no disponible (ej.: GitHub Pages) → reservar por WhatsApp
+    staticMode = true;
+    const waText = `Hola Pabla! Soy ${name}. Quiero reservar un turno:\n• Área: ${AREAS[state.area].label}\n• Tratamiento: ${state.treatment}\n• Fecha: ${prettyDate(state.date)}\n• Horario: ${state.time} hs\n• Teléfono: ${phone}${notes ? `\n• Nota: ${notes}` : ''}`;
+    window.open(waLink(waText), '_blank', 'noopener');
+    document.querySelector('.booking-wrap').hidden = true;
+    bookingSuccess.hidden = false;
+    successDetail.innerHTML = `¡Perfecto, <strong>${name}</strong>! Abrimos WhatsApp con el detalle de tu solicitud para <strong>${state.treatment}</strong> (${prettyDate(state.date)}, ${state.time} hs). Si no se abrió, tocá el botón de abajo.`;
+    successWaBtn.dataset.waText = waText;
+    successWaBtn.href = waLink(waText);
+    bookingSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = `Solicitar turno
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+  }
+});
+
+/* Reservar otro turno */
+bookAnotherBtn?.addEventListener('click', () => {
+  bookingForm.reset();
+  state.area = null; state.treatment = ''; state.date = ''; state.time = '';
+  treatmentSelect.innerHTML = '<option value="">Primero elegí un área…</option>';
+  treatmentSelect.disabled = true;
+  areaPills.forEach((p) => p.classList.remove('selected'));
+  slotsGrid.innerHTML = '<p class="slots-empty">Elegí una fecha para ver los horarios disponibles.</p>';
+  updateSummary();
+  document.querySelector('.booking-wrap').hidden = false;
+  bookingSuccess.hidden = true;
+});

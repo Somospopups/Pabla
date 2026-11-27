@@ -71,8 +71,7 @@ function renderCards(gridId, area) {
       <h3>${s.name}</h3>
       <p>${s.desc}</p>
       <div class="tcard-actions">
-        <button class="tcard-btn tcard-btn-book" data-book-area="${area}" data-book-treatment="${s.name}">Reservar turno</button>
-        <a class="tcard-btn-wa" data-fx="${area === 'odontologia' ? 'tooth' : 'sparkle'}" href="${waLink(`Hola Pabla! Quiero consultar por: ${s.name}.`)}" target="_blank" rel="noopener" aria-label="Consultar ${s.name} por WhatsApp" title="Consultar por WhatsApp">${waIcon(20)}</a>
+        <button class="tcard-btn tcard-btn-book" data-book-open data-book-area="${area}" data-book-treatment="${s.name}">Reservar turno</button>
       </div>
       <a class="tcard-price" data-fx="${area === 'odontologia' ? 'tooth' : 'sparkle'}" href="${waLink(`Hola Pabla! ¿Me pasás el valor de: ${s.name}?`)}" target="_blank" rel="noopener">Valor a consultar por WhatsApp <span aria-hidden="true">→</span></a>
     </article>`).join('');
@@ -179,13 +178,77 @@ function selectArea(area, treatment) {
 areaPills.forEach((pill) => pill.addEventListener('click', () => selectArea(pill.dataset.area)));
 treatmentSelect?.addEventListener('change', () => { state.treatment = treatmentSelect.value; updateSummary(); });
 
-/* Botones "Reservar turno" de las tarjetas */
+/* Popup · Reservar turno (turnero o WhatsApp directo) */
+const bookModal = document.getElementById('bookModal');
+const bookContext = document.getElementById('bookContext');
+const bookContextName = document.getElementById('bookContextName');
+let pendingBooking = null;
+let lastTrigger = null;
+
+function openBookModal(pending, trigger) {
+  if (!bookModal) return;
+  pendingBooking = pending || null;
+  lastTrigger = trigger || null;
+  if (pendingBooking?.treatment) {
+    bookContextName.textContent = pendingBooking.treatment;
+    bookContext.hidden = false;
+  } else {
+    bookContext.hidden = true;
+  }
+  bookModal.hidden = false;
+  bookModal.setAttribute('aria-hidden', 'false');
+  requestAnimationFrame(() => requestAnimationFrame(() => bookModal.classList.add('open')));
+  document.body.classList.add('book-open');
+  bookModal.querySelector('[data-book-turnero]')?.focus({ preventScroll: true });
+}
+
+function closeBookModal() {
+  if (!bookModal || bookModal.hidden) return;
+  bookModal.classList.remove('open');
+  bookModal.classList.add('closing');
+  bookModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('book-open');
+  const restore = lastTrigger;
+  setTimeout(() => {
+    bookModal.hidden = true;
+    bookModal.classList.remove('closing');
+    pendingBooking = null;
+    lastTrigger = null;
+    restore?.focus?.({ preventScroll: true });
+  }, 300);
+}
+
 document.addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-book-area]');
-  if (!btn) return;
-  selectArea(btn.dataset.bookArea, btn.dataset.bookTreatment);
-  document.getElementById('turnos')?.scrollIntoView({ behavior: 'smooth' });
+  const trigger = e.target.closest('[data-book-open]');
+  if (trigger) {
+    e.preventDefault();
+    openBookModal(
+      { area: trigger.dataset.bookArea || null, treatment: trigger.dataset.bookTreatment || null },
+      trigger
+    );
+    return;
+  }
+  if (e.target.closest('[data-book-turnero]')) {
+    const p = pendingBooking;
+    closeBookModal();
+    if (p?.area) {
+      selectArea(p.area, p.treatment || undefined);
+      document.getElementById('turnos')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      document.getElementById('turnos')?.scrollIntoView({ behavior: 'smooth' });
+    }
+    return;
+  }
+  if (e.target.closest('[data-book-wa]')) {
+    const t = pendingBooking?.treatment;
+    const text = t ? `Hola Pabla! Quiero reservar un turno para: ${t}.` : 'Hola Pabla! Quiero reservar un turno.';
+    window.open(waLink(text), '_blank', 'noopener');
+    closeBookModal();
+    return;
+  }
+  if (e.target.closest('[data-book-close]')) { closeBookModal(); return; }
 });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBookModal(); });
 
 /* Horarios de respaldo si el backend no responde (hosting estático) */
 function renderFallbackSlots(dateStr) {
@@ -352,8 +415,8 @@ const fxKindFor = (v) => (String(v || '').toLowerCase().includes('armonizacion')
 document.addEventListener('click', (e) => {
   const fxEl = e.target.closest('[data-fx]');
   if (fxEl) { burst(e.clientX, e.clientY, fxEl.dataset.fx); return; }
-  const book = e.target.closest('[data-book-area]');
-  if (book) { burst(e.clientX, e.clientY, fxKindFor(book.dataset.bookArea)); }
+  const book = e.target.closest('[data-book-open]');
+  if (book) { burst(e.clientX, e.clientY, fxKindFor(book.dataset.bookArea || '')); }
 });
 
 /* Celebración al enviar el turno */

@@ -118,7 +118,7 @@
       <a href="admin.html" class="nav-admin">Acceso profesional</a>
     </nav>
     <div class="nav-actions">
-      <a href="#turnos" class="btn btn-primary btn-sm nav-cta">Reservar turno</a>
+      <button type="button" class="btn btn-primary btn-sm nav-cta" data-book-open>Reservar turno</button>
       <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -400,7 +400,7 @@
     <h2>¿Lista para <em>tu mejor versión</em>?</h2>
     <p>Turnos disponibles esta semana. Escribinos y empecemos tu plan personalizado.</p>
     <div class="hero-ctas hero-ctas-center">
-      <a href="#turnos" class="btn btn-gold btn-lg">Quiero mi turno</a>
+      <button type="button" class="btn btn-gold btn-lg" data-book-open>Reservar turno</button>
       <a class="btn btn-whatsapp btn-lg wa-link" data-wa-text="Hola Pabla! Quiero reservar un turno." href="https://wa.me/5493512166540" target="_blank" rel="noopener">
         <img src="img/whatsapp.svg" alt="" width="20" height="20" class="wa-icon" />
         WhatsApp 351 216 6540
@@ -409,6 +409,41 @@
     <a class="final-call" href="tel:+5493512166540">o llamar al <strong>351 216 6540</strong></a>
   </div>
 </section>
+
+<!-- ══════════════ POPUP · RESERVAR TURNO ══════════════ -->
+<div class="book-modal" id="bookModal" role="dialog" aria-modal="true" aria-labelledby="bookModalTitle" aria-hidden="true" hidden>
+  <div class="book-backdrop" data-book-close aria-hidden="true"></div>
+  <div class="book-card" role="document">
+    <button class="book-close" type="button" data-book-close aria-label="Cerrar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <img class="book-mark" src="img/logo-mark.svg" alt="" width="76" height="76" />
+    <p class="book-eyebrow">Reservar turno</p>
+    <h3 class="book-title" id="bookModalTitle">¿Cómo preferís <em>reservar</em>?</h3>
+    <p class="book-context" id="bookContext" hidden>Turno para: <strong id="bookContextName"></strong></p>
+    <div class="book-options">
+      <button class="book-option" type="button" data-book-turnero>
+        <span class="book-option-icon book-option-cal">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>
+        </span>
+        <span class="book-option-text">
+          <strong>Por el turnero online</strong>
+          <span>Elegí día, horario y tratamiento. Queda <em>pendiente</em> hasta que Pabla confirme.</span>
+        </span>
+        <span class="book-option-arrow" aria-hidden="true">→</span>
+      </button>
+      <button class="book-option" type="button" data-book-wa>
+        <span class="book-option-icon book-option-wa-icon"><img src="img/whatsapp.svg" alt="" width="30" height="30" /></span>
+        <span class="book-option-text">
+          <strong>Directamente con Pabla</strong>
+          <span>Escribile por <strong>WhatsApp</strong> y coordiná personalmente día y horario.</span>
+        </span>
+        <span class="book-option-arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+    <p class="book-note">Sin compromiso · Te responde el mismo día</p>
+  </div>
+</div>
 
 <!-- ══════════════ FOOTER ══════════════ -->
 <footer class="footer" id="contacto">
@@ -441,7 +476,7 @@
     <div class="footer-col">
       <h4>Horarios</h4>
       <p>Lun a Vie · 9:00–19:00<br/>Sábados · 9:00–13:00<br/>Domingos · Cerrado</p>
-      <a href="#turnos" class="btn btn-gold btn-sm footer-cta">Reservar turno online</a>
+      <button type="button" class="btn btn-gold btn-sm footer-cta" data-book-open>Reservar turno</button>
     </div>
   </div>
   <div class="footer-bottom">

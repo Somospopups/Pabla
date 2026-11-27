@@ -60,3 +60,21 @@ Los turnos se guardan en `data/appointments.json`.
 
 - El retrato de Pabla es una foto real (enviada por el cliente) con retoque de luz. Las imágenes de consultorio/tratamientos son de apoyo visual (IA). Reemplazar por fotos reales del consultorio cuando estén disponibles.
 - El sitio no reemplaza la consulta profesional.
+
+## Agregados tipo "centro médico premium" (inspirados en anandacentromedico.es)
+
+- **Blog** (`blog.html` + `blog-*.html`): 3 artículos SEO en español rioplatense con schema Article. Agregar más artículos siguiendo el mismo formato y subirlos al `sitemap.xml`.
+- **SEO técnico completo**: JSON-LD `Dentist` + `FAQPage` en `index.html`, Open Graph, Twitter Card, canonical, `robots.txt`, `sitemap.xml`. Si cambiás de dominio, actualizá URLs en `sitemap.xml`, `robots.txt`, canonical y JSON-LD.
+- **Sección "Lo más buscado en Córdoba"**: chips con links internos (SEO).
+- **Tarjeta regalo**: CTA a WhatsApp con mensaje precargado. No requiere backend.
+- **Reseñas**: sección "¿Te atendimos?" con link a Google Maps. Si Pabla activa su perfil de Google Business Profile y acumula reseñas, reemplazar ese bloque por un widget de Trustindex (gratis: trustindex.io — crear widget → pegar el <script> donde está `.reviews-box`).
+- **Precios**: a propósito NO se publican valores (cambian con frecuencia). Cada tratamiento tiene "Valor a consultar por WhatsApp".
+- **Botón Llamar** (tel:) en hero, CTA final y footer.
+- **Testimonios**: no se inventaron reseñas. Cuando haya reseñas reales de Google, cargarlas o activar Trustindex.
+
+## Checklist antes de publicar
+
+1. `node server/server.js` y probar: reservar un turno, entrar al admin (`/admin.html`).
+2. Revisar textos, teléfonos y horarios con Pabla.
+3. Fotos reales del consultorio si las hay (reemplazar `img/*.jpg` del sitio manteniendo nombres).
+4. Si hay perfil de Google Business Profile → cargar link de reseñas y/o activar Trustindex.

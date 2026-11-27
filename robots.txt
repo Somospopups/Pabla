@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /server/
+Disallow: /data/
+
+Sitemap: https://somospopups.github.io/Pabla/sitemap.xml

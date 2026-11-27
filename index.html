@@ -114,6 +114,12 @@
 <!-- ══════════════ HERO ══════════════ -->
 <section class="hero" id="inicio">
   <div class="hero-decor" aria-hidden="true"></div>
+  <span class="twinkle tw-1" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg></span>
+  <span class="twinkle tw-2" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg></span>
+  <span class="twinkle tw-3" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg></span>
+  <span class="twinkle tw-4" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg></span>
+  <span class="twinkle tw-5" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg></span>
+  <span class="twinkle tw-6" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg></span>
   <div class="container hero-grid">
     <div class="hero-copy reveal">
       <div class="hero-badge"><span class="dot"></span> MP 12469 · Córdoba, Argentina</div>
@@ -163,7 +169,7 @@
       <p>Cada tratamiento parte de un diagnóstico personalizado: primero la salud, después la estética. Elegí el área que necesitás.</p>
     </div>
     <div class="areas-grid">
-      <a href="#odontologia" class="area-card reveal">
+      <a href="#odontologia" class="area-card reveal" data-fx="tooth">
         <img src="img/odontologia.jpg" alt="Consultorio odontológico" loading="lazy" />
         <div class="area-card-overlay"></div>
         <div class="area-card-body">
@@ -175,7 +181,7 @@
           </span>
         </div>
       </a>
-      <a href="#armonizacion" class="area-card reveal">
+      <a href="#armonizacion" class="area-card reveal" data-fx="sparkle">
         <img src="img/armonizacion.jpg" alt="Tratamiento de armonización orofacial" loading="lazy" />
         <div class="area-card-overlay"></div>
         <div class="area-card-body">
@@ -196,14 +202,14 @@
   <div class="container searched-inner">
     <span class="searched-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Lo más buscado en Córdoba</span>
     <div class="searched-chips">
-      <a href="#odontologia">Limpieza dental</a>
-      <a href="#odontologia">Blanqueamiento</a>
-      <a href="#odontologia">Diseño de sonrisa</a>
-      <a href="#odontologia">Carillas</a>
-      <a href="#armonizacion">Toxina botulínica</a>
-      <a href="#armonizacion">Ácido hialurónico</a>
-      <a href="#armonizacion">Labios</a>
-      <a href="#armonizacion">Bioestimuladores</a>
+      <a href="#odontologia" data-fx="tooth">Limpieza dental</a>
+      <a href="#odontologia" data-fx="tooth">Blanqueamiento</a>
+      <a href="#odontologia" data-fx="tooth">Diseño de sonrisa</a>
+      <a href="#odontologia" data-fx="tooth">Carillas</a>
+      <a href="#armonizacion" data-fx="sparkle">Toxina botulínica</a>
+      <a href="#armonizacion" data-fx="sparkle">Ácido hialurónico</a>
+      <a href="#armonizacion" data-fx="sparkle">Labios</a>
+      <a href="#armonizacion" data-fx="sparkle">Bioestimuladores</a>
       <a href="blog.html">Blog</a>
     </div>
   </div>
@@ -248,11 +254,11 @@
         <fieldset class="form-step">
           <legend><span class="step-num">1</span> Elegí el área</legend>
           <div class="area-pills" id="areaPills">
-            <button type="button" class="area-pill" data-area="odontologia">
+            <button type="button" class="area-pill" data-area="odontologia" data-fx="tooth">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5c-2.5-2-6-1.6-7.5.8-1.3 2-.7 5 .8 8 1.2 2.4 1.9 4.7 3.7 4.7 1.6 0 1.6-1.6 3-1.6s1.4 1.6 3 1.6c1.8 0 2.5-2.3 3.7-4.7 1.5-3 2.1-6 .8-8-1.5-2.4-5-2.8-7.5-.8z"/></svg>
               Odontología
             </button>
-            <button type="button" class="area-pill" data-area="armonizacion">
+            <button type="button" class="area-pill" data-area="armonizacion" data-fx="sparkle">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
               Armonización Orofacial
             </button>

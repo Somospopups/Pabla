@@ -72,9 +72,9 @@ function renderCards(gridId, area) {
       <p>${s.desc}</p>
       <div class="tcard-actions">
         <button class="tcard-btn tcard-btn-book" data-book-area="${area}" data-book-treatment="${s.name}">Reservar turno</button>
-        <a class="tcard-btn-wa" href="${waLink(`Hola Pabla! Quiero consultar por: ${s.name}.`)}" target="_blank" rel="noopener" aria-label="Consultar ${s.name} por WhatsApp" title="Consultar por WhatsApp">${waIcon(20)}</a>
+        <a class="tcard-btn-wa" data-fx="${area === 'odontologia' ? 'tooth' : 'sparkle'}" href="${waLink(`Hola Pabla! Quiero consultar por: ${s.name}.`)}" target="_blank" rel="noopener" aria-label="Consultar ${s.name} por WhatsApp" title="Consultar por WhatsApp">${waIcon(20)}</a>
       </div>
-      <a class="tcard-price" href="${waLink(`Hola Pabla! ¿Me pasás el valor de: ${s.name}?`)}" target="_blank" rel="noopener">Valor a consultar por WhatsApp <span aria-hidden="true">→</span></a>
+      <a class="tcard-price" data-fx="${area === 'odontologia' ? 'tooth' : 'sparkle'}" href="${waLink(`Hola Pabla! ¿Me pasás el valor de: ${s.name}?`)}" target="_blank" rel="noopener">Valor a consultar por WhatsApp <span aria-hidden="true">→</span></a>
     </article>`).join('');
 }
 renderCards('grid-odontologia', 'odontologia');
@@ -274,6 +274,7 @@ bookingForm?.addEventListener('submit', async (e) => {
     successWaBtn.dataset.waText = waText;
     successWaBtn.href = waLink(waText);
     bookingSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    celebrateBooking();
   } catch {
     // Backend no disponible (ej.: GitHub Pages) → reservar por WhatsApp
     staticMode = true;
@@ -285,6 +286,7 @@ bookingForm?.addEventListener('submit', async (e) => {
     successWaBtn.dataset.waText = waText;
     successWaBtn.href = waLink(waText);
     bookingSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    celebrateBooking();
     return;
   } finally {
     submitBtn.disabled = false;
@@ -305,3 +307,61 @@ bookAnotherBtn?.addEventListener('click', () => {
   document.querySelector('.booking-wrap').hidden = false;
   bookingSuccess.hidden = true;
 });
+
+/* ============================================================
+   EFECTOS: muelitas y destellos al interactuar
+   ============================================================ */
+const FX_ICONS = {
+  tooth: '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5c-2.5-2-6-1.6-7.5.8-1.3 2-.7 5 .8 8 1.2 2.4 1.9 4.7 3.7 4.7 1.6 0 1.6-1.6 3-1.6s1.4 1.6 3 1.6c1.8 0 2.5-2.3 3.7-4.7 1.5-3 2.1-6 .8-8-1.5-2.4-5-2.8-7.5-.8z"/><path d="M9.5 11h5"/></svg>',
+  sparkle: '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>',
+};
+const fxLayer = (() => {
+  const d = document.createElement('div');
+  d.id = 'fx-layer';
+  document.body.appendChild(d);
+  return d;
+})();
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function burst(x, y, kind, count = 9) {
+  if (reducedMotion()) return;
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('span');
+    el.className = `fx-particle fx-${kind}`;
+    el.innerHTML = FX_ICONS[kind];
+    const ang = Math.random() * Math.PI * 2;
+    const dist = 46 + Math.random() * 78;
+    el.style.setProperty('--dx', `${Math.cos(ang) * dist}px`);
+    el.style.setProperty('--dy', `${Math.sin(ang) * dist}px`);
+    el.style.setProperty('--rot', `${Math.random() * 340 - 170}deg`);
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    el.addEventListener('animationend', () => el.remove());
+    fxLayer.appendChild(el);
+  }
+  const big = document.createElement('span');
+  big.className = `fx-pop fx-${kind}`;
+  big.innerHTML = FX_ICONS[kind];
+  big.style.left = `${x}px`;
+  big.style.top = `${y}px`;
+  big.addEventListener('animationend', () => big.remove());
+  fxLayer.appendChild(big);
+}
+const fxKindFor = (v) => (String(v || '').toLowerCase().includes('armonizacion') ? 'sparkle' : 'tooth');
+
+document.addEventListener('click', (e) => {
+  const fxEl = e.target.closest('[data-fx]');
+  if (fxEl) { burst(e.clientX, e.clientY, fxEl.dataset.fx); return; }
+  const book = e.target.closest('[data-book-area]');
+  if (book) { burst(e.clientX, e.clientY, fxKindFor(book.dataset.bookArea)); }
+});
+
+/* Celebración al enviar el turno */
+function celebrateBooking() {
+  const icon = document.querySelector('.success-icon');
+  if (!icon) return;
+  const r = icon.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  burst(cx, cy, 'tooth', 8);
+  burst(cx, cy, 'sparkle', 8);
+}

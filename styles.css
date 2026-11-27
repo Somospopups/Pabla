@@ -422,8 +422,9 @@ textarea { resize: vertical; }
 
 /* ---------- Copito · muela flotante que invita a escribir ---------- */
 .copito-float {
-  position: fixed; bottom: 10px; right: 0; z-index: 90;
+  position: fixed; bottom: 14px; right: 16px; z-index: 90;
   display: flex; align-items: flex-end; gap: .3rem; text-decoration: none;
+  transition: transform .35s cubic-bezier(.2,1.4,.35,1);
 }
 .copito-bubble {
   background: #fff; border: 1.5px solid #e3d2c4; color: var(--bordo);
@@ -438,19 +439,17 @@ textarea { resize: vertical; }
   50% { transform: scale(1.07); }
 }
 .copito-img {
-  height: 158px; width: auto; display: block;
-  margin-right: -64px;               /* se asoma del borde derecho */
-  transition: margin-right .5s cubic-bezier(.2, 1.45, .35, 1);
+  height: 116px; width: auto; display: block;
   animation: copitoBob 2.6s ease-in-out infinite;
-  filter: drop-shadow(0 14px 26px rgba(20, 4, 10, .42));
+  filter: drop-shadow(0 12px 22px rgba(20, 4, 10, .4));
 }
 @keyframes copitoBob {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-9px); }
 }
-.copito-float:hover .copito-img,
-.copito-float:focus-visible .copito-img {
-  margin-right: 4px;                 /* sale del todo al pasar el mouse */
+.copito-float:hover,
+.copito-float:focus-visible {
+  transform: scale(1.08) rotate(-3deg);
 }
 .copito-float:focus-visible { outline: 2px dashed var(--dorado); outline-offset: 4px; border-radius: 12px; }
 
@@ -852,7 +851,7 @@ body.splash-on { overflow: hidden; }
 
 /* Copito · mobile */
 @media (max-width: 640px) {
-  .copito-img { height: 112px; margin-right: -42px; }
-  .copito-float:hover .copito-img, .copito-float:focus-visible .copito-img { margin-right: 2px; }
-  .copito-bubble { margin-bottom: 3.9rem; font-size: .76rem; padding: .35rem .62rem; }
+  .copito-float { right: 10px; bottom: 10px; }
+  .copito-img { height: 92px; }
+  .copito-bubble { margin-bottom: 3.3rem; font-size: .76rem; padding: .35rem .62rem; }
 }

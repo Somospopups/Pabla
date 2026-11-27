@@ -651,7 +651,7 @@ textarea { resize: vertical; }
 }
 
 /* Pulso sutil del monograma al cargar */
-.brand-monogram { animation: brandPop 1.1s cubic-bezier(.2,1.4,.4,1) 1; }
+.brand-logo { animation: brandPop 1.1s cubic-bezier(.2,1.4,.4,1) 1; }
 @keyframes brandPop {
   0% { transform: scale(.4); opacity: 0; }
   60% { transform: scale(1.18); opacity: 1; }
@@ -672,7 +672,15 @@ textarea { resize: vertical; }
 .tcard { position: relative; }
 
 @media (prefers-reduced-motion: reduce) {
-  .twinkle, .hero-decor, .brand-monogram, .tcard:hover .tcard-icon,
+  .twinkle, .hero-decor, .brand-logo, .tcard:hover .tcard-icon,
   .btn-primary::after, .btn-gold::after { animation: none !important; transition: none !important; }
   #fx-layer { display: none; }
+}
+
+/* ---------- Logo horizontal (isologo PB) ---------- */
+.brand-logo { height: 56px; width: auto; display: block; }
+.footer .brand-logo { height: 64px; }
+@media (max-width: 600px) {
+  .brand-logo { height: 44px; }
+  .footer .brand-logo { height: 56px; }
 }

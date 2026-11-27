@@ -4,6 +4,7 @@
 'use strict';
 
 const WA_NUMBER = '5493512166540';
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 /* ---------- Iconos SVG (trazo) ---------- */
 const ICONS = {
@@ -30,7 +31,7 @@ const AREAS = {
   armonizacion: { label: 'Armonización Orofacial', icon: ICONS.blanqueamiento },
 };
 
-const SERVICES = {
+let SERVICES = {
   odontologia: [
     { name: 'Limpieza y profilaxis dental', desc: 'Eliminación de placa y sarro, pulido y flúor para prevenir caries y encías sanas.', icon: ICONS.limpieza },
     { name: 'Blanqueamiento dental', desc: 'Aclaramiento profesional en consultorio para una sonrisa más luminosa y pareja.', icon: ICONS.blanqueamiento },
@@ -68,15 +69,45 @@ function renderCards(gridId, area) {
   grid.innerHTML = SERVICES[area].map((s) => `
     <article class="tcard">
       <div class="tcard-icon">${iconSvg(s.icon)}</div>
-      <h3>${s.name}</h3>
-      <p>${s.desc}</p>
+      <h3>${esc(s.name)}</h3>
+      <p>${esc(s.desc)}</p>
       <div class="tcard-actions">
-        <button class="tcard-btn tcard-btn-book" data-book-open data-book-area="${area}" data-book-treatment="${s.name}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>Reservar turno</button>
+        <button class="tcard-btn tcard-btn-book" data-book-open data-book-area="${esc(area)}" data-book-treatment="${esc(s.name)}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>Reservar turno</button>
       </div>
     </article>`).join('');
 }
 renderCards('grid-odontologia', 'odontologia');
 renderCards('grid-armonizacion', 'armonizacion');
+
+/* ---------- Tarjetas editables desde el panel profesional ----------
+   Si la tabla "treatments" existe y tiene filas, se usan esas.
+   Si no (sin conexion o sin configurar), quedan las por defecto. */
+const SUPABASE_CFG = window.PABLA_SUPABASE || {};
+function rowToCard(r) { return { name: r.name, desc: r.descr || '', icon: ICONS[r.icon] || ICONS.limpieza }; }
+async function refreshCardsFromCloud() {
+  if (!SUPABASE_CFG.url || !SUPABASE_CFG.anonKey) return;
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 4000);
+    const res = await fetch(`${SUPABASE_CFG.url}/rest/v1/treatments?select=area,name,descr,icon,sort&active=eq.true&order=sort.asc,created_at.asc`, {
+      headers: { apikey: SUPABASE_CFG.anonKey, Authorization: 'Bearer ' + SUPABASE_CFG.anonKey },
+      signal: ctrl.signal,
+    });
+    clearTimeout(timer);
+    if (!res.ok) return;
+    const rows = await res.json();
+    if (!Array.isArray(rows) || !rows.length) return;
+    const odonto = rows.filter((r) => r.area === 'odontologia').map(rowToCard);
+    const armo = rows.filter((r) => r.area === 'armonizacion').map(rowToCard);
+    SERVICES = {
+      odontologia: odonto.length ? odonto : SERVICES.odontologia,
+      armonizacion: armo.length ? armo : SERVICES.armonizacion,
+    };
+    renderCards('grid-odontologia', 'odontologia');
+    renderCards('grid-armonizacion', 'armonizacion');
+  } catch (e) { /* sin conexion: quedan las tarjetas por defecto */ }
+}
+refreshCardsFromCloud();
 
 /* ---------- WhatsApp links con texto precargado ---------- */
 function applyWaLinks(root = document) {
@@ -163,7 +194,7 @@ function selectArea(area, treatment) {
   areaPills.forEach((p) => p.classList.toggle('selected', p.dataset.area === area));
   treatmentSelect.innerHTML =
     '<option value="">Elegí un tratamiento…</option>' +
-    SERVICES[area].map((s) => `<option value="${s.name}">${s.name}</option>`).join('');
+    SERVICES[area].map((s) => `<option value="${esc(s.name)}">${esc(s.name)}</option>`).join('');
   treatmentSelect.disabled = false;
   if (treatment) {
     treatmentSelect.value = treatment;

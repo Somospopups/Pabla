@@ -8,298 +8,1524 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%235e1224' stroke='%23c9a24b' stroke-width='5'/><g transform='translate(24.5,27) scale(2.12)' fill='none' stroke='%23e9d9cf' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 5.5c-2.5-2-6-1.6-7.5.8-1.3 2-.7 5 .8 8 1.2 2.4 1.9 4.7 3.7 4.7 1.6 0 1.6-1.6 3-1.6s1.4 1.6 3 1.6c1.8 0 2.5-2.3 3.7-4.7 1.5-3 2.1-6 .8-8-1.5-2.4-5-2.8-7.5-.8z'/></g></svg>" />
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="supabase-config.js"></script>
 <style>
 :root{
-  --bordo:#5e1224; --bordo-2:#7a1f35; --bordo-3:#93314d; --vino:#3f0b1a;
+  --bordo:#5e1224; --bordo-2:#7a1f35; --bordo-3:#93314d; --vino:#3f0b1a; --vino-2:#2a0611;
   --crema:#faf5f0; --nude:#f3e8e1; --nude-2:#e9d9cf; --dorado:#c9a24b; --dorado-suave:#e4c87a;
   --texto:#40222b; --texto-suave:#83626d; --blanco:#fffdfb;
-  --verde:#1d5c46; --ambar:#d97706; --rojo:#b3261e;
+  --verde:#1d5c46; --verde-soft:#dcfce7; --rojo:#b3261e; --rojo-soft:#fee2e2; --ambar-soft:#fef3c7; --ambar-tx:#92400e;
   --font-display:'Playfair Display', Georgia, serif; --font-body:'Jost', system-ui, sans-serif;
+  --shadow: 0 6px 24px rgba(63,11,26,.10);
 }
 *{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none !important}
 body{font-family:var(--font-body);background:var(--crema);color:var(--texto);min-height:100vh}
-.topbar{background:var(--vino);color:#fdf3ec;padding:.9rem 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
-.topbar .brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;color:inherit}
-.monogram-img{width:44px;height:44px;display:block}
-.topbar small{display:block;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(253,243,236,.6)}
-.topbar strong{font-size:.92rem}
-.topbar-actions{display:flex;gap:.6rem;align-items:center}
-.btn{display:inline-flex;align-items:center;gap:.45rem;border:none;border-radius:999px;cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:.85rem;padding:.6rem 1.2rem;text-decoration:none;transition:transform .2s, filter .2s}
-.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.monogram-img{display:block}
+.btn{display:inline-flex;align-items:center;gap:.45rem;border:none;border-radius:999px;cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:.85rem;padding:.55rem 1.15rem;text-decoration:none;transition:transform .2s, filter .2s, box-shadow .2s;white-space:nowrap}
+.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
 .btn-gold{background:linear-gradient(160deg,var(--dorado-suave),var(--dorado));color:#3d2c07}
 .btn-ghost{background:transparent;color:#fdf3ec;border:1px solid rgba(253,243,236,.35)}
 .btn-bordo{background:var(--bordo);color:#fff}
 .btn-verde{background:var(--verde);color:#062f16}
 .btn-rojo{background:var(--rojo);color:#fff}
+.btn-line{background:var(--blanco);color:var(--bordo);border:1.5px solid var(--nude-2)}
 .btn-sm{padding:.4rem .8rem;font-size:.78rem}
+.icon{width:1.1em;height:1.1em;display:inline-block;vertical-align:-.15em}
 
-/* ---------- Login ---------- */
-.login-wrap{min-height:calc(100vh - 66px);display:grid;place-items:center;padding:2rem}
-.login-card{background:var(--blanco);border-radius:20px;box-shadow:0 24px 60px rgba(63,11,26,.25);border:1px solid rgba(201,162,75,.4);padding:2.5rem 2rem;width:min(420px,100%);text-align:center}
-.login-card h1{font-family:var(--font-display);color:var(--vino);font-size:1.5rem;margin:.8rem 0 .2rem}
-.login-card p{color:var(--texto-suave);font-size:.88rem;margin-bottom:1.5rem}
-.login-card input{width:100%;padding:.85rem 1rem;border-radius:12px;border:1.5px solid var(--nude-2);font-family:var(--font-body);font-size:1rem;outline:none;margin-bottom:.8rem;background:var(--crema)}
-.login-card input:focus{border-color:var(--bordo-3);box-shadow:0 0 0 3px rgba(147,49,77,.15)}
-.login-error{color:var(--rojo);font-size:.85rem;min-height:1.3em;margin-bottom:.4rem;font-weight:500}
-.back-link{display:inline-block;margin-top:1rem;font-size:.82rem;color:var(--texto-suave);text-decoration:none}
+/* ---------- Topbar ---------- */
+.topbar{background:var(--vino);color:#fdf3ec;padding:.8rem 1.4rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:60}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;color:inherit}
+.topbar small{display:block;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(253,243,236,.6)}
+.topbar strong{font-size:.92rem}
+.topbar-actions{display:flex;gap:.55rem;align-items:center}
+.save-dot{font-size:.72rem;color:rgba(253,243,236,.65);min-width:9ch;text-align:right}
+
+/* ---------- Login / Crear acceso ---------- */
+.gate-wrap{min-height:calc(100vh - 64px);display:grid;place-items:center;padding:2rem}
+.gate-card{background:var(--blanco);border-radius:20px;box-shadow:0 24px 60px rgba(63,11,26,.25);border:1px solid rgba(201,162,75,.4);padding:2.3rem 2rem;width:min(430px,100%);text-align:center}
+.gate-card h1{font-family:var(--font-display);color:var(--vino);font-size:1.5rem;margin:.8rem 0 .25rem}
+.gate-card p{color:var(--texto-suave);font-size:.88rem;margin-bottom:1.3rem;line-height:1.5}
+.gate-card input{width:100%;padding:.85rem 1rem;border-radius:12px;border:1.5px solid var(--nude-2);font-family:var(--font-body);font-size:1rem;outline:none;margin-bottom:.8rem;background:var(--crema)}
+.gate-card input:focus{border-color:var(--bordo-3);box-shadow:0 0 0 3px rgba(147,49,77,.15)}
+.gate-error{color:var(--rojo);font-size:.85rem;min-height:1.3em;margin-bottom:.4rem;font-weight:500}
+.gate-note{font-size:.78rem;color:var(--texto-suave);background:var(--nude);border-radius:12px;padding:.7rem .8rem;margin-top:.9rem;line-height:1.5;text-align:left}
+.gate-foot{margin-top:1rem;font-size:.8rem}
+.back-link{color:var(--texto-suave);text-decoration:none;font-size:.82rem}
 .back-link:hover{color:var(--bordo)}
+.linkish{color:var(--bordo-2);background:none;border:none;font-family:inherit;font-size:.78rem;cursor:pointer;text-decoration:underline}
+.danger-zone{margin-top:1.1rem;border-top:1px dashed var(--nude-2);padding-top:.8rem}
 
-/* ---------- Dashboard ---------- */
-.dashboard{display:none;padding:1.5rem;max-width:1200px;margin:0 auto}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-bottom:1.4rem}
-.stat{background:var(--blanco);border:1px solid var(--nude-2);border-radius:16px;padding:1rem 1.1rem;box-shadow:0 2px 10px rgba(63,11,26,.07)}
-.stat small{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--texto-suave);display:block}
-.stat strong{font-family:var(--font-display);font-size:1.9rem;color:var(--vino);display:block;line-height:1.2}
+/* ---------- Layout ---------- */
+.layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 64px)}
+.side{background:var(--vino);padding:1rem .7rem;display:flex;flex-direction:column;gap:.25rem;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto}
+.side-title{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,243,236,.45);padding:.5rem .7rem .2rem}
+.nav-btn{display:flex;align-items:center;gap:.6rem;background:transparent;border:none;color:rgba(253,243,236,.82);font-family:var(--font-body);font-size:.88rem;font-weight:500;padding:.55rem .7rem;border-radius:12px;cursor:pointer;text-align:left;transition:background .2s,color .2s;text-decoration:none}
+.nav-btn svg{flex:0 0 auto;opacity:.85}
+.nav-btn:hover{background:rgba(253,243,236,.08);color:#fdf3ec}
+.nav-btn.active{background:linear-gradient(160deg,var(--dorado-suave),var(--dorado));color:#3d2c07;font-weight:600}
+.nav-btn.active svg{opacity:1}
+.side-foot{margin-top:auto;padding:.8rem .7rem .2rem;font-size:.68rem;color:rgba(253,243,236,.4);border-top:1px solid rgba(253,243,236,.12)}
+.content{padding:1.4rem;max-width:1180px;width:100%;margin:0 auto}
+.page{display:none}
+.page.active{display:block;animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.page-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.page-head h1{font-family:var(--font-display);color:var(--vino);font-size:1.55rem}
+.page-head p{color:var(--texto-suave);font-size:.86rem;margin-top:.15rem}
+
+/* ---------- Cards & paneles ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.8rem;margin-bottom:1.3rem}
+.stat{background:var(--blanco);border:1px solid var(--nude-2);border-radius:16px;padding:.9rem 1rem;box-shadow:0 2px 10px rgba(63,11,26,.06)}
+.stat small{font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--texto-suave);display:block;font-weight:600}
+.stat strong{font-family:var(--font-display);font-size:1.55rem;color:var(--vino);display:block;line-height:1.25}
 .stat.accent{background:var(--vino);border-color:var(--bordo)}
-.stat.accent small{color:rgba(253,243,236,.6)}
+.stat.accent small{color:rgba(253,243,236,.65)}
 .stat.accent strong{color:var(--dorado-suave)}
-.panel{background:var(--blanco);border:1px solid var(--nude-2);border-radius:18px;box-shadow:0 6px 24px rgba(63,11,26,.08);overflow:hidden}
-.panel-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding:1.1rem 1.3rem;border-bottom:1px solid var(--nude)}
-.panel-head h2{font-family:var(--font-display);color:var(--vino);font-size:1.15rem}
-.filters{display:flex;gap:.4rem;flex-wrap:wrap;padding:.9rem 1.3rem;border-bottom:1px solid var(--nude);background:var(--crema)}
-.filter-btn{border:1.5px solid var(--nude-2);background:var(--blanco);border-radius:999px;padding:.38rem .95rem;font-size:.8rem;font-weight:600;color:var(--texto-suave);cursor:pointer;font-family:var(--font-body);transition:all .2s}
-.filter-btn:hover{border-color:var(--bordo-3);color:var(--bordo)}
-.filter-btn.active{background:var(--bordo);border-color:var(--bordo);color:#fff}
-.search-row{padding:.9rem 1.3rem;border-bottom:1px solid var(--nude)}
-.search-row input{width:100%;padding:.7rem .95rem;border-radius:12px;border:1.5px solid var(--nude-2);outline:none;font-family:var(--font-body);background:var(--crema)}
-.search-row input:focus{border-color:var(--bordo-3)}
-.appointments{display:flex;flex-direction:column}
-.day-group{padding:.8rem 1.3rem .3rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dorado);font-weight:700;background:linear-gradient(180deg, var(--nude), transparent)}
-.appt{display:grid;grid-template-columns:70px 1.4fr 1.6fr auto;gap:1rem;align-items:center;padding:.85rem 1.3rem;border-bottom:1px solid var(--nude)}
+.stat.ok strong{color:var(--verde)}
+.stat.bad strong{color:var(--rojo)}
+.panel{background:var(--blanco);border:1px solid var(--nude-2);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:1.2rem}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap;padding:1rem 1.2rem;border-bottom:1px solid var(--nude)}
+.panel-head h2{font-family:var(--font-display);color:var(--vino);font-size:1.1rem}
+.panel-body{padding:1.1rem 1.2rem}
+.muted{color:var(--texto-suave);font-size:.8rem}
+.empty{text-align:center;padding:2.2rem 1rem;color:var(--texto-suave)}
+.empty .big{font-size:2rem;display:block;margin-bottom:.4rem}
+
+/* ---------- Formularios ---------- */
+label.f{display:block;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-suave);margin:0 0 .25rem}
+.input, select.input, textarea.input{width:100%;padding:.62rem .75rem;border-radius:10px;border:1.5px solid var(--nude-2);font-family:var(--font-body);font-size:.92rem;outline:none;background:var(--crema);color:var(--texto)}
+.input:focus{border-color:var(--bordo-3);box-shadow:0 0 0 3px rgba(147,49,77,.12)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem}
+.field{margin-bottom:.7rem}
+.hint{font-size:.75rem;color:var(--texto-suave);margin-top:.35rem;line-height:1.5}
+
+/* ---------- Tablas / filas ---------- */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-suave);text-align:left;padding:.55rem .6rem;border-bottom:2px solid var(--nude-2)}
+td{padding:.55rem .6rem;border-bottom:1px solid var(--nude);vertical-align:middle}
+tbody tr:hover{background:var(--nude)}
+.badge{font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-radius:999px;padding:.22rem .65rem;display:inline-block}
+.badge-pendiente{background:var(--ambar-soft);color:var(--ambar-tx)}
+.badge-confirmado{background:var(--verde-soft);color:#166534}
+.badge-cancelado{background:var(--rojo-soft);color:#b91c1c}
+.row-actions{display:flex;gap:.3rem;justify-content:flex-end}
+.icon-btn{border:none;background:var(--nude);border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:.82rem;color:var(--bordo);transition:background .2s}
+.icon-btn:hover{background:var(--nude-2)}
+.icon-btn.ok{color:var(--verde)}
+.icon-btn.danger{color:var(--rojo)}
+
+/* ---------- Agenda ---------- */
+.agenda-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:1.1rem}
+.cal{user-select:none}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.cal-head strong{font-family:var(--font-display);color:var(--vino);font-size:1rem;text-transform:capitalize}
+.cal-nav{display:flex;gap:.35rem;align-items:center}
+.cal-week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.cal-week span{text-align:center;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day{border:1.5px solid transparent;background:var(--crema);border-radius:10px;min-height:54px;padding:.25rem .3rem;font-family:var(--font-body);cursor:pointer;text-align:left;position:relative;transition:border-color .2s, background .2s}
+.cal-day:hover{border-color:var(--dorado)}
+.cal-day.other{opacity:.35}
+.cal-day.today{border-color:var(--bordo-3)}
+.cal-day.selected{border-color:var(--dorado);background:#fdf6e0}
+.cal-day .n{font-size:.8rem;font-weight:600;color:var(--vino)}
+.cal-day .dots{position:absolute;bottom:4px;left:.35rem;right:.35rem;display:flex;gap:3px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--dorado)}
+.dot.more{background:var(--bordo-3)}
+.day-group{padding:.55rem .2rem .2rem;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--dorado);font-weight:700;border-bottom:1.5px solid var(--nude-2);margin-bottom:.35rem}
+.appt{display:grid;grid-template-columns:60px 1.25fr 1.4fr auto;gap:.8rem;align-items:center;padding:.65rem .6rem;border-bottom:1px solid var(--nude)}
 .appt:last-child{border-bottom:none}
-.appt-time{font-family:var(--font-display);font-size:1.15rem;color:var(--vino);font-weight:700}
-.appt-time small{display:block;font-size:.62rem;font-family:var(--font-body);color:var(--texto-suave);letter-spacing:.06em}
-.appt-name{font-weight:600;color:var(--vino)}
-.appt-name a{color:inherit;text-decoration:none;font-size:.82rem;color:var(--texto-suave);display:flex;align-items:center;gap:.3rem}
-.appt-name a:hover{color:var(--bordo-2)}
-.appt-treatment{font-size:.88rem;color:var(--texto)}
-.appt-treatment small{display:block;color:var(--texto-suave);font-size:.74rem}
-.appt-notes{font-size:.78rem;color:var(--texto-suave);font-style:italic;margin-top:.15rem}
-.appt-actions{display:flex;flex-direction:column;gap:.35rem;align-items:flex-end}
-.badge{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:.25rem .75rem}
-.badge-pendiente{background:#fef3c7;color:#92400e}
-.badge-confirmado{background:#dcfce7;color:#166534}
-.badge-cancelado{background:#fee2e2;color:#b91c1c}
-.appt-buttons{display:flex;gap:.35rem}
-.empty{text-align:center;padding:3rem 1rem;color:var(--texto-suave)}
-.loading{text-align:center;padding:2rem;color:var(--texto-suave)}
-@media (max-width:820px){
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .appt{grid-template-columns:1fr;gap:.35rem;padding:.9rem 1.1rem}
-  .appt-actions{flex-direction:row;align-items:center;justify-content:space-between;width:100%}
+.appt-time{font-family:var(--font-display);font-size:1.05rem;color:var(--vino);font-weight:700}
+.appt-time small{display:block;font-size:.6rem;font-family:var(--font-body);color:var(--texto-suave);letter-spacing:.05em}
+.appt-name{font-weight:600;color:var(--vino);font-size:.92rem}
+.appt-name small{display:block;font-weight:400;color:var(--texto-suave);font-size:.76rem}
+.appt-name a{color:inherit;text-decoration:none}
+.appt-name a:hover{color:var(--bordo-2);text-decoration:underline}
+.appt-treatment{font-size:.84rem}
+.appt-notes{font-size:.74rem;color:var(--texto-suave);font-style:italic;margin-top:.1rem}
+.appt-actions{display:flex;flex-direction:column;gap:.3rem;align-items:flex-end}
+.filter-chip{border:1.5px solid var(--nude-2);background:var(--blanco);border-radius:999px;padding:.32rem .8rem;font-size:.76rem;font-weight:600;color:var(--texto-suave);cursor:pointer;font-family:var(--font-body)}
+.filter-chip.active{background:var(--bordo);border-color:var(--bordo);color:#fff}
+.filters-row{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.7rem}
+
+/* ---------- Accesos ---------- */
+.access-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.9rem}
+.access-card{display:flex;gap:.8rem;align-items:flex-start;background:var(--blanco);border:1px solid var(--nude-2);border-radius:16px;padding:1rem;text-decoration:none;color:inherit;transition:transform .25s, box-shadow .25s, border-color .25s;box-shadow:0 2px 10px rgba(63,11,26,.06)}
+.access-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(63,11,26,.14);border-color:var(--dorado)}
+.access-icon{flex:0 0 52px;width:52px;height:52px;border-radius:14px;display:grid;place-items:center}
+.ai-ig{background:radial-gradient(circle at 30% 110%,#feda77 0%,#d62976 45%,#962fbf 75%,#4f5bd5 100%)}
+.ai-wa{background:#25D366}
+.ai-rcta{background:#123f7b}
+.ai-apross{background:#0f5e2e}
+.ai-recetas{background:#7b2d12}
+.access-card > span:last-child{min-width:0}
+.access-card h3{font-size:.94rem;color:var(--vino);margin-bottom:.15rem}
+.access-card p{font-size:.76rem;color:var(--texto-suave);line-height:1.45}
+.access-card .host{display:block;margin-top:.35rem;font-size:.68rem;color:var(--dorado);letter-spacing:.03em;overflow-wrap:anywhere}
+
+/* ---------- Balance ---------- */
+.balance-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.1rem}
+.bars{display:flex;flex-direction:column;gap:.55rem}
+.bar-row{display:grid;grid-template-columns:88px 1fr auto;gap:.6rem;align-items:center;font-size:.78rem}
+.bar-track{background:var(--nude);border-radius:6px;height:14px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;background:var(--bordo)}
+.bar-fill.gasto{background:var(--dorado)}
+.bar-fill.ig{background:var(--verde)}
+.mono{font-variant-numeric:tabular-nums}
+
+/* ---------- Modales ---------- */
+.modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal.open{display:flex}
+.modal-backdrop{position:absolute;inset:0;background:rgba(26,6,13,.6);backdrop-filter:blur(6px)}
+.modal-card{position:relative;background:var(--blanco);border-radius:18px;max-width:520px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 30px 70px rgba(0,0,0,.4);border:1px solid rgba(201,162,75,.4)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1.2rem;border-bottom:1px solid var(--nude);position:sticky;top:0;background:var(--blanco);z-index:1}
+.modal-head h3{font-family:var(--font-display);color:var(--vino)}
+.modal-body{padding:1rem 1.2rem}
+.modal-foot{display:flex;justify-content:flex-end;gap:.5rem;padding:.8rem 1.2rem;border-top:1px solid var(--nude)}
+.close-x{border:none;background:var(--nude);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;color:var(--texto-suave)}
+
+/* ---------- Toast ---------- */
+#toast{position:fixed;bottom:1.2rem;left:50%;transform:translate(-50%,20px);background:var(--vino);color:#fdf3ec;padding:.6rem 1.2rem;border-radius:999px;font-size:.84rem;opacity:0;pointer-events:none;transition:opacity .3s, transform .3s;z-index:100;max-width:min(90vw,480px);text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:.6rem}
+  .side-title,.side-foot{display:none}
+  .nav-btn{white-space:nowrap}
+  .agenda-grid{grid-template-columns:1fr}
+  .balance-cards{grid-template-columns:1fr}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .appt{grid-template-columns:1fr;gap:.3rem;padding:.7rem .6rem}
+  .appt-actions{flex-direction:row;justify-content:space-between;align-items:center;width:100%}
 }
+@media (prefers-reduced-motion:reduce){.page.active{animation:none}.btn:hover{transform:none}}
 </style>
 </head>
 <body>
 
 <header class="topbar">
   <a class="brand" href="index.html">
-    <img class="monogram-img" src="img/logo-mark.svg" alt="Pabla Bonaudi" width="44" height="44" />
-    <span><strong>Od. Pabla Bonaudi</strong><small>Panel profesional · Turnos</small></span>
+    <img class="monogram-img" src="img/logo-mark.svg" alt="Pabla Bonaudi" width="42" height="42" />
+    <span><strong>Od. Pabla Bonaudi</strong><small>Panel profesional</small></span>
   </a>
   <div class="topbar-actions" id="topbarActions" hidden>
-    <button class="btn btn-gold btn-sm" id="exportCsvBtn">⬇ Exportar CSV</button>
-    <button class="btn btn-ghost btn-sm" id="logoutBtn">Cerrar sesión</button>
+    <span class="save-dot" id="saveDot"></span>
+    <button class="btn btn-gold btn-sm" id="quickExportBtn" type="button">⬇ Exportar datos</button>
+    <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">Cerrar sesión</button>
   </div>
 </header>
 
-<!-- ════════ LOGIN ════════ -->
-<div class="login-wrap" id="loginWrap">
-  <form class="login-card" id="loginForm">
-    <img class="monogram-img" src="img/logo-mark.svg" alt="Pabla Bonaudi" width="88" height="88" style="width:88px;height:88px;margin:0 auto 1rem;" />
+<!-- ════════ ACCESO ════════ -->
+<div class="gate-wrap" id="gateWrap">
+  <form class="gate-card" id="gateForm" autocomplete="off">
+    <img class="monogram-img" src="img/logo-mark.svg" alt="Pabla Bonaudi" width="84" height="84" style="width:84px;height:84px;margin:0 auto 1rem;" />
     <h1>Acceso profesional</h1>
-    <p>Ingresá tu contraseña para ver y gestionar los turnos.</p>
-    <input type="password" id="passwordInput" placeholder="Contraseña" autocomplete="current-password" required />
-    <div class="login-error" id="loginError" role="alert"></div>
-    <button type="submit" class="btn btn-bordo" style="width:100%;justify-content:center;padding:.85rem">Entrar al panel</button>
-    <a class="back-link" href="index.html">← Volver al sitio</a>
+    <p id="gateSub">Ingresá con tu usuario y contraseña del consultorio.</p>
+    <input type="email" id="gateEmail" placeholder="Email" autocomplete="email" required />
+    <input type="password" id="gatePass" placeholder="Contraseña" autocomplete="current-password" required />
+    <div class="gate-error" id="gateError" role="alert"></div>
+    <button type="submit" class="btn btn-bordo" id="gateBtn" style="width:100%;justify-content:center;padding:.85rem">Entrar al panel</button>
+    <div class="gate-note" id="configMissing" style="display:none;border:1.5px solid #f3c0c0;background:#fff5f5">
+      <strong>Falta configurar la conexión.</strong><br>
+      El panel todavía no está conectado a la base de datos. Si sos German: ejecutá <strong>PUBLICAR-PANEL-NUBE.bat</strong> del paquete <em>actualizacion-pabla-panel-nube</em> para crear la base y publicar. Si ya lo ejecutaste, recargá con Ctrl+Shift+R.
+    </div>
+    <div class="gate-foot"><a class="back-link" href="index.html">← Volver al sitio</a></div>
   </form>
 </div>
 
-<!-- ════════ DASHBOARD ════════ -->
-<main class="dashboard" id="dashboard">
-  <div class="stats">
-    <div class="stat accent"><small>Turnos hoy</small><strong id="statToday">0</strong></div>
-    <div class="stat"><small>Pendientes de confirmar</small><strong id="statPending">0</strong></div>
-    <div class="stat"><small>Confirmados (próximos)</small><strong id="statConfirmed">0</strong></div>
-    <div class="stat"><small>Total registrados</small><strong id="statTotal">0</strong></div>
-  </div>
+<!-- ════════ PANEL ════════ -->
+<div class="layout" id="panel" hidden>
+  <nav class="side" aria-label="Secciones del panel">
+    <div class="side-title">Gestión del consultorio</div>
+    <button class="nav-btn active" data-tab="resumen"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h6V4H4zM14 20h6V4h-6zM4 20h6v-3H4z"/></svg>Resumen</button>
+    <button class="nav-btn" data-tab="agenda"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>Agenda</button>
+    <button class="nav-btn" data-tab="pacientes"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M15.5 3.13a4 4 0 0 1 0 7.75"/></svg>Pacientes</button>
+    <button class="nav-btn" data-tab="precios"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3H5a2 2 0 0 0-2 2v4.59a2 2 0 0 0 .59 1.41l9.58 9.59a2 2 0 0 0 2.83 0l4.59-4.59a2 2 0 0 0 0-2.59z"/><circle cx="7.5" cy="7.5" r=".5"/></svg>Precios</button>
+    <button class="nav-btn" data-tab="gastos"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12v20l-2-1.2-2 1.2-2-1.2L10 22l-2-1.2L6 22z"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>Gastos de insumos</button>
+    <button class="nav-btn" data-tab="ingresos"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Ingresos</button>
+    <button class="nav-btn" data-tab="balance"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7l-3 6a5.5 5.5 0 0 0 6 0L5 7zM19 7l-3 6a5.5 5.5 0 0 0 6 0l-3-6zM8 21h8"/></svg>Balance</button>
+    <div class="side-title">Clínica</div>
+    <button class="nav-btn" data-tab="historia"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>Historia clínica</button>
+    <div class="side-title">Herramientas</div>
+    <button class="nav-btn" data-tab="accesos"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l3.54-3.54a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.07 0l-3.54 3.54a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Accesos</button>
+    <button class="nav-btn" data-tab="respaldo"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>Datos y cuenta</button>
+    <div class="side-foot">Datos cifrados en este navegador (AES-256).<br>Exportá respaldos seguido.</div>
+  </nav>
 
-  <div class="panel">
-    <div class="panel-head">
-      <h2>Agenda de turnos</h2>
-      <button class="btn btn-bordo btn-sm" id="refreshBtn">↻ Actualizar</button>
-    </div>
-    <div class="filters" id="filters">
-      <button class="filter-btn active" data-filter="all">Todos</button>
-      <button class="filter-btn" data-filter="today">Hoy</button>
-      <button class="filter-btn" data-filter="pendiente">Pendientes</button>
-      <button class="filter-btn" data-filter="confirmado">Confirmados</button>
-      <button class="filter-btn" data-filter="cancelado">Cancelados</button>
-    </div>
-    <div class="search-row">
-      <input type="text" id="searchInput" placeholder="Buscar por nombre, teléfono o tratamiento…" />
-    </div>
-    <div class="appointments" id="appointmentsList"><div class="loading">Cargando turnos…</div></div>
-  </div>
-</main>
+  <main class="content">
 
+    <!-- ════ RESUMEN ════ -->
+    <section class="page active" id="page-resumen">
+      <div class="page-head">
+        <div><h1 id="greetTitle">Buenas tardes, Pabla</h1><p id="greetDate"></p></div>
+        <button class="btn btn-bordo" id="resumenNewTurno" type="button">+ Nuevo turno</button>
+      </div>
+      <div class="cards" id="statCards"></div>
+      <div class="panel">
+        <div class="panel-head"><h2>Accesos rápidos</h2><button class="btn btn-line btn-sm" data-goto="accesos" type="button">Ver todos →</button></div>
+        <div class="panel-body"><div class="access-grid" id="quickAccessGrid"></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h2>Recordatorios</h2></div>
+        <div class="panel-body">
+          <p class="muted" style="margin-bottom:.5rem">· Agregá cada turno que entra por WhatsApp a la Agenda: así el calendario y los pendientes siempre dicen la verdad.</p>
+          <p class="muted" style="margin-bottom:.5rem">· Cargá gastos e ingresos el mismo día: el Balance se arma solo.</p>
+          <p class="muted">· Tus datos viven en la nube: entrá desde cualquier PC o teléfono con tu usuario.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ AGENDA ════ -->
+    <section class="page" id="page-agenda">
+      <div class="page-head">
+        <div><h1>Agenda</h1><p>Calendario y turnos del consultorio. Los turnos que llegan por WhatsApp se cargan acá.</p></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button class="btn btn-line btn-sm" id="exportTurnosBtn" type="button">⬇ CSV</button>
+          <button class="btn btn-bordo" id="addTurnoBtn" type="button">+ Nuevo turno</button>
+        </div>
+      </div>
+      <div class="agenda-grid">
+        <div class="panel"><div class="panel-body cal">
+          <div class="cal-head">
+            <strong id="calTitle"></strong>
+            <div class="cal-nav">
+              <button class="icon-btn" id="calPrev" type="button" aria-label="Mes anterior">←</button>
+              <button class="btn btn-line btn-sm" id="calToday" type="button">Hoy</button>
+              <button class="icon-btn" id="calNext" type="button" aria-label="Mes siguiente">→</button>
+            </div>
+          </div>
+          <div class="cal-week"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
+          <div class="cal-days" id="calDays"></div>
+          <p class="hint" style="margin-top:.6rem">Tocá un día para ver sus turnos abajo. Los puntos dorados marcan días con turnos.</p>
+        </div></div>
+        <div class="panel">
+          <div class="panel-head"><h2>Turnos <span class="muted" id="agendaCount"></span></h2></div>
+          <div class="panel-body">
+            <div class="filters-row" id="agendaFilters">
+              <button class="filter-chip active" data-afilter="all">Próximos</button>
+              <button class="filter-chip" data-afilter="today">Hoy</button>
+              <button class="filter-chip" data-afilter="pendiente">Pendientes</button>
+              <button class="filter-chip" data-afilter="confirmado">Confirmados</button>
+              <button class="filter-chip" data-afilter="cancelado">Cancelados</button>
+              <button class="filter-chip" data-afilter="day">Día elegido</button>
+            </div>
+            <input class="input" id="agendaSearch" placeholder="Buscar por nombre, teléfono o tratamiento…" style="margin-bottom:.6rem" />
+            <div id="agendaList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ PACIENTES ════ -->
+    <section class="page" id="page-pacientes">
+      <div class="page-head">
+        <div><h1>Pacientes</h1><p>Listado de pacientes del consultorio. <span class="muted">(La historia clínica odontológica llega pronto — la traés del consultorio.)</span></p></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button class="btn btn-line btn-sm" id="exportPacientesBtn" type="button">⬇ CSV</button>
+          <button class="btn btn-bordo" id="addPacienteBtn" type="button">+ Nuevo paciente</button>
+        </div>
+      </div>
+      <div class="panel"><div class="panel-body">
+        <input class="input" id="pacientesSearch" placeholder="Buscar paciente por nombre, teléfono o tratamiento…" />
+        <div class="table-wrap" style="margin-top:.7rem"><table>
+          <thead><tr><th>Paciente</th><th>Teléfono</th><th>Área</th><th>Tratamiento</th><th>Turnos</th><th></th></tr></thead>
+          <tbody id="pacientesTable"></tbody>
+        </table></div>
+      </div></div>
+    </section>
+
+    <!-- ════ PRECIOS ════ -->
+    <section class="page" id="page-precios">
+      <div class="page-head">
+        <div><h1>Precios</h1><p>Lista de referencia interna — editable cuando cambie la lista del consultorio.</p></div>
+        <button class="btn btn-line btn-sm" id="exportPreciosBtn" type="button">⬇ CSV</button>
+      </div>
+      <div class="panel"><div class="panel-head"><h2>Odontología</h2><span class="muted" id="preciosOdontoCount"></span></div>
+        <div class="panel-body"><div class="table-wrap"><table>
+          <thead><tr><th>Tratamiento</th><th style="width:170px">Precio ($)</th><th style="width:90px">Estado</th></tr></thead>
+          <tbody id="preciosOdontoTable"></tbody>
+        </table></div></div></div>
+      <div class="panel"><div class="panel-head"><h2>Armonización Orofacial</h2><span class="muted" id="preciosArmoCount"></span></div>
+        <div class="panel-body"><div class="table-wrap"><table>
+          <thead><tr><th>Tratamiento</th><th style="width:170px">Precio ($)</th><th style="width:90px">Estado</th></tr></thead>
+          <tbody id="preciosArmoTable"></tbody>
+        </table></div></div></div>
+      <p class="hint">Los precios se guardan solo en este navegador, cifrados. Nadie los ve desde afuera. Dejá vacío lo que todavía no quieras definir — aparece “a definir”.</p>
+    </section>
+
+    <!-- ════ GASTOS ════ -->
+    <section class="page" id="page-gastos">
+      <div class="page-head">
+        <div><h1>Gastos de insumos</h1><p>Todo lo que compra el consultorio. Se suma solo al balance del mes.</p></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button class="btn btn-line btn-sm" id="exportGastosBtn" type="button">⬇ CSV</button>
+          <button class="btn btn-bordo" id="addGastoBtn" type="button">+ Nuevo gasto</button>
+        </div>
+      </div>
+      <div class="cards" id="gastosStats"></div>
+      <div class="panel"><div class="panel-head"><h2>Movimientos</h2>
+        <input type="month" class="input" id="gastosMonth" style="width:auto" />
+      </div><div class="panel-body"><div class="table-wrap"><table>
+        <thead><tr><th>Fecha</th><th>Concepto</th><th>Categoría</th><th>Proveedor</th><th style="text-align:right">Monto</th><th></th></tr></thead>
+        <tbody id="gastosTable"></tbody>
+      </table></div></div></div>
+    </section>
+
+    <!-- ════ INGRESOS ════ -->
+    <section class="page" id="page-ingresos">
+      <div class="page-head">
+        <div><h1>Ingresos</h1><p>Cobros del consultorio, manuales o al cierre del día. Suman solos al balance.</p></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button class="btn btn-line btn-sm" id="exportIngresosBtn" type="button">⬇ CSV</button>
+          <button class="btn btn-bordo" id="addIngresoBtn" type="button">+ Nuevo ingreso</button>
+        </div>
+      </div>
+      <div class="cards" id="ingresosStats"></div>
+      <div class="panel"><div class="panel-head"><h2>Movimientos</h2>
+        <input type="month" class="input" id="ingresosMonth" style="width:auto" />
+      </div><div class="panel-body"><div class="table-wrap"><table>
+        <thead><tr><th>Fecha</th><th>Concepto</th><th>Área</th><th>Medio</th><th style="text-align:right">Monto</th><th></th></tr></thead>
+        <tbody id="ingresosTable"></tbody>
+      </table></div></div></div>
+    </section>
+
+    <!-- ════ BALANCE ════ -->
+    <section class="page" id="page-balance">
+      <div class="page-head">
+        <div><h1>Balance</h1><p>Se arma solo con lo cargado en Ingresos y Gastos de este mes.</p></div>
+        <input type="month" class="input" id="balanceMonth" style="width:auto" />
+      </div>
+      <div class="balance-cards" id="balanceCards"></div>
+      <div class="panel"><div class="panel-head"><h2>Últimos 6 meses</h2><span class="muted">ingresos vs. gastos</span></div>
+        <div class="panel-body"><div class="bars" id="balanceBars"></div></div></div>
+      <div class="panel"><div class="panel-head"><h2>¿De dónde entró la plata?</h2><span class="muted">por medio de pago este mes</span></div>
+        <div class="panel-body"><div class="bars" id="balanceMedio"></div></div></div>
+      <p class="hint">El balance calcula únicamente lo cargado en esta compu. Si cargás efectivo al final del día y las transferencias/APROSS/RCTA cuando entran, el número siempre está al día.</p>
+    </section>
+
+    <!-- ════ HISTORIA CLÍNICA ════ -->
+    <section class="page" id="page-historia">
+      <div class="page-head"><div><h1>Historia clínica</h1><p>Odontológica y de armonización facial.</p></div></div>
+      <div class="panel"><div class="panel-body" style="text-align:center;padding:3rem 1.5rem">
+        <span class="big" style="font-size:2.6rem;display:block;margin-bottom:.6rem">🗂️</span>
+        <h2 style="font-family:var(--font-display);color:var(--vino);margin-bottom:.5rem">Próximamente</h2>
+        <p class="muted" style="max-width:52ch;margin:0 auto 1rem;line-height:1.6">La <strong>historia clínica odontológica</strong> la sumamos cuando traigas del consultorio el modelo de ficha que querés usar — con odontograma, antecedentes y evolución. La <strong>de armonización</strong> va detrás, con su modelo.</p>
+        <p class="muted" style="max-width:52ch;margin:0 auto;line-height:1.6">Mientras tanto, todo lo importante de cada paciente ya queda guardado en <button class="linkish" data-goto="pacientes" type="button">Pacientes</button> (datos, tratamientos y turnos).</p>
+      </div></div>
+    </section>
+
+    <!-- ════ ACCESOS ════ -->
+    <section class="page" id="page-accesos">
+      <div class="page-head"><div><h1>Accesos</h1><p>Las herramientas que usás todos los días, a un toque. Se abren en una pestaña nueva.</p></div></div>
+      <div class="access-grid" id="fullAccessGrid"></div>
+      <p class="hint">Las contraseñas de APROSS y RCTA no se guardan acá (ni conviene). Si una página pide login, ingresalo en el sitio oficial.</p>
+    </section>
+
+    <!-- ════ DATOS Y CUENTA ════ -->
+    <section class="page" id="page-respaldo">
+      <div class="page-head"><div><h1>Datos y cuenta</h1><p>Tu panel vive en la nube de tu consultorio: se ve igual desde cualquier PC o teléfono. Nada se guarda en las computadoras.</p></div></div>
+      <div class="panel"><div class="panel-head"><h2>Exportar todos tus datos</h2></div><div class="panel-body">
+        <p class="muted" style="margin-bottom:.7rem">Descargá una copia completa del panel (pacientes, turnos, precios, gastos e ingresos) en un archivo .json, para guardar en Drive o donde quieras.</p>
+        <button class="btn btn-gold" id="exportBackupBtn" type="button">⬇ Exportar datos (JSON)</button>
+      </div></div>
+      <div class="panel"><div class="panel-head"><h2>Cambiar contraseña</h2></div><div class="panel-body">
+        <p class="muted" style="margin-bottom:.7rem">Cambiá la contraseña de tu acceso. La próxima vez entrás con la nueva, desde cualquier dispositivo.</p>
+        <div class="grid2" style="max-width:520px">
+          <div class="field"><label class="f" for="newPass1">Nueva contraseña</label><input type="password" class="input" id="newPass1" minlength="8" autocomplete="new-password" /></div>
+          <div class="field"><label class="f" for="newPass2">Repetir</label><input type="password" class="input" id="newPass2" minlength="8" autocomplete="new-password" /></div>
+        </div>
+        <button class="btn btn-bordo" id="changePassBtn" type="button">Cambiar contraseña</button>
+      </div></div>
+      <div class="panel" style="border-color:#f3c0c0"><div class="panel-head"><h2 style="color:var(--rojo)">Zona peligrosa</h2></div><div class="panel-body">
+        <p class="muted" style="margin-bottom:.7rem">Borra TODOS tus datos en la nube (pacientes, turnos, precios, gastos e ingresos). No se puede deshacer. Exportá una copia primero.</p>
+        <button class="btn btn-rojo" id="wipePanelBtn" type="button">Borrar todos mis datos</button>
+      </div></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ════════ MODALES ════════ -->
+<div class="modal" id="turnoModal" role="dialog" aria-modal="true" aria-label="Turno">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card">
+    <div class="modal-head"><h3 id="turnoModalTitle">Nuevo turno</h3><button class="close-x" data-close-modal type="button">✕</button></div>
+    <form id="turnoForm">
+      <div class="modal-body">
+        <input type="hidden" id="turnoId" />
+        <div class="grid2">
+          <div class="field"><label class="f" for="turnoNombre">Paciente *</label><input class="input" id="turnoNombre" required maxlength="80" placeholder="Ana Gómez" /></div>
+          <div class="field"><label class="f" for="turnoTelefono">Teléfono *</label><input class="input" id="turnoTelefono" required maxlength="25" placeholder="351 123 4567" /></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label class="f" for="turnoArea">Área</label><select class="input" id="turnoArea"></select></div>
+          <div class="field"><label class="f" for="turnoTratamiento">Tratamiento</label><select class="input" id="turnoTratamiento"></select></div>
+        </div>
+        <div class="grid3">
+          <div class="field"><label class="f" for="turnoFecha">Fecha *</label><input type="date" class="input" id="turnoFecha" required /></div>
+          <div class="field"><label class="f" for="turnoHora">Hora *</label><select class="input" id="turnoHora" required></select></div>
+          <div class="field"><label class="f" for="turnoEstado">Estado</label><select class="input" id="turnoEstado"><option value="pendiente">Pendiente</option><option value="confirmado">Confirmado</option><option value="cancelado">Cancelado</option></select></div>
+        </div>
+        <div class="field"><label class="f" for="turnoNota">Nota</label><input class="input" id="turnoNota" maxlength="300" placeholder="Ej.: viene de control post-carilla" /></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-line" data-close-modal type="button">Cancelar</button>
+        <button class="btn btn-bordo" type="submit">Guardar turno</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="pacienteModal" role="dialog" aria-modal="true" aria-label="Paciente">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card">
+    <div class="modal-head"><h3 id="pacienteModalTitle">Nuevo paciente</h3><button class="close-x" data-close-modal type="button">✕</button></div>
+    <form id="pacienteForm">
+      <div class="modal-body">
+        <input type="hidden" id="pacienteId" />
+        <div class="grid2">
+          <div class="field"><label class="f" for="pacienteNombre">Nombre y apellido *</label><input class="input" id="pacienteNombre" required maxlength="80" placeholder="Ana Gómez" /></div>
+          <div class="field"><label class="f" for="pacienteTelefono">Teléfono</label><input class="input" id="pacienteTelefono" maxlength="25" placeholder="351 123 4567" /></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label class="f" for="pacienteArea">Área</label><select class="input" id="pacienteArea"><option value="odontologia">Odontología</option><option value="armonizacion">Armonización Orofacial</option><option value="ambas">Ambas</option></select></div>
+          <div class="field"><label class="f" for="pacienteTratamiento">Tratamiento de interés</label><select class="input" id="pacienteTratamiento"></select></div>
+        </div>
+        <div class="field"><label class="f" for="pacienteNotas">Notas</label><textarea class="input" id="pacienteNotas" rows="3" maxlength="600" placeholder="Ej.: alérgica a la penicilina; prefiere anestesia sin epinefrina…"></textarea></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-line" data-close-modal type="button">Cancelar</button>
+        <button class="btn btn-bordo" type="submit">Guardar paciente</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="gastoModal" role="dialog" aria-modal="true" aria-label="Gasto">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card">
+    <div class="modal-head"><h3>Nuevo gasto</h3><button class="close-x" data-close-modal type="button">✕</button></div>
+    <form id="gastoForm">
+      <div class="modal-body">
+        <div class="grid2">
+          <div class="field"><label class="f" for="gastoFecha">Fecha *</label><input type="date" class="input" id="gastoFecha" required /></div>
+          <div class="field"><label class="f" for="gastoMonto">Monto ($) *</label><input type="number" class="input" id="gastoMonto" required min="0" step="0.01" placeholder="12500" /></div>
+        </div>
+        <div class="field"><label class="f" for="gastoConcepto">Concepto *</label><input class="input" id="gastoConcepto" required maxlength="120" placeholder="Ej.: ampollas de toxina, guantes, anestesia…" /></div>
+        <div class="grid2">
+          <div class="field"><label class="f" for="gastoCategoria">Categoría</label><select class="input" id="gastoCategoria"><option>Insumos odontología</option><option>Insumos armonización</option><option>Anestesia y descartables</option><option>Honorarios y colaboradores</option><option>Servicios (luz, alquiler, limpieza)</option><option>Marketing y publicidad</option><option>Impuestos y tasas</option><option>Otros</option></select></div>
+          <div class="field"><label class="f" for="gastoProveedor">Proveedor</label><input class="input" id="gastoProveedor" maxlength="80" placeholder="Ej.: Dental Cordóba" /></div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-line" data-close-modal type="button">Cancelar</button>
+        <button class="btn btn-bordo" type="submit">Guardar gasto</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="ingresoModal" role="dialog" aria-modal="true" aria-label="Ingreso">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card">
+    <div class="modal-head"><h3>Nuevo ingreso</h3><button class="close-x" data-close-modal type="button">✕</button></div>
+    <form id="ingresoForm">
+      <div class="modal-body">
+        <div class="grid2">
+          <div class="field"><label class="f" for="ingresoFecha">Fecha *</label><input type="date" class="input" id="ingresoFecha" required /></div>
+          <div class="field"><label class="f" for="ingresoMonto">Monto ($) *</label><input type="number" class="input" id="ingresoMonto" required min="0" step="0.01" placeholder="85000" /></div>
+        </div>
+        <div class="field"><label class="f" for="ingresoConcepto">Concepto *</label><input class="input" id="ingresoConcepto" required maxlength="120" placeholder="Ej.: Toxina botulínica — Ana Gómez" /></div>
+        <div class="grid3">
+          <div class="field"><label class="f" for="ingresoArea">Área</label><select class="input" id="ingresoArea"><option value="odontologia">Odontología</option><option value="armonizacion">Armonización</option><option value="general">General</option></select></div>
+          <div class="field"><label class="f" for="ingresoMedio">Medio de pago</label><select class="input" id="ingresoMedio"><option>Efectivo</option><option>Transferencia</option><option>Tarjeta de débito</option><option>Tarjeta de crédito</option><option>APROSS</option><option>RCTA</option><option>Otra obra social</option></select></div>
+          <div class="field"><label class="f" for="ingresoPaciente">Paciente</label><input class="input" id="ingresoPaciente" maxlength="80" placeholder="Opcional" /></div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-line" data-close-modal type="button">Cancelar</button>
+        <button class="btn btn-bordo" type="submit">Guardar ingreso</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="confirmModal" role="dialog" aria-modal="true" aria-label="Confirmar">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card" style="max-width:420px">
+    <div class="modal-head"><h3 id="confirmTitle">Confirmar</h3><button class="close-x" data-close-modal type="button">✕</button></div>
+    <div class="modal-body"><p id="confirmText" style="line-height:1.55"></p></div>
+    <div class="modal-foot">
+      <button class="btn btn-line" data-close-modal type="button">Cancelar</button>
+      <button class="btn btn-rojo" id="confirmOkBtn" type="button">Sí, seguro</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status"></div>
 <script>
 'use strict';
-const WA = '5493512166540';
-const $ = (s) => document.querySelector(s);
-const $$ = (s) => [...document.querySelectorAll(s)];
-let token = sessionStorage.getItem('pb_admin_token') || null;
-let appointments = [];
-let currentFilter = 'all';
-let searchTerm = '';
+/* ============================================================
+   Panel profesional · Od. Pabla Bonaudi
+   100% estático: datos cifrados en este navegador (AES-256-GCM,
+   clave PBKDF2 derivada de la contraseña del panel).
+   Nada se envía a ningún servidor.
+   ============================================================ */
 
-const loginWrap = $('#loginWrap'), dashboard = $('#dashboard'), topbarActions = $('#topbarActions');
+/* ============================================================
+   Conexión a la nube (Supabase) — sin servidores propios.
+   Los datos viven en la base del proyecto y solo la cuenta
+   de Pabla puede leerlos (RLS). Acá no se guarda nada salvo
+   el token de sesión.
+   ============================================================ */
+const SERVICES = {
+  odontologia: ['Limpieza y profilaxis dental','Blanqueamiento dental','Carillas de porcelana y composite','Diseño de sonrisa','Ortodoncia y alineadores','Implantes dentales','Endodoncia (tratamiento de conducto)','Periodoncia y encías'],
+  armonizacion: ['Toxina botulínica (arrugas de expresión)','Relleno de labios con ácido hialurónico','Voluminización facial (pómulos, mentón, ojeras)','Bioestimuladores de colágeno','Rinomodelación','Hilos tensores / lifting sin cirugía','Peelings químicos','Mesoterapia y skinbooster'],
+};
+const AREA_LABEL = { odontologia: 'Odontología', armonizacion: 'Armonización', general: 'General', ambas: 'Ambas' };
+const ALL_SERVICES = [...SERVICES.odontologia, ...SERVICES.armonizacion];
 
-function showDashboard() {
-  loginWrap.style.display = 'none';
-  dashboard.style.display = 'block';
-  topbarActions.hidden = false;
-  loadAppointments();
+/* ---------- utilidades ---------- */
+const $ = (s, ctx = document) => ctx.querySelector(s);
+const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+const pad = (n) => String(n).padStart(2, '0');
+const todayISO = () => { const n = new Date(); return `${n.getFullYear()}-${pad(n.getMonth() + 1)}-${pad(n.getDate())}`; };
+const nowMonth = () => todayISO().slice(0, 7);
+const isoPlusDays = (iso, days) => { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + days); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+const prettyDateLong = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const prettyDateShort = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+const monthName = (ym) => { const [y, m] = ym.split('-').map(Number); return new Date(y, m - 1, 1).toLocaleDateString('es-AR', { month: 'long', year: 'numeric' }); };
+const digits = (s) => String(s ?? '').replace(/\D/g, '');
+const phoneKey = (s) => digits(s).slice(-8);
+const shiftMonth = (ym, delta) => { let [y, m] = ym.split('-').map(Number); m += delta; while (m < 1) { m += 12; y -= 1; } while (m > 12) { m -= 12; y += 1; } return `${y}-${pad(m)}`; };
+const fmtCents = (c) => '$ ' + (Math.round(c) / 100).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const parseMonto = (v) => { const n = parseFloat(String(v).replace(',', '.')); return Number.isFinite(n) ? Math.max(0, Math.round(n * 100)) : null; };
+const waLink = (text) => 'https://wa.me/5493512166540?text=' + encodeURIComponent(text);
+const isSameMonth = (iso, ym) => iso && iso.startsWith(ym);
+
+function download(filename, content, mime = 'application/octet-stream') {
+  const blob = content instanceof Blob ? content : new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
 }
-function showLogin() {
-  loginWrap.style.display = 'grid';
-  dashboard.style.display = 'none';
-  topbarActions.hidden = true;
+function toCSV(header, rows) {
+  const escCell = (c) => `"${String(c ?? '').replace(/"/g, '""')}"`;
+  return '﻿' + [header, ...rows].map((r) => r.map(escCell).join(';')).join('\r\n');
 }
 
-/* ---------- Login ---------- */
-$('#loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const err = $('#loginError'); err.textContent = '';
-  const password = $('#passwordInput').value;
+
+const CFG = window.PABLA_SUPABASE || {};
+const CONFIGURED = !!(CFG.url && CFG.anonKey && !String(CFG.url).includes('PEGAR') && !String(CFG.anonKey).includes('PEGAR'));
+const SESSION_KEY = 'pb_sb_session_v1';
+
+let session = null;
+try { session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch { session = null; }
+let store = null; // datos en memoria (camelCase)
+
+const saveDot = $('#saveDot');
+function setSaveState(state) {
+  if (!saveDot) return;
+  if (state === 'guardando') saveDot.textContent = 'Guardando…';
+  else if (state === 'ok') { saveDot.textContent = 'En la nube ✓'; setTimeout(() => { saveDot.textContent = ''; }, 1600); }
+  else saveDot.textContent = 'Error al guardar';
+}
+
+/* ---------- mapeadores snake_case (DB) ⇄ camelCase (UI) ---------- */
+const MAP = {
+  patients: { table: 'patients',
+    toStore: (r) => ({ id: r.id, nombre: r.nombre, telefono: r.telefono ?? '', area: r.area ?? 'odontologia', tratamiento: r.tratamiento ?? '', notas: r.notas ?? '', createdAt: r.created_at }),
+    toRow: (o) => ({ id: o.id, nombre: o.nombre, telefono: o.telefono, area: o.area, tratamiento: o.tratamiento, notas: o.notas, created_at: o.createdAt || new Date().toISOString() }) },
+  appointments: { table: 'appointments',
+    toStore: (r) => ({ id: r.id, nombre: r.nombre, telefono: r.telefono, area: r.area ?? 'odontologia', tratamiento: r.tratamiento, date: r.date, time: r.time, status: r.status ?? 'pendiente', nota: r.nota ?? '', createdAt: r.created_at }),
+    toRow: (o) => ({ id: o.id, nombre: o.nombre, telefono: o.telefono, area: o.area, tratamiento: o.tratamiento, date: o.date, time: o.time, status: o.status, nota: o.nota, created_at: o.createdAt || new Date().toISOString() }) },
+  prices: { table: 'prices',
+    toStore: (r) => ({ id: r.id, area: r.area, tratamiento: r.tratamiento, precioCents: r.precio_cents == null ? null : Number(r.precio_cents) }),
+    toRow: (o) => ({ id: o.id, area: o.area, tratamiento: o.tratamiento, precio_cents: o.precioCents }) },
+  expenses: { table: 'expenses',
+    toStore: (r) => ({ id: r.id, date: r.date, concepto: r.concepto, categoria: r.categoria ?? 'Otros', proveedor: r.proveedor ?? '', montoCents: Number(r.monto_cents || 0), createdAt: r.created_at }),
+    toRow: (o) => ({ id: o.id, date: o.date, concepto: o.concepto, categoria: o.categoria, proveedor: o.proveedor, monto_cents: o.montoCents, created_at: o.createdAt || new Date().toISOString() }) },
+  incomes: { table: 'incomes',
+    toStore: (r) => ({ id: r.id, date: r.date, concepto: r.concepto, area: r.area ?? 'odontologia', medio: r.medio ?? 'Efectivo', paciente: r.paciente ?? '', montoCents: Number(r.monto_cents || 0), createdAt: r.created_at }),
+    toRow: (o) => ({ id: o.id, date: o.date, concepto: o.concepto, area: o.area, medio: o.medio, paciente: o.paciente, monto_cents: o.montoCents, created_at: o.createdAt || new Date().toISOString() }) },
+};
+
+/* ---------- bajo nivel: auth + REST ---------- */
+async function sbFetch(path, { method = 'GET', body, headers = {}, retryAuth = true } = {}) {
+  if ((!session || !session.access_token) && retryAuth) {
+    const ok = await refreshSession();
+    if (!ok) throw new Error('auth');
+  }
+  const res = await fetch(CFG.url + path, {
+    method,
+    headers: {
+      apikey: CFG.anonKey,
+      Authorization: 'Bearer ' + session.access_token,
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+  if (res.status === 401 && retryAuth) {
+    const ok = await refreshSession();
+    if (ok) return sbFetch(path, { method, body, headers, retryAuth: false });
+    signOut(true);
+    throw new Error('auth');
+  }
+  return res;
+}
+async function refreshSession() {
+  if (!session?.refresh_token) return false;
   try {
-    const res = await fetch('/api/admin/login', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password })
+    const res = await fetch(CFG.url + '/auth/v1/token?grant_type=refresh_token', {
+      method: 'POST',
+      headers: { apikey: CFG.anonKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh_token: session.refresh_token }),
     });
-    const data = await res.json();
-    if (!res.ok) { err.textContent = data.error || 'Contraseña incorrecta.'; return; }
-    token = data.token;
-    sessionStorage.setItem('pb_admin_token', token);
-    showDashboard();
-  } catch { err.textContent = 'Error de conexión.'; }
+    if (!res.ok) return false;
+    const d = await res.json();
+    session = { access_token: d.access_token, refresh_token: d.refresh_token, expires_at: Date.now() + (d.expires_in || 3600) * 1000 };
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    return true;
+  } catch { return false; }
+}
+async function signIn(email, password) {
+  const res = await fetch(CFG.url + '/auth/v1/token?grant_type=password', {
+    method: 'POST',
+    headers: { apikey: CFG.anonKey, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+  if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error_description || err.msg || 'creds'); }
+  const d = await res.json();
+  session = { access_token: d.access_token, refresh_token: d.refresh_token, expires_at: Date.now() + (d.expires_in || 3600) * 1000 };
+  localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+}
+function signOut(silent) {
+  session = null; store = null;
+  localStorage.removeItem(SESSION_KEY);
+  if (!silent) showGate('Sesión cerrada.');
+}
+
+/* ---------- colecciones ---------- */
+async function cloudSelectAll(tableKey) {
+  const res = await sbFetch(`/rest/v1/${MAP[tableKey].table}?select=*&order=created_at.asc`);
+  if (!res.ok) throw new Error('fetch ' + tableKey);
+  return res.json();
+}
+async function cloudInsert(tableKey, obj) {
+  const res = await sbFetch(`/rest/v1/${MAP[tableKey].table}`, { method: 'POST', headers: { Prefer: 'return=representation' }, body: MAP[tableKey].toRow(obj) });
+  if (!res.ok) throw new Error('insert ' + tableKey + ': ' + (await res.text()));
+  const rows = await res.json();
+  return MAP[tableKey].toStore(Array.isArray(rows) ? rows[0] : rows);
+}
+async function cloudInsertMany(tableKey, objs) {
+  const res = await sbFetch(`/rest/v1/${MAP[tableKey].table}`, { method: 'POST', headers: { Prefer: 'return=representation,resolution=merge-duplicates' }, body: objs.map((o) => MAP[tableKey].toRow(o)) });
+  if (!res.ok) throw new Error('insertMany ' + tableKey);
+  return (await res.json()).map(MAP[tableKey].toStore);
+}
+async function cloudUpdate(tableKey, id, obj) {
+  const res = await sbFetch(`/rest/v1/${MAP[tableKey].table}?id=eq.${encodeURIComponent(id)}`, { method: 'PATCH', headers: { Prefer: 'return=representation' }, body: MAP[tableKey].toRow(obj) });
+  if (!res.ok) throw new Error('update ' + tableKey);
+  const rows = await res.json();
+  return MAP[tableKey].toStore(Array.isArray(rows) ? rows[0] : rows);
+}
+async function cloudUpdateFields(tableKey, id, fields) {
+  const res = await sbFetch(`/rest/v1/${MAP[tableKey].table}?id=eq.${encodeURIComponent(id)}`, { method: 'PATCH', headers: { Prefer: 'return=representation' }, body: fields });
+  if (!res.ok) throw new Error('patch ' + tableKey);
+  return res;
+}
+async function cloudDelete(tableKey, id) {
+  const res = await sbFetch(`/rest/v1/${MAP[tableKey].table}?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
+  if (!res.ok && res.status !== 204) throw new Error('delete ' + tableKey);
+}
+async function cloudDeleteAll(tableKey) {
+  const res = await sbFetch(`/rest/v1/${MAP[tableKey].table}?id=not.is.null`, { method: 'DELETE' });
+  if (!res.ok && res.status !== 204) throw new Error('deleteAll ' + tableKey);
+}
+
+async function fetchAll() {
+  const [patients, appointments, prices, expenses, incomes] = await Promise.all(['patients', 'appointments', 'prices', 'expenses', 'incomes'].map(cloudSelectAll));
+  store = {
+    version: 2,
+    patients: patients.map(MAP.patients.toStore),
+    appointments: appointments.map(MAP.appointments.toStore),
+    prices: prices.map(MAP.prices.toStore),
+    expenses: expenses.map(MAP.expenses.toStore),
+    incomes: incomes.map(MAP.incomes.toStore),
+  };
+  if (!store.prices.length) {
+    const seed = ALL_SERVICES.map((name, i) => ({ area: i < SERVICES.odontologia.length ? 'odontologia' : 'armonizacion', tratamiento: name, precioCents: null }));
+    try { store.prices = await cloudInsertMany('prices', seed); } catch (e) { console.error(e); toast('No se pudo precargar la lista de precios.'); }
+  }
+}
+async function loadAll() { await fetchAll(); renderAll(); }
+/* wrapper uniforme para mutaciones: nube o recarga */
+async function persist(fn, errorMsg) {
+  setSaveState('guardando');
+  try { await fn(); setSaveState('ok'); return true; }
+  catch (e) {
+    console.error(e);
+    toast(errorMsg || 'No se pudo guardar en la nube. Se recargaron los datos.');
+    setSaveState('error');
+    try { await loadAll(); } catch { /* sin conexión */ }
+    return false;
+  }
+}
+
+/* ---------- toast y confirmación ---------- */
+const toastEl = $('#toast');
+let toastTimer = null;
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 3400);
+}
+let confirmResolver = null;
+function showConfirm(title, text) {
+  $('#confirmTitle').textContent = title;
+  $('#confirmText').textContent = text;
+  $('#confirmModal').classList.add('open');
+  return new Promise((resolve) => { confirmResolver = resolve; });
+}
+function closeConfirm(result) {
+  $('#confirmModal').classList.remove('open');
+  if (confirmResolver) { confirmResolver(result); confirmResolver = null; }
+}
+$('#confirmOkBtn').addEventListener('click', () => closeConfirm(true));
+
+/* ---------- modales genéricos ---------- */
+function openModal(sel) { $(sel).classList.add('open'); }
+function closeModals() { $$('.modal.open').forEach((m) => m.classList.remove('open')); }
+document.addEventListener('click', (e) => {
+  const closer = e.target.closest('[data-close-modal]');
+  if (closer) { const modal = closer.closest('.modal'); if (modal) modal.classList.remove('open'); return; }
+  if (e.target.classList?.contains('modal-backdrop')) e.target.closest('.modal')?.classList.remove('open');
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModals(); });
+</script>
+<script>
+'use strict';
+/* ============================================================
+   Acceso al panel (email + contraseña contra la nube)
+   ============================================================ */
+const gateWrap = $('#gateWrap'), gateForm = $('#gateForm'), gateEmail = $('#gateEmail'), gatePass = $('#gatePass');
+const gateError = $('#gateError'), gateSub = $('#gateSub'), gateBtn = $('#gateBtn'), configMissing = $('#configMissing');
+const panel = $('#panel'), topbarActions = $('#topbarActions');
+
+function showGate(note) {
+  panel.hidden = true;
+  gateWrap.style.display = 'grid';
+  topbarActions.hidden = true;
+  gateError.textContent = '';
+  if (note) gateSub.textContent = note;
+}
+function showPanel() {
+  gateWrap.style.display = 'none';
+  panel.hidden = false;
+  topbarActions.hidden = false;
+}
+function showConfigMissing() {
+  gateWrap.style.display = 'grid';
+  panel.hidden = true;
+  topbarActions.hidden = true;
+  gateEmail.disabled = true;
+  gatePass.disabled = true;
+  gateBtn.style.display = 'none';
+  configMissing.style.display = 'block';
+  gateSub.textContent = 'El panel todavía no está conectado.';
+}
+
+gateForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = gateEmail.value.trim();
+  const pass = gatePass.value;
+  gateError.textContent = '';
+  gateBtn.disabled = true;
+  try {
+    await signIn(email, pass);
+    await loadAll();
+    showPanel();
+    toast('Bienvenida, Pabla ✓');
+  } catch (err) {
+    console.error(err);
+    gateError.textContent = err instanceof TypeError ? 'Error de conexión. Probá de nuevo.' : 'Email o contraseña incorrectos.';
+  } finally {
+    gateBtn.disabled = false;
+  }
 });
 
-$('#logoutBtn').addEventListener('click', () => { sessionStorage.removeItem('pb_admin_token'); token = null; showLogin(); });
-$('#refreshBtn').addEventListener('click', loadAppointments);
+$('#logoutBtn').addEventListener('click', () => signOut());
 
-/* ---------- Cargar turnos ---------- */
-async function loadAppointments() {
-  const list = $('#appointmentsList');
-  list.innerHTML = '<div class="loading">Cargando turnos…</div>';
-  try {
-    const res = await fetch('/api/admin/appointments', { headers: { 'x-admin-token': token } });
-    if (res.status === 401) { sessionStorage.removeItem('pb_admin_token'); token = null; showLogin(); return; }
-    const data = await res.json();
-    appointments = data.appointments || [];
-    renderStats();
-    renderList();
-  } catch { list.innerHTML = '<div class="empty">Error de conexión. Probá actualizar.</div>'; }
+/* ============================================================
+   Navegación por pestañas
+   ============================================================ */
+const navButtons = $$('.nav-btn[data-tab]');
+function goTab(name) {
+  navButtons.forEach((b) => b.classList.toggle('active', b.dataset.tab === name));
+  $$('.page').forEach((p) => p.classList.toggle('active', p.id === 'page-' + name));
+  window.scrollTo({ top: 0 });
+}
+navButtons.forEach((b) => b.addEventListener('click', () => goTab(b.dataset.tab)));
+document.addEventListener('click', (e) => {
+  const go = e.target.closest('[data-goto]');
+  if (go) goTab(go.dataset.goto);
+});
+
+/* ============================================================
+   Accesos externos (contacto + gestión profesional)
+   ============================================================ */
+const ACCESS_ITEMS = [
+  { id: 'ig', cls: 'ai-ig', title: 'Instagram · @od.pablabonaudi', desc: 'Casos reales, antes y después, y consejos de Pabla.', host: 'instagram.com/od.pablabonaudi', href: 'https://www.instagram.com/od.pablabonaudi',
+    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>' },
+  { id: 'wa', cls: 'ai-wa', title: 'WhatsApp directo', desc: 'Chatear con el número del consultorio.', host: 'wa.me/5493512166540', href: waLink('Hola Pabla!'),
+    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.14 1.6 5.95L2.05 22l4.29-1.12a9.87 9.87 0 0 0 5.7 1.8h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.16 8.16 0 0 1-4.16-1.14l-.3-.18-2.46.64.66-2.4-.19-.31a8.18 8.18 0 0 1-1.26-4.37 8.2 8.2 0 0 1 8.22-8.22 8.17 8.17 0 0 1 5.81 2.41 8.17 8.17 0 0 1 2.4 5.8c0 4.54-3.7 8.2-8.21 8.2zm4.5-6.13c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.13-.17.25-.64.8-.79.96-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23a7.5 7.5 0 0 1-1.39-1.73c-.14-.25.15-.23.42-.79.05-.09.02-.2-.01-.28-.03-.07-.6-1.44-.82-1.97-.22-.51-.44-.44-.6-.45h-.51c-.18 0-.47.06-.71.33-.25.25-.94.92-.94 2.25 0 1.33.96 2.61 1.09 2.79.14.17 1.9 2.9 4.6 4.07.64.28 1.15.44 1.54.56.65.21 1.24.18 1.7.11.52-.08 1.46-.6 1.67-1.17.21-.58.21-1.07.14-1.17-.06-.1-.23-.16-.48-.28z"/></svg>' },
+  { id: 'rcta', cls: 'ai-rcta', title: 'RCTA', desc: 'Gestión y recetas profesionales RCTA.', host: 'app.rcta.me/home', href: 'https://app.rcta.me/home',
+    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 10h8M8 14h5M8 2v4M16 2v4"/></svg>' },
+  { id: 'apross', cls: 'ai-apross', title: 'APROSS · OdontoCube', desc: 'Portal para prestadores APROSS (odontología).', host: 'traditum.odontocube.com/usuario/login', href: 'https://traditum.odontocube.com/usuario/login',
+    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.5-9.5-10A5.4 5.4 0 0 1 12 6.5 5.4 5.4 0 0 1 21.5 11c-2 5.5-9.5 10-9.5 10z"/></svg>' },
+  { id: 'recetas', cls: 'ai-recetas', title: 'APROSS · Recetas', desc: 'Menú Traditum — receta de medicamentos.', host: 'menu.traditum.com/View/Login.aspx', href: 'https://menu.traditum.com/View/Login.aspx',
+    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3.5l10 10a5 5 0 0 1-7 7l-10-10a5 5 0 0 1 7-7z"/><path d="M8.5 11.5l4 4"/></svg>' },
+];
+function accessCard(item) {
+  return `<a class="access-card" href="${esc(item.href)}" target="_blank" rel="noopener noreferrer">
+    <span class="access-icon ${esc(item.cls)}">${item.icon}</span>
+    <span><h3>${esc(item.title)}</h3><p>${esc(item.desc)}</p><span class="host">${esc(item.host)} ↗</span></span>
+  </a>`;
+}
+function renderAccessGrids() {
+  $('#fullAccessGrid').innerHTML = ACCESS_ITEMS.map(accessCard).join('');
+  $('#quickAccessGrid').innerHTML = ACCESS_ITEMS.map(accessCard).join('');
 }
 
-function todayISO() {
-  const n = new Date(); const off = n.getTimezoneOffset();
-  return new Date(n.getTime() - off * 60000).toISOString().slice(0, 10);
+/* ============================================================
+   Resumen
+   ============================================================ */
+function greeting() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Buen día, Pabla';
+  if (h < 19) return 'Buenas tardes, Pabla';
+  return 'Buenas noches, Pabla';
 }
-const prettyDate = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function monthTotals(ym) {
+  const ing = (store?.incomes || []).filter((i) => isSameMonth(i.date, ym)).reduce((a, i) => a + (i.montoCents || 0), 0);
+  const gas = (store?.expenses || []).filter((g) => isSameMonth(g.date, ym)).reduce((a, g) => a + (g.montoCents || 0), 0);
+  return { ing, gas, neto: ing - gas };
+}
+function renderResumen() {
+  if (!store) return;
+  $('#greetTitle').textContent = greeting();
+  $('#greetDate').textContent = prettyDateLong(todayISO());
+  const t = todayISO(), ym = nowMonth();
+  const appts = store.appointments || [];
+  const hoy = appts.filter((a) => a.date === t && a.status !== 'cancelado').length;
+  const pendientes = appts.filter((a) => a.status === 'pendiente' && a.date >= t).length;
+  const balance = monthTotals(ym);
+  $('#statCards').innerHTML = `
+    <div class="stat accent"><small>Turnos hoy</small><strong>${hoy}</strong></div>
+    <div class="stat"><small>Pendientes de confirmar</small><strong>${pendientes}</strong></div>
+    <div class="stat"><small>Pacientes</small><strong>${(store.patients || []).length}</strong></div>
+    <div class="stat"><small>Ingresos del mes</small><strong>${fmtCents(balance.ing)}</strong></div>
+    <div class="stat"><small>Gastos del mes</small><strong>${fmtCents(balance.gas)}</strong></div>
+    <div class="stat ${balance.neto >= 0 ? 'ok' : 'bad'}"><small>Resultado del mes</small><strong>${fmtCents(balance.neto)}</strong></div>`;
+}
+</script>
+<script>
+'use strict';
+/* ============================================================
+   Agenda · calendario + turnos
+   ============================================================ */
+const calState = { viewYm: nowMonth(), selected: todayISO(), filter: 'all', search: '' };
+const agendaList = $('#agendaList'), agendaCount = $('#agendaCount');
+const calTitle = $('#calTitle'), calDays = $('#calDays');
 
-function renderStats() {
+const fillSelect = (sel, options, { placeholder } = {}) => {
+  sel.innerHTML = (placeholder ? `<option value="">${esc(placeholder)}</option>` : '') +
+    options.map((o) => `<option value="${esc(o.value ?? o)}">${esc(o.label ?? o)}</option>`).join('');
+};
+function fillAreaTreatments(areaSel, treatSel, currentTreatment) {
+  const area = areaSel.value;
+  const list = SERVICES[area] || [];
+  fillSelect(treatSel, [...list, 'Otro']);
+  if (currentTreatment && [...list, 'Otro'].includes(currentTreatment)) treatSel.value = currentTreatment;
+}
+function fillTimeSelect() {
+  const sel = $('#turnoHora');
+  if (sel.options.length) return;
+  const opts = [];
+  for (let h = 7; h <= 21; h++) { opts.push(`${pad(h)}:00`, `${pad(h)}:30`); }
+  fillSelect(sel, opts);
+}
+
+function renderCalendar() {
+  const [y, m] = calState.viewYm.split('-').map(Number);
+  calTitle.textContent = new Date(y, m - 1, 1).toLocaleDateString('es-AR', { month: 'long', year: 'numeric' });
+  const first = new Date(y, m - 1, 1);
+  const lead = (first.getDay() + 6) % 7; // lunes primero
+  const daysIn = new Date(y, m, 0).getDate();
+  const prevDays = new Date(y, m - 1, 0).getDate();
+  const apptsByDay = new Map();
+  for (const a of store?.appointments || []) {
+    if (a.status === 'cancelado') continue;
+    apptsByDay.set(a.date, (apptsByDay.get(a.date) || 0) + 1);
+  }
   const t = todayISO();
-  $('#statToday').textContent = appointments.filter(a => a.date === t && a.status !== 'cancelado').length;
-  $('#statPending').textContent = appointments.filter(a => a.status === 'pendiente').length;
-  $('#statConfirmed').textContent = appointments.filter(a => a.status === 'confirmado' && a.date >= t).length;
-  $('#statTotal').textContent = appointments.length;
+  let html = '';
+  const totalCells = Math.ceil((lead + daysIn) / 7) * 7;
+  for (let i = 0; i < totalCells; i++) {
+    let dayNum, iso, other = false;
+    if (i < lead) { dayNum = prevDays - lead + 1 + i; const d = new Date(y, m - 2, dayNum); iso = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; other = true; }
+    else if (i < lead + daysIn) { dayNum = i - lead + 1; iso = `${y}-${pad(m)}-${pad(dayNum)}`; }
+    else { dayNum = i - lead - daysIn + 1; const d = new Date(y, m, dayNum); iso = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; other = true; }
+    const count = apptsByDay.get(iso) || 0;
+    const dots = count ? `<span class="dots">${'<span class="dot"></span>'.repeat(Math.min(count, 3))}${count > 3 ? '<span class="dot more"></span>' : ''}</span>` : '';
+    const cls = ['cal-day'];
+    if (other) cls.push('other');
+    if (iso === t) cls.push('today');
+    if (iso === calState.selected) cls.push('selected');
+    html += `<button type="button" class="${cls.join(' ')}" data-day="${iso}"><span class="n">${dayNum}</span>${dots}</button>`;
+  }
+  calDays.innerHTML = html;
 }
 
-function matchesFilter(a) {
+function apptMatchesFilter(a) {
   const t = todayISO();
-  if (currentFilter === 'today') return a.date === t;
-  if (currentFilter === 'all') return true;
-  return a.status === currentFilter;
+  switch (calState.filter) {
+    case 'today': return a.date === t && a.status !== 'cancelado';
+    case 'pendiente': return a.status === 'pendiente';
+    case 'confirmado': return a.status === 'confirmado';
+    case 'cancelado': return a.status === 'cancelado';
+    case 'day': return a.date === calState.selected;
+    case 'all': default: return a.date >= t && a.status !== 'cancelado';
+  }
 }
-function matchesSearch(a) {
-  if (!searchTerm) return true;
-  const hay = `${a.name} ${a.phone} ${a.treatment} ${a.area} ${a.notes || ''}`.toLowerCase();
-  return hay.includes(searchTerm);
-}
-
-function renderList() {
-  const list = $('#appointmentsList');
-  const filtered = appointments.filter(a => matchesFilter(a) && matchesSearch(a));
-  if (!filtered.length) { list.innerHTML = '<div class="empty">No hay turnos para mostrar con este filtro.</div>'; return; }
-
+function renderAgenda() {
+  if (!store) return;
+  renderCalendar();
+  const q = calState.search.toLowerCase();
+  const appts = (store.appointments || [])
+    .filter(apptMatchesFilter)
+    .filter((a) => !q || `${a.nombre} ${a.telefono} ${a.tratamiento} ${a.nota || ''}`.toLowerCase().includes(q))
+    .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+  agendaCount.textContent = appts.length ? `(${appts.length})` : '';
+  if (!appts.length) { agendaList.innerHTML = '<div class="empty"><span class="big">🗓️</span>Nada por acá. Tocá “+ Nuevo turno” para agregar uno.</div>'; return; }
   let html = '', lastDate = null;
-  for (const a of filtered) {
-    if (a.date !== lastDate) { html += `<div class="day-group">${esc(prettyDate(a.date))}</div>`; lastDate = a.date; }
-    const digits = a.phone.replace(/\D/g, '');
-    const waNum = digits.startsWith('54') ? digits : '549' + digits.replace(/^0/, '').replace(/^15/, '');
-    const waLink = `https://wa.me/${waNum}?text=${encodeURIComponent(`Hola ${a.name.split(' ')[0]}! Te escribo por tu turno del ${a.date.split('-').reverse().join('/')} a las ${a.time} hs (${a.treatment}).`)}`;
+  for (const a of appts) {
+    if (a.date !== lastDate) { html += `<div class="day-group">${esc(prettyDateLong(a.date))}</div>`; lastDate = a.date; }
+    const first = (a.nombre || '').trim().split(/\s+/)[0] || 'vos';
+    const waText = `Hola ${first}! Te escribo por tu turno del ${prettyDateShort(a.date)} a las ${a.time} hs (${a.tratamiento}).`;
     html += `
     <div class="appt" data-id="${esc(a.id)}">
-      <div class="appt-time">${esc(a.time)}<small>${a.area === 'odontologia' ? 'Odonto' : 'Armonización'}</small></div>
-      <div class="appt-name">${esc(a.name)}
-        <a href="${esc(waLink)}" target="_blank" rel="noopener"><img src="img/whatsapp.svg" style="width:15px;height:15px;vertical-align:-2px" alt=""> ${esc(a.phone)}</a>
+      <div class="appt-time">${esc(a.time)}<small>${AREA_LABEL[a.area] || esc(a.area)}</small></div>
+      <div class="appt-name"><a href="${esc(waLink(waText))}" target="_blank" rel="noopener" title="Escribir por WhatsApp">${esc(a.nombre)}</a>
+        <small>${esc(a.telefono)} · <a class="linkish" href="${esc(waLink(waText))}" target="_blank" rel="noopener">WhatsApp ↗</a></small>
       </div>
-      <div class="appt-treatment">${esc(a.treatment)}${a.notes ? `<div class="appt-notes">“${esc(a.notes)}”</div>` : ''}</div>
+      <div class="appt-treatment">${esc(a.tratamiento)}${a.nota ? `<div class="appt-notes">“${esc(a.nota)}”</div>` : ''}</div>
       <div class="appt-actions">
         <span class="badge badge-${esc(a.status)}">${esc(a.status)}</span>
-        <div class="appt-buttons">
-          ${a.status !== 'confirmado' ? `<button class="btn btn-verde btn-sm" data-action="confirmado">✓ Confirmar</button>` : ''}
-          ${a.status !== 'cancelado' ? `<button class="btn btn-rojo btn-sm" data-action="cancelado">✕ Cancelar</button>` : `<button class="btn btn-bordo btn-sm" data-action="pendiente">↺ Reactivar</button>`}
-          <button class="btn btn-ghost btn-sm" data-action="delete" style="color:var(--rojo);border-color:#f3c0c0;background:#fff">🗑</button>
+        <div class="row-actions">
+          ${a.status !== 'confirmado' ? `<button class="icon-btn ok" data-act="confirmado" title="Confirmar">✓</button>` : ''}
+          ${a.status !== 'cancelado' ? `<button class="icon-btn danger" data-act="cancelado" title="Cancelar">✕</button>` : `<button class="icon-btn" data-act="pendiente" title="Reactivar">↺</button>`}
+          <button class="icon-btn" data-act="edit" title="Editar">✎</button>
+          <button class="icon-btn danger" data-act="delete" title="Eliminar">🗑</button>
         </div>
       </div>
     </div>`;
   }
-  list.innerHTML = html;
+  agendaList.innerHTML = html;
 }
 
-$('#filters').addEventListener('click', (e) => {
-  const btn = e.target.closest('.filter-btn'); if (!btn) return;
-  currentFilter = btn.dataset.filter;
-  $$('.filter-btn').forEach(b => b.classList.toggle('active', b === btn));
-  renderList();
+calDays.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-day]'); if (!btn) return;
+  calState.selected = btn.dataset.day;
+  calState.filter = 'day';
+  $$('#agendaFilters .filter-chip').forEach((c) => c.classList.toggle('active', c.dataset.afilter === 'day'));
+  renderAgenda();
 });
-$('#searchInput').addEventListener('input', (e) => { searchTerm = e.target.value.trim().toLowerCase(); renderList(); });
+$('#calPrev').addEventListener('click', () => { calState.viewYm = shiftMonth(calState.viewYm, -1); renderAgenda(); });
+$('#calNext').addEventListener('click', () => { calState.viewYm = shiftMonth(calState.viewYm, 1); renderAgenda(); });
+$('#calToday').addEventListener('click', () => { calState.viewYm = nowMonth(); calState.selected = todayISO(); renderAgenda(); });
+$('#agendaFilters').addEventListener('click', (e) => {
+  const chip = e.target.closest('[data-afilter]'); if (!chip) return;
+  calState.filter = chip.dataset.afilter;
+  $$('#agendaFilters .filter-chip').forEach((c) => c.classList.toggle('active', c === chip));
+  renderAgenda();
+});
+$('#agendaSearch').addEventListener('input', (e) => { calState.search = e.target.value; renderAgenda(); });
 
-/* ---------- Acciones sobre turnos ---------- */
-$('#appointmentsList').addEventListener('click', async (e) => {
-  const btn = e.target.closest('button[data-action]'); if (!btn) return;
-  const row = btn.closest('.appt'); const id = row?.dataset.id; const action = btn.dataset.action;
-  if (!id) return;
+const turnoModal = $('#turnoModal');
+function openTurnoModal(appt) {
+  fillTimeSelect();
+  $('#turnoModalTitle').textContent = appt ? 'Editar turno' : 'Nuevo turno';
+  $('#turnoId').value = appt?.id || '';
+  $('#turnoNombre').value = appt?.nombre || '';
+  $('#turnoTelefono').value = appt?.telefono || '';
+  const areaSel = $('#turnoArea');
+  if (!areaSel.options.length) fillSelect(areaSel, [{ value: 'odontologia', label: 'Odontología' }, { value: 'armonizacion', label: 'Armonización Orofacial' }]);
+  areaSel.value = appt?.area || 'odontologia';
+  fillAreaTreatments(areaSel, $('#turnoTratamiento'), appt?.tratamiento || '');
+  $('#turnoFecha').value = appt?.date || calState.selected || todayISO();
+  $('#turnoHora').value = appt?.time || '09:00';
+  $('#turnoEstado').value = appt?.status || 'pendiente';
+  $('#turnoNota').value = appt?.nota || '';
+  turnoModal.classList.add('open');
+  setTimeout(() => $('#turnoNombre').focus(), 80);
+}
+$('#turnoArea').addEventListener('change', () => fillAreaTreatments($('#turnoArea'), $('#turnoTratamiento'), ''));
+$('#addTurnoBtn').addEventListener('click', () => openTurnoModal(null));
+$('#resumenNewTurno').addEventListener('click', () => { goTab('agenda'); openTurnoModal(null); });
 
-  if (action === 'delete') {
-    if (!confirm('¿Eliminar este turno definitivamente?')) return;
-    await fetch(`/api/admin/appointments/${id}`, { method: 'DELETE', headers: { 'x-admin-token': token } });
+$('#turnoForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = $('#turnoId').value;
+  const data = {
+    nombre: $('#turnoNombre').value.trim(),
+    telefono: $('#turnoTelefono').value.trim(),
+    area: $('#turnoArea').value,
+    tratamiento: $('#turnoTratamiento').value,
+    date: $('#turnoFecha').value,
+    time: $('#turnoHora').value,
+    status: $('#turnoEstado').value,
+    nota: $('#turnoNota').value.trim(),
+  };
+  if (!data.nombre || !data.telefono || !data.date || !data.time) return;
+  const submitBtn = $('#turnoForm button[type="submit"]');
+  submitBtn.disabled = true;
+  const ok = await persist(async () => {
+    if (id) {
+      const current = store.appointments.find((a) => a.id === id) || { id, createdAt: new Date().toISOString() };
+      const updated = await cloudUpdate('appointments', id, { ...current, ...data, id });
+      const i = store.appointments.findIndex((a) => a.id === id);
+      store.appointments[i] = updated;
+    } else {
+      const created = await cloudInsert('appointments', { id: uid(), ...data, createdAt: new Date().toISOString() });
+      store.appointments.push(created);
+    }
+  }, 'No se pudo guardar el turno.');
+  submitBtn.disabled = false;
+  if (!ok) return;
+  closeModals();
+  renderAgenda(); renderResumen();
+  toast(id ? 'Turno actualizado ✓' : 'Turno agregado ✓');
+});
+
+agendaList.addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-act]'); if (!btn) return;
+  const row = btn.closest('.appt'); const id = row?.dataset.id;
+  const appt = (store.appointments || []).find((a) => a.id === id); if (!appt) return;
+  const act = btn.dataset.act;
+  if (act === 'edit') return openTurnoModal(appt);
+  if (act === 'delete') {
+    const ok = await showConfirm('Eliminar turno', `¿Eliminar definitivamente el turno de ${appt.nombre} del ${prettyDateShort(appt.date)} a las ${appt.time}?`);
+    if (!ok) return;
+    const done = await persist(() => cloudDelete('appointments', id), 'No se pudo eliminar el turno.');
+    if (!done) return;
+    store.appointments = store.appointments.filter((a) => a.id !== id);
   } else {
-    await fetch(`/api/admin/appointments/${id}`, {
-      method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
-      body: JSON.stringify({ status: action }),
-    });
+    const done = await persist(() => cloudUpdateFields('appointments', id, { status: act }), 'No se pudo actualizar el estado.');
+    if (!done) return;
+    appt.status = act; // confirmado | cancelado | pendiente
   }
-  loadAppointments();
+  renderAgenda(); renderResumen();
 });
 
-/* ---------- Exportar CSV ---------- */
-$('#exportCsvBtn').addEventListener('click', () => {
-  const header = ['Fecha', 'Horario', 'Paciente', 'Teléfono', 'Área', 'Tratamiento', 'Estado', 'Nota', 'Creado'];
-  const rows = appointments.map(a => [a.date, a.time, a.name, a.phone, a.area === 'odontologia' ? 'Odontología' : 'Armonización Orofacial', a.treatment, a.status, (a.notes || '').replace(/[\n;]+/g, ' '), a.createdAt || '']);
-  const csv = [header, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\r\n');
-  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'turnos-pabla-bonaudi.csv'; a.click();
-  URL.revokeObjectURL(url);
+/* ============================================================
+   Pacientes
+   ============================================================ */
+const pacientesTable = $('#pacientesTable');
+let pacientesSearch = '';
+function patientVisits(p) {
+  const pk = phoneKey(p.telefono);
+  const nm = (p.nombre || '').trim().toLowerCase();
+  return (store.appointments || []).filter((a) =>
+    (pk && phoneKey(a.telefono) === pk) || (!pk && (a.nombre || '').trim().toLowerCase() === nm)
+  );
+}
+function renderPacientes() {
+  if (!store) return;
+  const q = pacientesSearch.toLowerCase();
+  const list = (store.patients || [])
+    .filter((p) => !q || `${p.nombre} ${p.telefono} ${p.tratamiento} ${p.notas || ''}`.toLowerCase().includes(q))
+    .sort((a, b) => (a.nombre || '').localeCompare(b.nombre || '', 'es'));
+  if (!list.length) { pacientesTable.innerHTML = '<tr><td colspan="6" class="empty"><span class="big">🧍</span>Todavía no hay pacientes cargados.</td></tr>'; return; }
+  pacientesTable.innerHTML = list.map((p) => {
+    const visits = patientVisits(p);
+    const last = visits.length ? visits.map((v) => v.date).sort().slice(-1)[0] : null;
+    return `<tr data-id="${esc(p.id)}">
+      <td><strong>${esc(p.nombre)}</strong>${p.notas ? `<div class="muted" style="font-size:.72rem">“${esc(p.notas)}”</div>` : ''}</td>
+      <td>${esc(p.telefono || '—')}</td>
+      <td>${AREA_LABEL[p.area] || esc(p.area)}</td>
+      <td>${esc(p.tratamiento || '—')}</td>
+      <td>${visits.length}${last ? `<div class="muted" style="font-size:.72rem">último ${esc(prettyDateShort(last))}</div>` : ''}</td>
+      <td><div class="row-actions">
+        <button class="icon-btn" data-pact="edit" title="Editar">✎</button>
+        <button class="icon-btn danger" data-pact="delete" title="Eliminar">🗑</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+$('#pacientesSearch').addEventListener('input', (e) => { pacientesSearch = e.target.value; renderPacientes(); });
+
+const pacienteModal = $('#pacienteModal');
+function openPacienteModal(p) {
+  $('#pacienteModalTitle').textContent = p ? 'Editar paciente' : 'Nuevo paciente';
+  $('#pacienteId').value = p?.id || '';
+  $('#pacienteNombre').value = p?.nombre || '';
+  $('#pacienteTelefono').value = p?.telefono || '';
+  $('#pacienteArea').value = p?.area || 'odontologia';
+  const treatSel = $('#pacienteTratamiento');
+  fillSelect(treatSel, [...ALL_SERVICES, 'Otro']);
+  treatSel.value = p?.tratamiento && ALL_SERVICES.concat('Otro').includes(p.tratamiento) ? p.tratamiento : (p?.tratamiento ? 'Otro' : ALL_SERVICES[0]);
+  $('#pacienteNotas').value = p?.notas || '';
+  pacienteModal.classList.add('open');
+  setTimeout(() => $('#pacienteNombre').focus(), 80);
+}
+$('#addPacienteBtn').addEventListener('click', () => openPacienteModal(null));
+$('#pacienteForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = $('#pacienteId').value;
+  const data = {
+    nombre: $('#pacienteNombre').value.trim(),
+    telefono: $('#pacienteTelefono').value.trim(),
+    area: $('#pacienteArea').value,
+    tratamiento: $('#pacienteTratamiento').value,
+    notas: $('#pacienteNotas').value.trim(),
+  };
+  if (!data.nombre) return;
+  const ok = await persist(async () => {
+    if (id) {
+      const current = store.patients.find((p) => p.id === id) || { id, createdAt: new Date().toISOString() };
+      const updated = await cloudUpdate('patients', id, { ...current, ...data, id });
+      const i = store.patients.findIndex((p) => p.id === id);
+      store.patients[i] = updated;
+    } else {
+      const created = await cloudInsert('patients', { id: uid(), ...data, createdAt: new Date().toISOString() });
+      store.patients.push(created);
+    }
+  }, 'No se pudo guardar el paciente.');
+  if (!ok) return;
+  closeModals(); renderPacientes(); renderResumen();
+  toast(id ? 'Paciente actualizado ✓' : 'Paciente agregado ✓');
+});
+$('#pacientesTable').addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-pact]'); if (!btn) return;
+  const row = btn.closest('tr'); const id = row?.dataset.id;
+  const p = (store.patients || []).find((x) => x.id === id); if (!p) return;
+  if (btn.dataset.pact === 'edit') return openPacienteModal(p);
+  const ok = await showConfirm('Eliminar paciente', `¿Eliminar a ${p.nombre} del listado? Los turnos cargados no se borran.`);
+  if (!ok) return;
+  const done = await persist(() => cloudDelete('patients', id), 'No se pudo eliminar el paciente.');
+  if (!done) return;
+  store.patients = store.patients.filter((x) => x.id !== id);
+  renderPacientes(); renderResumen();
+});
+</script>
+<script>
+'use strict';
+/* ============================================================
+   Precios
+   ============================================================ */
+function renderPrecios() {
+  if (!store) return;
+  const groups = { odontologia: $('#preciosOdontoTable'), armonizacion: $('#preciosArmoTable') };
+  const counters = { odontologia: $('#preciosOdontoCount'), armonizacion: $('#preciosArmoCount') };
+  for (const area of Object.keys(groups)) {
+    const items = (store.prices || []).filter((p) => p.area === area);
+    counters[area].textContent = `${items.filter((p) => p.precioCents != null).length} de ${items.length} cargados`;
+    groups[area].innerHTML = items.map((p) => `
+      <tr data-id="${esc(p.id)}">
+        <td>${esc(p.tratamiento)}</td>
+        <td><input type="number" min="0" step="0.01" class="input precio-input" data-id="${esc(p.id)}" value="${p.precioCents != null ? (p.precioCents / 100).toFixed(2) : ''}" placeholder="0.00" inputmode="decimal" /></td>
+        <td class="precio-estado">${p.precioCents != null ? '<span class="badge badge-confirmado">Cargado</span>' : '<span class="badge badge-pendiente">A definir</span>'}</td>
+      </tr>`).join('');
+  }
+}
+$('#page-precios').addEventListener('change', async (e) => {
+  const input = e.target.closest('.precio-input'); if (!input) return;
+  const p = (store.prices || []).find((x) => x.id === input.dataset.id); if (!p) return;
+  const cents = input.value.trim() === '' ? null : parseMonto(input.value);
+  p.precioCents = cents;
+  const row = input.closest('tr');
+  row.querySelector('.precio-estado').innerHTML = cents != null ? '<span class="badge badge-confirmado">Cargado</span>' : '<span class="badge badge-pendiente">A definir</span>';
+  const area = p.area;
+  const items = store.prices.filter((x) => x.area === area);
+  $(area === 'odontologia' ? '#preciosOdontoCount' : '#preciosArmoCount').textContent = `${items.filter((x) => x.precioCents != null).length} de ${items.length} cargados`;
+  persist(() => cloudUpdateFields('prices', p.id, { precio_cents: cents }), 'No se pudo guardar el precio.');
 });
 
-/* ---------- Arranque ---------- */
-if (token) showDashboard(); else showLogin();
+/* ============================================================
+   Gastos de insumos
+   ============================================================ */
+const gastosTable = $('#gastosTable'), gastosMonth = $('#gastosMonth'), gastosStats = $('#gastosStats');
+function renderGastos() {
+  if (!store) return;
+  if (!gastosMonth.value) gastosMonth.value = nowMonth();
+  const ym = gastosMonth.value;
+  const list = (store.expenses || []).filter((g) => isSameMonth(g.date, ym)).sort((a, b) => (b.date + (b.createdAt || '')).localeCompare(a.date + (a.createdAt || '')));
+  const total = list.reduce((a, g) => a + (g.montoCents || 0), 0);
+  const max = list.reduce((a, g) => Math.max(a, g.montoCents || 0), 0);
+  gastosStats.innerHTML = `
+    <div class="stat accent"><small>Total ${esc(monthName(ym))}</small><strong>${fmtCents(total)}</strong></div>
+    <div class="stat"><small>Movimientos</small><strong>${list.length}</strong></div>
+    <div class="stat"><small>Mayor gasto</small><strong>${fmtCents(max)}</strong></div>`;
+  if (!list.length) { gastosTable.innerHTML = '<tr><td colspan="6" class="empty"><span class="big">🧾</span>Sin gastos cargados este mes.</td></tr>'; return; }
+  gastosTable.innerHTML = list.map((g) => `
+    <tr data-id="${esc(g.id)}">
+      <td>${esc(prettyDateShort(g.date))}</td>
+      <td>${esc(g.concepto)}</td>
+      <td>${esc(g.categoria || '—')}</td>
+      <td>${esc(g.proveedor || '—')}</td>
+      <td style="text-align:right" class="mono"><strong>${fmtCents(g.montoCents)}</strong></td>
+      <td><div class="row-actions"><button class="icon-btn danger" data-gact="delete" title="Eliminar">🗑</button></div></td>
+    </tr>`).join('');
+}
+gastosMonth.addEventListener('change', renderGastos);
+$('#addGastoBtn').addEventListener('click', () => {
+  $('#gastoForm').reset();
+  $('#gastoFecha').value = todayISO();
+  openModal('#gastoModal');
+});
+$('#gastoForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const montoCents = parseMonto($('#gastoMonto').value);
+  if (montoCents == null) { toast('Ingresá un monto válido.'); return; }
+  const data = { id: uid(), date: $('#gastoFecha').value, concepto: $('#gastoConcepto').value.trim(), categoria: $('#gastoCategoria').value, proveedor: $('#gastoProveedor').value.trim(), montoCents, createdAt: new Date().toISOString() };
+  const ok = await persist(async () => { store.expenses.push(await cloudInsert('expenses', data)); }, 'No se pudo guardar el gasto.');
+  if (!ok) return;
+  closeModals(); renderGastos(); renderBalance(); renderResumen();
+  toast('Gasto cargado ✓');
+});
+$('#gastosTable').addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-gact]'); if (!btn) return;
+  const row = btn.closest('tr'); const id = row?.dataset.id;
+  const g = (store.expenses || []).find((x) => x.id === id); if (!g) return;
+  const ok = await showConfirm('Eliminar gasto', `¿Eliminar “${g.concepto}” por ${fmtCents(g.montoCents)}?`);
+  if (!ok) return;
+  const done = await persist(() => cloudDelete('expenses', id), 'No se pudo eliminar el gasto.');
+  if (!done) return;
+  store.expenses = store.expenses.filter((x) => x.id !== id);
+  renderGastos(); renderBalance(); renderResumen();
+});
+
+/* ============================================================
+   Ingresos
+   ============================================================ */
+const ingresosTable = $('#ingresosTable'), ingresosMonth = $('#ingresosMonth'), ingresosStats = $('#ingresosStats');
+function renderIngresos() {
+  if (!store) return;
+  if (!ingresosMonth.value) ingresosMonth.value = nowMonth();
+  const ym = ingresosMonth.value;
+  const list = (store.incomes || []).filter((i) => isSameMonth(i.date, ym)).sort((a, b) => (b.date + (b.createdAt || '')).localeCompare(a.date + (a.createdAt || '')));
+  const total = list.reduce((a, i) => a + (i.montoCents || 0), 0);
+  const ticket = list.length ? Math.round(total / list.length) : 0;
+  ingresosStats.innerHTML = `
+    <div class="stat accent"><small>Total ${esc(monthName(ym))}</small><strong>${fmtCents(total)}</strong></div>
+    <div class="stat"><small>Movimientos</small><strong>${list.length}</strong></div>
+    <div class="stat"><small>Ticket promedio</small><strong>${fmtCents(ticket)}</strong></div>`;
+  if (!list.length) { ingresosTable.innerHTML = '<tr><td colspan="6" class="empty"><span class="big">💵</span>Sin ingresos cargados este mes.</td></tr>'; return; }
+  ingresosTable.innerHTML = list.map((i) => `
+    <tr data-id="${esc(i.id)}">
+      <td>${esc(prettyDateShort(i.date))}</td>
+      <td>${esc(i.concepto)}${i.paciente ? `<div class="muted" style="font-size:.72rem">${esc(i.paciente)}</div>` : ''}</td>
+      <td>${AREA_LABEL[i.area] || esc(i.area)}</td>
+      <td>${esc(i.medio)}</td>
+      <td style="text-align:right" class="mono"><strong>${fmtCents(i.montoCents)}</strong></td>
+      <td><div class="row-actions"><button class="icon-btn danger" data-iact="delete" title="Eliminar">🗑</button></div></td>
+    </tr>`).join('');
+}
+ingresosMonth.addEventListener('change', renderIngresos);
+$('#addIngresoBtn').addEventListener('click', () => {
+  $('#ingresoForm').reset();
+  $('#ingresoFecha').value = todayISO();
+  openModal('#ingresoModal');
+});
+$('#ingresoForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const montoCents = parseMonto($('#ingresoMonto').value);
+  if (montoCents == null) { toast('Ingresá un monto válido.'); return; }
+  const data = { id: uid(), date: $('#ingresoFecha').value, concepto: $('#ingresoConcepto').value.trim(), area: $('#ingresoArea').value, medio: $('#ingresoMedio').value, paciente: $('#ingresoPaciente').value.trim(), montoCents, createdAt: new Date().toISOString() };
+  const ok = await persist(async () => { store.incomes.push(await cloudInsert('incomes', data)); }, 'No se pudo guardar el ingreso.');
+  if (!ok) return;
+  closeModals(); renderIngresos(); renderBalance(); renderResumen();
+  toast('Ingreso cargado ✓');
+});
+$('#ingresosTable').addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-iact]'); if (!btn) return;
+  const row = btn.closest('tr'); const id = row?.dataset.id;
+  const i = (store.incomes || []).find((x) => x.id === id); if (!i) return;
+  const ok = await showConfirm('Eliminar ingreso', `¿Eliminar “${i.concepto}” por ${fmtCents(i.montoCents)}?`);
+  if (!ok) return;
+  const done = await persist(() => cloudDelete('incomes', id), 'No se pudo eliminar el ingreso.');
+  if (!done) return;
+  store.incomes = store.incomes.filter((x) => x.id !== id);
+  renderIngresos(); renderBalance(); renderResumen();
+});
+</script>
+<script>
+'use strict';
+/* ============================================================
+   Balance
+   ============================================================ */
+const balanceMonth = $('#balanceMonth'), balanceCards = $('#balanceCards'), balanceBars = $('#balanceBars'), balanceMedio = $('#balanceMedio');
+function lastSixMonths(ym) {
+  const out = [];
+  for (let i = 5; i >= 0; i--) out.push(shiftMonth(ym, -i));
+  return out;
+}
+function renderBalance() {
+  if (!store) return;
+  if (!balanceMonth.value) balanceMonth.value = nowMonth();
+  const ym = balanceMonth.value;
+  const { ing, gas, neto } = monthTotals(ym);
+  balanceCards.innerHTML = `
+    <div class="stat"><small>Ingresos ${esc(monthName(ym))}</small><strong>${fmtCents(ing)}</strong></div>
+    <div class="stat"><small>Gastos ${esc(monthName(ym))}</small><strong>${fmtCents(gas)}</strong></div>
+    <div class="stat ${neto >= 0 ? 'ok' : 'bad'}"><small>Resultado</small><strong>${fmtCents(neto)}</strong></div>`;
+
+  const months = lastSixMonths(ym);
+  const totals = months.map((m) => monthTotals(m));
+  const maxVal = Math.max(1, ...totals.map((t) => Math.max(t.ing, t.gas)));
+  balanceBars.innerHTML = months.map((m, idx) => {
+    const t = totals[idx];
+    const label = new Date(Number(m.slice(0, 4)), Number(m.slice(5, 7)) - 1, 1).toLocaleDateString('es-AR', { month: 'short', year: '2-digit' });
+    return `
+      <div class="bar-row">
+        <span style="text-transform:capitalize">${esc(label)}</span>
+        <div>
+          <div class="bar-track" style="margin-bottom:4px" title="Ingresos ${fmtCents(t.ing)}"><div class="bar-fill ig" style="width:${(t.ing / maxVal) * 100}%"></div></div>
+          <div class="bar-track" title="Gastos ${fmtCents(t.gas)}"><div class="bar-fill gasto" style="width:${(t.gas / maxVal) * 100}%"></div></div>
+        </div>
+        <span class="mono" style="font-size:.74rem;color:${t.neto >= 0 ? 'var(--verde)' : 'var(--rojo)'}">${t.neto >= 0 ? '+' : ''}${fmtCents(t.neto)}</span>
+      </div>`;
+  }).join('');
+
+  const byMedio = new Map();
+  for (const i of store.incomes || []) {
+    if (!isSameMonth(i.date, ym)) continue;
+    byMedio.set(i.medio, (byMedio.get(i.medio) || 0) + (i.montoCents || 0));
+  }
+  const medios = [...byMedio.entries()].sort((a, b) => b[1] - a[1]);
+  if (!medios.length) {
+    balanceMedio.innerHTML = '<p class="muted">Sin ingresos cargados en este mes todavía.</p>';
+  } else {
+    const maxMedio = medios[0][1];
+    balanceMedio.innerHTML = medios.map(([medio, cents]) => `
+      <div class="bar-row" style="grid-template-columns:150px 1fr auto">
+        <span>${esc(medio)}</span>
+        <div class="bar-track"><div class="bar-fill ig" style="width:${(cents / maxMedio) * 100}%"></div></div>
+        <span class="mono">${fmtCents(cents)}</span>
+      </div>`).join('');
+  }
+}
+balanceMonth.addEventListener('change', renderBalance);
+
+/* ============================================================
+   Datos y cuenta
+   ============================================================ */
+function exportAllJSON() {
+  if (!store) return;
+  const stamp = `${todayISO().replace(/-/g, '')}-${pad(new Date().getHours())}${pad(new Date().getMinutes())}`;
+  const dump = { exportado: new Date().toISOString(), ...store };
+  download(`pabla-datos-${stamp}.json`, JSON.stringify(dump, null, 2), 'application/json');
+  toast('Copia completa descargada ✓');
+}
+$('#exportBackupBtn').addEventListener('click', exportAllJSON);
+$('#quickExportBtn').addEventListener('click', exportAllJSON);
+
+$('#changePassBtn').addEventListener('click', async () => {
+  const p1 = $('#newPass1').value, p2 = $('#newPass2').value;
+  if (p1.length < 8) { toast('La nueva contraseña debe tener al menos 8 caracteres.'); return; }
+  if (p1 !== p2) { toast('Las contraseñas no coinciden.'); return; }
+  try {
+    const res = await sbFetch('/auth/v1/user', { method: 'PUT', body: { password: p1 } });
+    if (!res.ok) throw new Error('change password');
+    $('#newPass1').value = ''; $('#newPass2').value = '';
+    toast('Contraseña cambiada ✓');
+  } catch {
+    toast('No se pudo cambiar la contraseña. Probá de nuevo.');
+  }
+});
+
+$('#wipePanelBtn').addEventListener('click', async () => {
+  const ok1 = await showConfirm('Borrar TODOS tus datos', 'Se borran pacientes, turnos, precios, gastos e ingresos en la nube. Esto no se puede deshacer. Te conviene exportar una copia antes.');
+  if (!ok1) return;
+  const ok2 = await showConfirm('Última confirmación', '¿Borrar definitivamente todos tus datos del consultorio?');
+  if (!ok2) return;
+  setSaveState('guardando');
+  try {
+    for (const key of ['patients', 'appointments', 'expenses', 'incomes', 'prices']) await cloudDeleteAll(key);
+    store.patients = []; store.appointments = []; store.expenses = []; store.incomes = [];
+    // La lista de precios se recrea vacía (16 tratamientos "a definir")
+    const seed = ALL_SERVICES.map((name, i) => ({ area: i < SERVICES.odontologia.length ? 'odontologia' : 'armonizacion', tratamiento: name, precioCents: null }));
+    store.prices = await cloudInsertMany('prices', seed);
+    setSaveState('ok');
+    renderAll();
+    toast('Todos tus datos fueron borrados.');
+  } catch (e) {
+    console.error(e);
+    toast('No se pudieron borrar todos los datos. Recargá e intentá de nuevo.');
+    setSaveState('error');
+  }
+});
+
+/* ============================================================
+   Exportar CSV
+   ============================================================ */
+function exportCSV(name, header, rows) {
+  download(name, toCSV(header, rows), 'text/csv;charset=utf-8');
+}
+$('#exportTurnosBtn').addEventListener('click', () => {
+  const rows = (store.appointments || []).map((a) => [a.date, a.time, a.nombre, a.telefono, AREA_LABEL[a.area] || a.area, a.tratamiento, a.status, (a.nota || '').replace(/[\n;]+/g, ' ')]);
+  exportCSV('turnos.csv', ['Fecha','Hora','Paciente','Teléfono','Área','Tratamiento','Estado','Nota'], rows);
+});
+$('#exportPacientesBtn').addEventListener('click', () => {
+  const rows = (store.patients || []).map((p) => [p.nombre, p.telefono, AREA_LABEL[p.area] || p.area, p.tratamiento, (p.notas || '').replace(/[\n;]+/g, ' ')]);
+  exportCSV('pacientes.csv', ['Paciente','Teléfono','Área','Tratamiento','Notas'], rows);
+});
+$('#exportPreciosBtn').addEventListener('click', () => {
+  const rows = (store.prices || []).map((p) => [AREA_LABEL[p.area] || p.area, p.tratamiento, p.precioCents != null ? (p.precioCents / 100).toFixed(2) : '']);
+  exportCSV('precios.csv', ['Área','Tratamiento','Precio'], rows);
+});
+$('#exportGastosBtn').addEventListener('click', () => {
+  const rows = (store.expenses || []).map((g) => [g.date, g.concepto, g.categoria, g.proveedor || '', (g.montoCents / 100).toFixed(2)]);
+  exportCSV('gastos.csv', ['Fecha','Concepto','Categoría','Proveedor','Monto'], rows);
+});
+$('#exportIngresosBtn').addEventListener('click', () => {
+  const rows = (store.incomes || []).map((i) => [i.date, i.concepto, AREA_LABEL[i.area] || i.area, i.medio, i.paciente || '', (i.montoCents / 100).toFixed(2)]);
+  exportCSV('ingresos.csv', ['Fecha','Concepto','Área','Medio de pago','Paciente','Monto'], rows);
+});
+
+/* ============================================================
+   Render general y arranque
+   ============================================================ */
+async function boot() {
+  if (!CONFIGURED) { showConfigMissing(); return; }
+  const validSession = session?.access_token && (session.expires_at - Date.now() > 60000 || await refreshSession());
+  if (validSession) {
+    try { await loadAll(); showPanel(); return; } catch (e) { console.error(e); }
+  }
+  showGate();
+}
+
+function renderAll() {
+  renderAccessGrids();
+  renderResumen();
+  renderAgenda();
+  renderPacientes();
+  renderPrecios();
+  renderGastos();
+  renderIngresos();
+  renderBalance();
+}
+
+boot();
 </script>
 </body>
 </html>

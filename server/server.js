@@ -14,11 +14,15 @@ const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'pabla2026';
+// Si no se define ADMIN_PASSWORD, se genera una aleatoria y se muestra por consola al iniciar.
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || crypto.randomBytes(9).toString('base64url');
+const GENERATED_PASSWORD = !process.env.ADMIN_PASSWORD;
 
-const ROOT = __dirname;
-const PUBLIC_DIR = path.join(ROOT, 'public');
+const ROOT = path.join(__dirname, '..');
+const PUBLIC_DIR = ROOT; // GitHub Pages sirve la raíz del repo
 const DATA_FILE = path.join(ROOT, 'data', 'appointments.json');
+// Archivos que nunca se sirven públicamente
+const STATIC_BLOCKLIST = ['/server/', '/data/', '/.git', '/.gitignore', '/readme.md', '/package.json'];
 
 const WA_NUMBER = '5493512166540'; // 54 9 351 2166540 (formato wa.me)
 
@@ -268,6 +272,10 @@ function serveStatic(req, res, url) {
   if (!filePath.startsWith(PUBLIC_DIR)) {
     res.writeHead(403); res.end('Forbidden'); return;
   }
+  const rel = '/' + path.relative(PUBLIC_DIR, filePath).replace(/\\/g, '/').toLowerCase();
+  if (STATIC_BLOCKLIST.some((b) => rel === b.replace(/\/$/, '') || rel.startsWith(b))) {
+    res.writeHead(403); res.end('Forbidden'); return;
+  }
 
   fs.readFile(filePath, (err, content) => {
     if (err) {
@@ -315,4 +323,8 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, HOST, () => {
   console.log(`✅ Sitio Od. Pabla Bonaudi corriendo en http://${HOST}:${PORT}`);
+  if (GENERATED_PASSWORD) {
+    console.log(`🔑 ADMIN_PASSWORD no definida. Contraseña del panel generada: ${ADMIN_PASSWORD}`);
+    console.log('   Definí ADMIN_PASSWORD para usar tu propia contraseña.');
+  }
 });

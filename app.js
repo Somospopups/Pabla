@@ -451,3 +451,15 @@ function celebrateBooking() {
   window.addEventListener('keydown', done, { once: true });
   setTimeout(done, 2500);
 })();
+
+/* ============ COPITO · frases de la burbuja ============ */
+(function initCopito() {
+  const b = document.getElementById('copitoBubble');
+  if (!b) return;
+  const phrases = ['¡Escribime!', '¿Dudas o consultas?', '¿Agendamos tu turno?'];
+  let i = 0;
+  setInterval(() => {
+    i = (i + 1) % phrases.length;
+    b.textContent = phrases[i];
+  }, 6000);
+})();

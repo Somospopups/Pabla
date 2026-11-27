@@ -246,11 +246,12 @@ em { font-family: var(--font-display); font-style: italic; color: var(--bordo-2)
 .tcard-btn-book { background: var(--bordo); color: #fff; }
 .treatments-alt .tcard-btn-book { background: var(--dorado); color: var(--vino); }
 .tcard-btn-wa {
-  width: 40px; flex: 0 0 40px; background: linear-gradient(160deg, #23614d, #173f31); color: #f3ead8;
-  border: 1px solid rgba(228, 200, 122, .35);
-  border-radius: 10px; display: inline-flex; align-items: center; justify-content: center;
+  width: 42px; flex: 0 0 42px; background: transparent; border: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  text-decoration: none; transition: transform .2s ease; border-radius: 10px;
 }
-.tcard-btn-wa:hover { background: #2a7055; border-color: rgba(228, 200, 122, .65); }
+.tcard-btn-wa:hover { transform: scale(1.18); background: rgba(20,56,44,.08); }
+.tcard-btn-wa img { width: 30px; height: 30px; display: block; }
 
 /* ---------- Turnero ---------- */
 .booking { padding: 5rem 0; background: var(--crema); position: relative; }
@@ -328,7 +329,7 @@ textarea { resize: vertical; }
   background: var(--blanco); border: 1px solid var(--nude-2); border-radius: var(--radius);
   padding: 1.2rem; box-shadow: var(--shadow-sm);
 }
-.aside-wa-card svg { color: var(--wa-oscuro); flex-shrink: 0; margin-top: .15rem; }
+.aside-wa-card img { flex-shrink: 0; width: 34px; height: 34px; margin-top: .1rem; }
 .aside-wa-card strong { color: var(--vino); font-size: .95rem; }
 .aside-wa-card p { font-size: .8rem; color: var(--texto-suave); margin: .3rem 0 .5rem; }
 .aside-wa-btn { font-weight: 700; color: var(--wa-oscuro); text-decoration: none; font-size: .95rem; letter-spacing: .02em; border-bottom: 1.5px solid rgba(29,92,70,.35); padding-bottom: .1rem; }
@@ -420,20 +421,19 @@ textarea { resize: vertical; }
 
 /* ---------- WhatsApp flotante ---------- */
 .wa-float {
-  position: fixed; bottom: 22px; right: 22px; z-index: 90;
-  width: 62px; height: 62px; border-radius: 50%;
-  background: radial-gradient(circle at 33% 30%, #2a7055, #14382c 78%);
-  color: #f3ead8; display: grid; place-items: center;
-  border: 1.5px solid rgba(228, 200, 122, .6);
-  box-shadow: 0 12px 32px rgba(20, 56, 44, .5), 0 0 0 5px rgba(20, 56, 44, .1);
-  text-decoration: none; transition: transform .25s ease, box-shadow .25s ease;
+  position: fixed; bottom: 20px; right: 20px; z-index: 90;
+  width: 64px; height: 64px; border-radius: 50%;
+  display: block; text-decoration: none;
+  box-shadow: 0 10px 24px rgba(20, 56, 44, .45);
+  transition: transform .25s ease;
   animation: waPulse 2.8s infinite;
 }
-.wa-float:hover { transform: scale(1.1); box-shadow: 0 14px 38px rgba(20, 56, 44, .6), 0 0 0 5px rgba(228,200,122,.25); }
+.wa-float img { width: 100%; height: 100%; border-radius: 50%; display: block; }
+.wa-float:hover { transform: scale(1.12); }
 @keyframes waPulse {
-  0% { box-shadow: 0 12px 32px rgba(20, 56, 44, .5), 0 0 0 0 rgba(35, 97, 77, .4); }
-  70% { box-shadow: 0 12px 32px rgba(20, 56, 44, .5), 0 0 0 16px rgba(35, 97, 77, 0); }
-  100% { box-shadow: 0 12px 32px rgba(20, 56, 44, .5), 0 0 0 0 rgba(35, 97, 77, 0); }
+  0% { box-shadow: 0 10px 24px rgba(20, 56, 44, .45), 0 0 0 0 rgba(35, 97, 77, .4); }
+  70% { box-shadow: 0 10px 24px rgba(20, 56, 44, .45), 0 0 0 17px rgba(35, 97, 77, 0); }
+  100% { box-shadow: 0 10px 24px rgba(20, 56, 44, .45), 0 0 0 0 rgba(35, 97, 77, 0); }
 }
 
 /* ---------- Reveal on scroll ---------- */

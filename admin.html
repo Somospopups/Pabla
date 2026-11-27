@@ -243,7 +243,7 @@ function renderList() {
     <div class="appt" data-id="${esc(a.id)}">
       <div class="appt-time">${esc(a.time)}<small>${a.area === 'odontologia' ? 'Odonto' : 'Armonización'}</small></div>
       <div class="appt-name">${esc(a.name)}
-        <a href="${esc(waLink)}" target="_blank" rel="noopener">📱 ${esc(a.phone)}</a>
+        <a href="${esc(waLink)}" target="_blank" rel="noopener"><img src="img/whatsapp.svg" style="width:15px;height:15px;vertical-align:-2px" alt=""> ${esc(a.phone)}</a>
       </div>
       <div class="appt-treatment">${esc(a.treatment)}${a.notes ? `<div class="appt-notes">“${esc(a.notes)}”</div>` : ''}</div>
       <div class="appt-actions">

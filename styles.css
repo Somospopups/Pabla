@@ -29,7 +29,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; background: var(--vino); }
 
 body {
   font-family: var(--font-body);
@@ -424,7 +424,11 @@ textarea { resize: vertical; }
 .copito-float {
   position: fixed; bottom: 14px; right: 16px; z-index: 90;
   display: flex; align-items: flex-end; gap: .3rem; text-decoration: none;
-  transition: transform .35s cubic-bezier(.2,1.4,.35,1);
+  transition: transform .35s cubic-bezier(.2,1.4,.35,1), opacity .3s ease, visibility 0s linear 0s;
+}
+.copito-float.copito-off {
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: transform .35s cubic-bezier(.2,1.4,.35,1), opacity .3s ease, visibility 0s linear .31s;
 }
 .copito-bubble {
   background: #fff; border: 1.5px solid #e3d2c4; color: var(--bordo);

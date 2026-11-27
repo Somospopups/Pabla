@@ -465,3 +465,14 @@ function celebrateBooking() {
     b.textContent = phrases[i];
   }, 6000);
 })();
+
+/* ============ COPITO · se oculta cerca del pie para no encimar ============ */
+(function initCopitoAutoHide() {
+  const copito = document.querySelector('.copito-float');
+  const footer = document.querySelector('.footer');
+  if (!copito || !footer || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => copito.classList.toggle('copito-off', en.isIntersecting));
+  }, { threshold: 0.02, rootMargin: '0px 0px 32px 0px' });
+  io.observe(footer);
+})();

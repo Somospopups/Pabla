@@ -71,6 +71,7 @@ body{font-family:var(--font-body);background:var(--crema);color:var(--texto);min
 .nav-btn.active{background:linear-gradient(160deg,var(--dorado-suave),var(--dorado));color:#3d2c07;font-weight:600}
 .nav-btn.active svg{opacity:1}
 .side-foot{margin-top:auto;padding:.8rem .7rem .2rem;font-size:.68rem;color:rgba(253,243,236,.4);border-top:1px solid rgba(253,243,236,.12)}
+.only-mobile{display:none}
 .content{padding:1.4rem;max-width:1180px;width:100%;margin:0 auto}
 .page{display:none}
 .page.active{display:block;animation:fadeUp .35s ease}
@@ -202,6 +203,12 @@ tbody tr:hover{background:var(--nude)}
   .side{position:fixed;left:0;right:0;top:var(--adm-top,60px);height:auto;max-height:calc(100vh - var(--adm-top,60px) - .5rem);background:var(--vino);display:none;flex-direction:column;align-items:stretch;gap:.12rem;padding:.55rem .6rem .8rem;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 24px 44px rgba(42,6,17,.5);border-bottom:1px solid rgba(253,243,236,.14);z-index:59}
   .side.open{display:flex}
   .side-title{display:block;padding:.4rem .7rem .05rem}
+  .only-mobile.side-title{padding-top:.6rem}
+  .hide-mobile{display:none !important}
+  .only-mobile{display:block}
+  .side-actions{display:flex;flex-direction:column;gap:.12rem;border-top:1px solid rgba(253,243,236,.14);padding-top:.5rem;margin-top:.35rem}
+  .side-logout{color:#f3c1b8}
+  .side-logout:hover{color:#ffdad2}
   .side-foot{display:none}
   .nav-btn{flex:none;width:100%;align-items:center;justify-content:flex-start;gap:.6rem;height:auto;min-height:46px;padding:.55rem .7rem;border-radius:12px;white-space:nowrap;font-size:.92rem;text-align:left}
   .nav-btn svg{opacity:.9}
@@ -500,9 +507,9 @@ body.print-historia .side,body.print-historia .topbar,body.print-historia .page:
     <span><strong>Od. Pabla Bonaudi</strong><small>Panel profesional</small></span>
   </a>
   <div class="topbar-actions" id="topbarActions" hidden>
-    <span class="save-dot" id="saveDot"></span>
-    <button class="btn btn-gold btn-sm" id="quickExportBtn" type="button">⬇ Exportar datos</button>
-    <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">Cerrar sesión</button>
+    <span class="save-dot hide-mobile" id="saveDot"></span>
+    <button class="btn btn-gold btn-sm hide-mobile" id="quickExportBtn" type="button">⬇ Exportar datos</button>
+    <button class="btn btn-ghost btn-sm hide-mobile" id="logoutBtn" type="button">Cerrar sesión</button>
     <button class="hamburger" id="admMenuBtn" type="button" aria-label="Abrir menú de secciones" aria-expanded="false" aria-controls="admSideNav"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -544,6 +551,11 @@ body.print-historia .side,body.print-historia .topbar,body.print-historia .page:
     <div class="side-title">Herramientas</div>
     <button class="nav-btn" data-tab="accesos"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l3.54-3.54a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.07 0l-3.54 3.54a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Accesos</button>
     <button class="nav-btn" data-tab="respaldo"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>Datos y cuenta</button>
+    <div class="side-title only-mobile">Cuenta</div>
+    <div class="side-actions only-mobile">
+      <button class="nav-btn" id="quickExportBtnM" type="button"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>Exportar datos</button>
+      <button class="nav-btn side-logout" id="logoutBtnM" type="button"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>Cerrar sesión</button>
+    </div>
     <div class="side-foot">Datos cifrados en este navegador (AES-256).<br>Exportá respaldos seguido.</div>
   </nav>
 
@@ -4146,6 +4158,8 @@ function exportAllJSON() {
 }
 $('#exportBackupBtn').addEventListener('click', exportAllJSON);
 $('#quickExportBtn').addEventListener('click', exportAllJSON);
+$('#quickExportBtnM').addEventListener('click', () => { closeAdmMenu(); exportAllJSON(); });
+$('#logoutBtnM').addEventListener('click', () => { closeAdmMenu(); signOut(); });
 
 $('#changePassBtn').addEventListener('click', async () => {
   const p1 = $('#newPass1').value, p2 = $('#newPass2').value;

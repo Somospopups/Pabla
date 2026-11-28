@@ -40,6 +40,11 @@ body{font-family:var(--font-body);background:var(--crema);color:var(--texto);min
 .topbar strong{font-size:.92rem}
 .topbar-actions{display:flex;gap:.55rem;align-items:center}
 .save-dot{font-size:.72rem;color:rgba(253,243,236,.65);min-width:9ch;text-align:right}
+.hamburger{display:none;background:none;border:none;cursor:pointer;width:40px;height:40px;padding:0;flex-direction:column;justify-content:center;gap:5px;flex:0 0 auto}
+.hamburger span{display:block;width:100%;height:2px;background:#fdf3ec;border-radius:2px;transition:transform .28s ease,opacity .28s ease}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* ---------- Login / Crear acceso ---------- */
 .gate-wrap{min-height:calc(100vh - 64px);display:grid;place-items:center;padding:2rem}
@@ -193,21 +198,22 @@ tbody tr:hover{background:var(--nude)}
 
 @media (max-width:960px){
   .layout{grid-template-columns:1fr}
-  .side{position:static;height:auto;flex-direction:row;align-items:center;gap:.4rem;overflow-x:auto;padding:.55rem .6rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain;mask-image:linear-gradient(to right,#000 85%,transparent);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent)}
-  .side::-webkit-scrollbar{display:none}
-  .side-title,.side-foot{display:none}
-  .nav-btn{flex:0 0 auto;align-items:center;justify-content:center;height:42px;padding:.45rem .75rem;border-radius:12px;white-space:nowrap;font-size:.85rem;gap:.5rem;text-align:center}
+  .hamburger{display:flex}
+  .side{position:fixed;left:0;right:0;top:var(--adm-top,60px);height:auto;max-height:calc(100vh - var(--adm-top,60px) - .5rem);background:var(--vino);display:none;flex-direction:column;align-items:stretch;gap:.12rem;padding:.55rem .6rem .8rem;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 24px 44px rgba(42,6,17,.5);border-bottom:1px solid rgba(253,243,236,.14);z-index:59}
+  .side.open{display:flex}
+  .side-title{display:block;padding:.4rem .7rem .05rem}
+  .side-foot{display:none}
+  .nav-btn{flex:none;width:100%;align-items:center;justify-content:flex-start;gap:.6rem;height:auto;min-height:46px;padding:.55rem .7rem;border-radius:12px;white-space:nowrap;font-size:.92rem;text-align:left}
+  .nav-btn svg{opacity:.9}
+  .content{padding:1rem .85rem}
   .agenda-grid{grid-template-columns:1fr}
   .balance-cards{grid-template-columns:1fr}
   .grid2,.grid3{grid-template-columns:1fr}
   .appt{grid-template-columns:1fr;gap:.3rem;padding:.7rem .6rem}
   .appt-actions{flex-direction:row;justify-content:space-between;align-items:center;width:100%}
 }
-/* Animacion de entrada: las secciones "se corren" para avisar que se deslizan */
-@keyframes navNudge{0%,100%{transform:translateX(0)}30%{transform:translateX(-34px)}65%{transform:translateX(14px)}}
-.side.nav-nudge{animation:navNudge 1.15s ease-in-out 2}
-@media (prefers-reduced-motion:reduce){.side.nav-nudge{animation:none}}
-@media (prefers-reduced-motion:reduce){.page.active{animation:none}.btn:hover{transform:none}}
+/* Animaciones de entrada */
+@media (prefers-reduced-motion:reduce){.page.active{animation:none}.btn:hover{transform:none}.hamburger span{transition:none}}
 /* ---------- Tarjetas del sitio ---------- */
 .tarjetas-list{display:flex;flex-direction:column;gap:.6rem}
 .tarj-row{display:grid;grid-template-columns:60px 1fr auto;gap:.75rem;align-items:center;border:1px solid var(--nude-2);border-radius:14px;padding:.55rem .65rem;background:var(--crema)}
@@ -497,6 +503,7 @@ body.print-historia .side,body.print-historia .topbar,body.print-historia .page:
     <span class="save-dot" id="saveDot"></span>
     <button class="btn btn-gold btn-sm" id="quickExportBtn" type="button">⬇ Exportar datos</button>
     <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">Cerrar sesión</button>
+    <button class="hamburger" id="admMenuBtn" type="button" aria-label="Abrir menú de secciones" aria-expanded="false" aria-controls="admSideNav"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -520,7 +527,7 @@ body.print-historia .side,body.print-historia .topbar,body.print-historia .page:
 
 <!-- ════════ PANEL ════════ -->
 <div class="layout" id="panel" hidden>
-  <nav class="side" aria-label="Secciones del panel">
+  <nav class="side" id="admSideNav" aria-label="Secciones del panel">
     <div class="side-title">Gestión del consultorio</div>
     <button class="nav-btn active" data-tab="resumen"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h6V4H4zM14 20h6V4h-6zM4 20h6v-3H4z"/></svg>Resumen</button>
     <button class="nav-btn" data-tab="agenda"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>Agenda</button>
@@ -1687,6 +1694,39 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
 const gateWrap = $('#gateWrap'), gateForm = $('#gateForm'), gateEmail = $('#gateEmail'), gatePass = $('#gatePass');
 const gateError = $('#gateError'), gateSub = $('#gateSub'), gateBtn = $('#gateBtn'), configMissing = $('#configMissing');
 const panel = $('#panel'), topbarActions = $('#topbarActions');
+const topbarEl = document.querySelector('.topbar');
+const admMenuBtn = document.getElementById('admMenuBtn');
+const admSideNav = document.getElementById('admSideNav');
+function setAdmMenuHeight() {
+  if (topbarEl) document.documentElement.style.setProperty('--adm-top', topbarEl.offsetHeight + 'px');
+}
+function setAdmMenu(open) {
+  if (!admSideNav || !admMenuBtn) return;
+  admSideNav.classList.toggle('open', open);
+  admMenuBtn.classList.toggle('active', open);
+  admMenuBtn.setAttribute('aria-expanded', String(open));
+  admMenuBtn.setAttribute('aria-label', open ? 'Cerrar menú de secciones' : 'Abrir menú de secciones');
+  if (open) setAdmMenuHeight();
+}
+function closeAdmMenu() { setAdmMenu(false); }
+setAdmMenuHeight();
+window.addEventListener('resize', () => {
+  setAdmMenuHeight();
+  if (window.innerWidth > 960) closeAdmMenu();
+}, { passive: true });
+if (admMenuBtn) admMenuBtn.addEventListener('click', () => setAdmMenu(!admSideNav.classList.contains('open')));
+document.addEventListener('click', (e) => {
+  if (!admSideNav || !admSideNav.classList.contains('open')) return;
+  if (e.target.closest('#admSideNav') || e.target.closest('#admMenuBtn')) return;
+  closeAdmMenu();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && admSideNav && admSideNav.classList.contains('open')) {
+    closeAdmMenu();
+    if (admMenuBtn) admMenuBtn.focus();
+  }
+});
+if (admSideNav) admSideNav.addEventListener('click', (e) => { if (e.target.closest('.nav-btn')) closeAdmMenu(); });
 
 function showGate(note) {
   panel.hidden = true;
@@ -1699,13 +1739,8 @@ function showPanel() {
   gateWrap.style.display = 'none';
   panel.hidden = false;
   topbarActions.hidden = false;
-  const sideEl = document.querySelector('.side');
-  if (sideEl && window.matchMedia('(max-width: 960px)').matches) {
-    sideEl.classList.remove('nav-nudge');
-    void sideEl.offsetWidth; /* reiniciar la animacion */
-    sideEl.classList.add('nav-nudge');
-    sideEl.addEventListener('animationend', () => sideEl.classList.remove('nav-nudge'), { once: true });
-  }
+  setAdmMenuHeight(); /* ya con las acciones visibles, la barra puede medir distinto */
+  closeAdmMenu(); /* arrancar siempre con el menu cerrado */
 }
 function showConfigMissing() {
   gateWrap.style.display = 'grid';
